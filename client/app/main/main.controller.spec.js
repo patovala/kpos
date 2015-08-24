@@ -12,8 +12,8 @@ describe('Controller: MainCtrl', function () {
   // Initialize the controller and a mock scope
   beforeEach(inject(function (_$httpBackend_, $controller, $rootScope) {
     $httpBackend = _$httpBackend_;
-    $httpBackend.expectGET('/api/things')
-      .respond(['HTML5 Boilerplate', 'AngularJS', 'Karma', 'Express']);
+    //$httpBackend.expectGET('/api/things')
+    //  .respond(['HTML5 Boilerplate', 'AngularJS', 'Karma', 'Express']);
 
     scope = $rootScope.$new();
     MainCtrl = $controller('MainCtrl', {
@@ -21,8 +21,18 @@ describe('Controller: MainCtrl', function () {
     });
   }));
 
-  it('should attach a list of things to the scope', function () {
-    $httpBackend.flush();
-    expect(scope.awesomeThings.length).toBe(4);
-  });
+  //it('should attach a list of things to the scope', function () {
+  //  $httpBackend.flush();
+  //  expect(scope.awesomeThings.length).toBe(4);
+  //});
+
+  /*
+   * TODO: Deberia ingresar con un usuario válido y ponerlo en el titulo
+   * ver gráfico (admin)
+   * */
+
+  /*
+   * TODO: deberia renderizar dos panels el de productos y el de cartPanel
+   * */
+
 });

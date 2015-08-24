@@ -4,7 +4,6 @@
  *
  */
 
-
 'use strict';
 
 describe('Directive: productsPanel', function () {
@@ -74,9 +73,18 @@ describe('Directive: productsPanel', function () {
     scope.$digest();
     $httpBackend.flush();
 
-    expect(element.find('tab')).toBeTruthy();
+    expect(element.find('div')).toBeDefined();
+    console.log(element.find('div'));
   }));
 
+  /*
+   * TODO: Deberia la directiva generar el input para busqueda de productos
+   * */
 
+
+  /*
+   * TODO: Al hacer click en el boton (=) Deberia agregar al cartService el producto
+   * como un item solo
+   * */
 
 });
