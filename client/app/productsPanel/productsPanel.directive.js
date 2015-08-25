@@ -32,4 +32,3 @@ function productsPanel() {
 
 angular.module('kposApp')
   .directive('productsPanel', productsPanel);
-
