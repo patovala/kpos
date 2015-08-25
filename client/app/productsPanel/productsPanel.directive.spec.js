@@ -19,22 +19,22 @@ describe('Directive: productsPanel', function () {
     $httpBackend = _$httpBackend_;
     products = [
       {_id: 1,
-       name: 'Product 1',
-       price: 0.99,
-       featured: false,
-       onSale: false
+        name: 'Product 1',
+        price: 0.99,
+        featured: false,
+        onSale: false
       },
       {_id: 2,
-       name: 'Product 2',
-       price: 0.99,
-       featured: true,
-       onSale: false
+        name: 'Product 2',
+        price: 0.99,
+        featured: true,
+        onSale: false
       },
       {_id: 3,
-       name: 'Product 3',
-       price: 0.99,
-       featured: false,
-       onSale: true
+        name: 'Product 3',
+        price: 0.99,
+        featured: false,
+        onSale: true
       }
     ];
 
