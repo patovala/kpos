@@ -15,7 +15,7 @@
           <li class="simple" ng-repeat="p in products">
             <div class="item">
               <div>
-                <div class="img"><img src="http://kokencoffee.com/pos/wp-content/uploads/2015/06/Drip_Coffee_Machine_928A_845-180x180.jpg" title="#25"></div>
+                <div class="img"><img ng-src="{{p.image}}" title="#25"></div>
                 <div class="title">
                   <strong>{{p.name}}</strong>
                 </div>
@@ -23,9 +23,9 @@
                   {{p.price}}
                 </div>
                 <div class="action">
-                  <a data-action="add" class="btn btn-success btn-circle" href="#">
+                  <span class="btn btn-success btn-circle" ng-click="addToCart(p._id)">
                     <i class="icon-plus icon-lg"></i>
-                  </a>
+                  </span>
                 </div>
               </div>
             </div>

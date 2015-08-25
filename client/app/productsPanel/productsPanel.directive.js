@@ -11,7 +11,7 @@ function productsPanel() {
 
   return directive;
 
-  function productsPanelCtrl($scope, $resource) {
+  function productsPanelCtrl($scope, $resource, cartService) {
     var vm = this;
 
     var r = $resource('api/products/:q', {q: '@q'});
@@ -21,6 +21,10 @@ function productsPanel() {
       if(vm.searchTerm && vm.searchTerm.length > 2){
         vm.products = r.query({q: vm.searchTerm});
       }
+    };
+
+    vm.addToCart = function(id){
+      cartService.addToCart(id);
     };
 
   }

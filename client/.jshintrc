@@ -33,6 +33,7 @@
     "module": true,
     "inject": true,
     "it": true,
+    "spyOn": true,
     "expect": true,
     "browser": true,
     "element": true,
