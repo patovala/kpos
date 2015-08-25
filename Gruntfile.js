@@ -152,6 +152,37 @@ module.exports = function (grunt) {
       }
     },
 
+    lintspaces: {
+      // all: {
+      //   src: [
+      //       'client/**/*'
+      //   ],
+      //   options: {
+      //       newline: true,
+      //       newlineMaximum: 2,
+      //       trailingspaces: true,
+      //       indentation: 'spaces',
+      //       spaces: 2
+      //   }
+      // },
+      javascript: {
+        src: [
+          // client side
+            'client/app/**/*.js',
+            'client/components/**/*.js',
+          // server side
+            'server/**/*.js',
+        ],
+        options: {
+            newline: true,
+            trailingspaces: true,
+            indentation: 'spaces',
+            spaces: 2,
+            ignores: ['js-comments']
+        }
+      },
+    },
+
     // Empties folders to start fresh
     clean: {
       dist: {
@@ -568,7 +599,7 @@ module.exports = function (grunt) {
       return grunt.task.run([
         'clean:server',
         'env:all',
-        'injector:less', 
+        'injector:less',
         'concurrent:server',
         'injector',
         'wiredep',
@@ -580,7 +611,7 @@ module.exports = function (grunt) {
     grunt.task.run([
       'clean:server',
       'env:all',
-      'injector:less', 
+      'injector:less',
       'concurrent:server',
       'injector',
       'wiredep',
@@ -610,7 +641,7 @@ module.exports = function (grunt) {
       return grunt.task.run([
         'clean:server',
         'env:all',
-        'injector:less', 
+        'injector:less',
         'concurrent:test',
         'injector',
         'autoprefixer',
@@ -623,7 +654,7 @@ module.exports = function (grunt) {
         'clean:server',
         'env:all',
         'env:test',
-        'injector:less', 
+        'injector:less',
         'concurrent:test',
         'injector',
         'wiredep',
@@ -641,7 +672,7 @@ module.exports = function (grunt) {
 
   grunt.registerTask('build', [
     'clean:dist',
-    'injector:less', 
+    'injector:less',
     'concurrent:dist',
     'injector',
     'wiredep',
@@ -660,6 +691,7 @@ module.exports = function (grunt) {
 
   grunt.registerTask('default', [
     'newer:jshint',
+    'newer:lintspaces',
     'test',
     'build'
   ]);
