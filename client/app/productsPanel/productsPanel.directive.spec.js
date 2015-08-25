@@ -21,25 +21,25 @@ describe('Directive: productsPanel', function () {
 
     products = [
       {_id: 1,
-       name: 'Product 1',
-       image: 'path/to/image',
-       price: 0.99,
-       featured: false,
-       onSale: false
+        name: 'Product 1',
+        image: 'path/to/image',
+        price: 0.99,
+        featured: false,
+        onSale: false
       },
       {_id: 2,
-       name: 'Product 2',
-       image: 'path/to/image',
-       price: 0.99,
-       featured: true,
-       onSale: false
+        name: 'Product 2',
+        image: 'path/to/image',
+        price: 0.99,
+        featured: true,
+        onSale: false
       },
       {_id: 3,
-       name: 'Product 3',
-       image: 'path/to/image',
-       price: 0.99,
-       featured: false,
-       onSale: true
+        name: 'Product 3',
+        image: 'path/to/image',
+        price: 0.99,
+        featured: false,
+        onSale: true
       }
     ];
 
