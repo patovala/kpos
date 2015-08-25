@@ -1,8 +1,5 @@
 'use strict';
 
-angular.module('kposApp')
-  .directive('productsPanel', productsPanel);
-
 /*Jhon Papa recomendations to have a separate function for the directive */
 function productsPanel() {
   var directive = {
@@ -17,7 +14,18 @@ function productsPanel() {
   function productsPanelCtrl($scope, $resource) {
     var vm = this;
 
-    var r = $resource('api/products');
+    var r = $resource('api/products/:q', {q: '@q'});
     vm.products = r.query();
+
+    vm.search = function(){
+      if(vm.searchTerm && vm.searchTerm.length > 2){
+        vm.products = r.query({q: vm.searchTerm});
+      }
+    };
+
   }
 }
+
+angular.module('kposApp')
+  .directive('productsPanel', productsPanel);
+
