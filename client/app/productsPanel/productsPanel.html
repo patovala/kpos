@@ -1,5 +1,15 @@
 <tabset>
     <tab heading="All">
+    <div class="input-group">
+      <span class="input-group-addon" id="searchbox">buscar:</span>
+      <input
+        type="text"
+        class="form-control"
+        placeholder="nombre producto"
+        aria-describedby="searchbox"
+        ng-model="searchTerm"
+        ng-change="search">
+    </div>
       <div>
         <ul class="striped">
           <li class="simple" ng-repeat="p in products">
