@@ -83,7 +83,7 @@ describe('Directive: productsPanel', function () {
   it('should have a search input for search for product', inject(function () {
     //expect(element.html()).toContain('input');
     expect(element.find('input').attr('type')).toBe('text');
-
+    expect(element.find('input').attr('ng-model')).toBe('searchTerm');
   }));
 
   /*
@@ -96,10 +96,10 @@ describe('Directive: productsPanel', function () {
     scope.searchTerm = 'ab';
     ctrl.search();
 
-    ctrl.searchTerm = 'abc';
+    ctrl.searchTerm = 'abcd';
     ctrl.search();
 
-    $httpBackend.expectGET('api/products/abc').respond([{'name': 'abc'}]);
+    $httpBackend.expectGET('api/products/abcd').respond([{'name': 'abc'}]);
     $httpBackend.flush();
   }));
 
