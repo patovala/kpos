@@ -36,14 +36,14 @@ describe('Controller: MainCtrl', function () {
   });
 
   /* Test para comprobar la creación del div con el icono y nombre de usuario*/
-  it('should exists', inject(function (){
+  iit('should exists', inject(function (){
     var viewHtml = templateCache.get('components/navbar/navbar.html');
     element = angular.element(viewHtml)
     element = $compile(element)(scope);
     scope.$digest();
-    var div = element.find('div');
-    //console.log((lab.html()).toContain('admin'));
-    expect(div.html()).toContain('<label class="ng-binding">admin</label>');
+    var div = element.find('label');
+    expect(div.html()).toContain('admin');
+    expect(div.hasClass('userinfo')).toBe(true);
   }));
 
 
