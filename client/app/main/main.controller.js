@@ -8,6 +8,7 @@ angular.module('kposApp')
     // });
   	var user = new Object();
   	user.name = "admin";
+    $scope.nombre="admin";
     user.iduser= 0;
     user.idsession=0;
     user.image = "assets/images/usericon.png"
