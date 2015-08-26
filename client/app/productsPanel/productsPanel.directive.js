@@ -11,7 +11,7 @@ function productsPanel() {
 
   return directive;
 
-  function productsPanelCtrl($scope, $resource) {
+  function productsPanelCtrl($scope, $resource, cartService) {
     var vm = this;
 
     var r = $resource('api/products/:q', {q: '@q'});
@@ -23,9 +23,12 @@ function productsPanel() {
       }
     };
 
+    vm.addToCart = function(id){
+      cartService.addToCart(id);
+    };
+
   }
 }
 
 angular.module('kposApp')
   .directive('productsPanel', productsPanel);
-

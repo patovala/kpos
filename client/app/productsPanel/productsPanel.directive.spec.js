@@ -12,29 +12,34 @@ describe('Directive: productsPanel', function () {
   beforeEach(module('kposApp'));
   beforeEach(module('app/productsPanel/productsPanel.html'));
 
-  var element, scope, $httpBackend, products, ctrl;
+  var element, scope, $httpBackend, products, ctrl, cartService;
 
-  beforeEach(inject(function ($rootScope, _$httpBackend_, $compile) {
+  beforeEach(inject(function ($rootScope, _$httpBackend_, $compile, _cartService_) {
     scope = $rootScope.$new();
     $httpBackend = _$httpBackend_;
+    cartService = _cartService_;
+
     products = [
       {_id: 1,
-       name: 'Product 1',
-       price: 0.99,
-       featured: false,
-       onSale: false
+        name: 'Product 1',
+        image: 'path/to/image',
+        price: 0.99,
+        featured: false,
+        onSale: false
       },
       {_id: 2,
-       name: 'Product 2',
-       price: 0.99,
-       featured: true,
-       onSale: false
+        name: 'Product 2',
+        image: 'path/to/image',
+        price: 0.99,
+        featured: true,
+        onSale: false
       },
       {_id: 3,
-       name: 'Product 3',
-       price: 0.99,
-       featured: false,
-       onSale: true
+        name: 'Product 3',
+        image: 'path/to/image',
+        price: 0.99,
+        featured: false,
+        onSale: true
       }
     ];
 
@@ -78,12 +83,12 @@ describe('Directive: productsPanel', function () {
   }));
 
   /*
-   * TODO: Deberia la directiva generar el input para busqueda de productos
+   * Deberia la directiva generar el input para busqueda de productos
    * */
   it('should have a search input for search for product', inject(function () {
     //expect(element.html()).toContain('input');
     expect(element.find('input').attr('type')).toBe('text');
-
+    expect(element.find('input').attr('ng-model')).toBe('searchTerm');
   }));
 
   /*
@@ -96,17 +101,23 @@ describe('Directive: productsPanel', function () {
     scope.searchTerm = 'ab';
     ctrl.search();
 
-    ctrl.searchTerm = 'abc';
+    ctrl.searchTerm = 'abcd';
     ctrl.search();
 
-    $httpBackend.expectGET('api/products/abc').respond([{'name': 'abc'}]);
+    $httpBackend.expectGET('api/products/abcd').respond([{'name': 'abc'}]);
     $httpBackend.flush();
   }));
 
 
   /*
-   * TODO: Al hacer click en el boton (=) Deberia agregar al cartService el producto
+   * Al hacer click en el boton (+) Deberia agregar al cartService el producto
    * como un item solo
    * */
+  it('should call to cartService on click', inject(function () {
+    spyOn(cartService, 'addToCart').andCallThrough();
+    ctrl.addToCart(1);
+
+    expect(cartService.addToCart).toHaveBeenCalled();
+  }));
 
 });
