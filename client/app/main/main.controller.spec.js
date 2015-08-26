@@ -19,7 +19,6 @@ describe('Controller: MainCtrl', function () {
     MainCtrl = $controller('MainCtrl', {
       $scope: scope
     });
- 
   }));
 
   //it('should attach a list of things to the scope', function () {
@@ -36,9 +35,9 @@ describe('Controller: MainCtrl', function () {
   });
 
   /* Test para comprobar la creación del div con el icono y nombre de usuario*/
-  iit('should exists', inject(function (){
+  it('should exists', inject(function (){
     var viewHtml = templateCache.get('components/navbar/navbar.html');
-    element = angular.element(viewHtml)
+    element = angular.element(viewHtml);
     element = $compile(element)(scope);
     scope.$digest();
     var div = element.find('label');
