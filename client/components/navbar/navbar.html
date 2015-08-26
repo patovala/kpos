@@ -1,4 +1,4 @@
-<div class="navbar navbar-default navbar-static-top" ng-controller="NavbarCtrl">
+<div class="navbar navbar-default navbar-static-top" ng-controller="NavbarCtrl" id="navbar">
   <div class="container">
     <div class="navbar-header">
       <button class="navbar-toggle" type="button" ng-click="isCollapsed = !isCollapsed">
@@ -15,6 +15,11 @@
             <a ng-href="{{item.link}}">{{item.title}}</a>
         </li>
       </ul>
+      <div class="pull-right panel-default" >
+        <img src="{{user.image}}"> 
+        <label class="userinfo">{{user.name}}</label>
+      </div>
     </div>
+    
   </div>
 </div>
