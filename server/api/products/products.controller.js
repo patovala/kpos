@@ -8,9 +8,9 @@ var MongoClient,
     url = config.mongo.uri;
 
 if(config.mongo.uri === 'mongodb://localhost/kpos-test'){
-  MongoClient = require('mongo-mock').MongoClient
+  MongoClient = require('mongo-mock').MongoClient;
 }else{
-  MongoClient = require('mongodb').MongoClient
+  MongoClient = require('mongodb').MongoClient;
 }
 
 // Get list of products
@@ -24,5 +24,4 @@ exports.index = function(req, res) {
       db.close();
     });
   });
-  //res.json([]);
 };
