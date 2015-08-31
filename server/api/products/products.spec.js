@@ -17,6 +17,7 @@ describe('GET /api/products', function() {
       .end(function(err, res) {
         if (err) return done(err);
         res.body.should.be.instanceof(Array);
+        console.log(res.body);
         done();
       });
   });
