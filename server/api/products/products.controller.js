@@ -14,7 +14,7 @@ if(config.mongo.uri === 'mongodb://localhost/kpos-test'){
 }
 
 // Get list of products
-exports.index = function(req, res) {
+exports.findAll = function(req, res) {
   MongoClient.connect(url, function(err, db) {
     console.log("Connected correctly to server");
     var products = db.collection('products');
@@ -26,11 +26,11 @@ exports.index = function(req, res) {
   });
 };
 //Get product
-exports.findbyQ = function(req, res) {
+exports.findbyQuery = function(req, res) {
   MongoClient.connect(url, function(err, db) {
     console.log("Connected correctly to server for find filtered");
     var products = db.collection('products');
-    var str = req.body
+    var str = req.params.query;
     var val = str.replace('%20', ' ');
     products.find({"name": val }).toArray(function(err, docs){
       res.json(docs);

@@ -172,6 +172,7 @@ module.exports = function (grunt) {
             'client/components/**/*.js',
           // server side
             'server/**/*.js',
+            '!server/fixtures/*.js',
         ],
         options: {
             newline: true,

@@ -50,15 +50,15 @@ describe('GET /api/products', function() {
    * been <q> the query
    * */
   it('should get the products filtered by ', function(done) {
-   request(app)
-     .get('/api/products/product%201')
-     .expect(200)
-     .expect('Content-Type', /json/)
-     .end(function(err, res) {
-       if (err) return done(err);
-       res.body.should.be.instanceof(Array);
-       res.body.length.should.equal(1);
-       done();
-     });
-  });
+    request(app)
+      .get('/api/products/product%201')
+      .expect(200)
+      .expect('Content-Type', /json/)
+      .end(function(err, res) {
+        if (err) return done(err);
+        res.body.should.be.instanceof(Array);
+        res.body.length.should.equal(1);
+        done();
+      });
+    });
 });
