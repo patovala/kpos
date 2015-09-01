@@ -13,26 +13,27 @@ if(config.mongo.uri === 'mongodb://localhost/kpos-test'){
   MongoClient = require('mongodb').MongoClient;
 }
 
-// Get list of products
+// Get list of clients
 exports.findAll = function(req, res) {
   MongoClient.connect(url, function(err, db) {
     console.log("Connected correctly to server");
-    var products = db.collection('products');
+    var clients = db.collection('clients');
 
-    products.find({}).toArray(function(err, docs){
+    clients.find({}).toArray(function(err, docs){
       res.json(docs);
       db.close();
     });
   });
 };
-//Get product
+
+//Get clients
 exports.findbyQuery = function(req, res) {
   MongoClient.connect(url, function(err, db) {
     console.log("Connected correctly to server for find filtered");
-    var products = db.collection('products');
+    var clients = db.collection('clients');
     var str = req.params.query;
     var val = str.replace('%20', ' ');
-    products.find({"name": val }).toArray(function(err, docs){
+    clients.find({"name": val }).toArray(function(err, docs){
       res.json(docs);
       db.close();
     });

@@ -6,34 +6,29 @@ var app = require('../../app');
 var request = require('supertest');
 
 var MongoClient = require('mongo-mock').MongoClient,
-    products;
-
+    clients;
 beforeEach(function(done) {
   //populate the db with some json
-  MongoClient.persist = 'server/fixtures/products.js';
+  MongoClient.persist = 'server/fixtures/clients.js';
   var url = 'mongodb://localhost/kpos-test';
-
   MongoClient.connect(url, {}, function(err, db) {
     // Get the documents collection
-    var collection = db.collection('products');
+    var collection = db.collection('clients');
     // Insert some documents
-    products = _.map([1, 2, 3, 4, 5], function(i){
-      return {_id: i, name: 'product ' + i, price: i * 100};
+    clients = _.map([1, 2, 3, 4, 5], function(i){
+      return {_id: i,  session_id: i * 100, name: 'client ' + i};
     });
-
-    collection.insert(products, function(err, result) {
+    collection.insert(clients, function(err, result) {
       console.log('populando DB');
     });
     db.close();
     done();
   });
 });
-
-describe('GET /api/products', function() {
-
-  it('should get the products (all)', function(done) {
+describe('GET /api/clients', function() {
+  it('should respond with JSON array', function(done) {
     request(app)
-      .get('/api/products')
+      .get('/api/clients')
       .expect(200)
       .expect('Content-Type', /json/)
       .end(function(err, res) {
@@ -43,22 +38,16 @@ describe('GET /api/products', function() {
         done();
       });
   });
-
-  /*
-   * TODO: we should get the product filtered
-   * when we call /api/products/<q>
-   * been <q> the query
-   * */
-  it('should get the products filtered by ', function(done) {
+  it('should get the client filtered by ', function(done) {
     request(app)
-      .get('/api/products/product%201')
+      .get('/api/clients/client%201')
       .expect(200)
       .expect('Content-Type', /json/)
       .end(function(err, res) {
         if (err) return done(err);
-        res.body.should.be.instanceof(Array);
-        res.body.length.should.equal(1);
-        done();
-      });
-    });
+          res.body.should.be.instanceof(Array);
+          res.body.length.should.equal(1);
+          done();
+        });
+  });
 });
