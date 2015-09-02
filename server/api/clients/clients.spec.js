@@ -5,12 +5,12 @@ var should = require('should');
 var app = require('../../app');
 var request = require('supertest');
 
-var MongoClient = require('mongo-mock').MongoClient,
+var MongoClient = require('mongodb').MongoClient,
+    url = 'mongodb://localhost/kpos-test',
     clients;
-beforeEach(function(done) {
-  //populate the db with some json
-  MongoClient.persist = 'server/fixtures/clients.js';
-  var url = 'mongodb://localhost/kpos-test';
+
+before(function(done) {
+
   MongoClient.connect(url, {}, function(err, db) {
     // Get the documents collection
     var collection = db.collection('clients');
@@ -25,6 +25,19 @@ beforeEach(function(done) {
     done();
   });
 });
+
+after(function(done){
+  MongoClient.connect(url, {}, function(err, db) {
+    var clients = db.collection('clients');
+
+    clients.drop(function(){
+      console.log('destroying DB');
+      db.close();
+      done();
+    });
+  });
+});
+
 describe('GET /api/clients', function() {
   it('should respond with JSON array', function(done) {
     request(app)
