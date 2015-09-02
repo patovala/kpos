@@ -7,11 +7,7 @@ var config = require('../../config/environment');
 var MongoClient,
     url = config.mongo.uri;
 
-if(config.mongo.uri === 'mongodb://localhost/kpos-test'){
-  MongoClient = require('mongo-mock').MongoClient;
-}else{
-  MongoClient = require('mongodb').MongoClient;
-}
+MongoClient = require('mongodb').MongoClient;
 
 // Get list of clients
 exports.findAll = function(req, res) {

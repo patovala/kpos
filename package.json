@@ -14,6 +14,7 @@
     "express-session": "~1.0.2",
     "lodash": "~2.4.1",
     "method-override": "~1.0.0",
+    "mongodb": "^2.0.42",
     "morgan": "~1.0.0",
     "serve-favicon": "~2.0.1"
   },
@@ -67,7 +68,6 @@
     "karma-phantomjs-launcher": "~0.1.4",
     "karma-requirejs": "~0.2.1",
     "karma-script-launcher": "~0.1.0",
-    "mongo-mock": "^1.2.8",
     "open": "~0.0.4",
     "requirejs": "~2.1.11",
     "should": "~3.3.1",
