@@ -23,9 +23,9 @@ describe('GET /api/clients', function() {
       });
       collection.insert(clients, function(err, result) {
         console.log('populando DB');
+        db.close();
+        done();
       });
-      db.close();
-      done();
     });
   });
 
