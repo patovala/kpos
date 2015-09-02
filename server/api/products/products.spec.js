@@ -58,7 +58,7 @@ describe('GET /api/products', function() {
   });
 
   /*
-   * TODO: we should get the product filtered
+   * we should get the product filtered
    * when we call /api/products/<q>
    * been <q> the query
    * */

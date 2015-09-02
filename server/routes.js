@@ -21,6 +21,7 @@ var clients = require('./api/clients/clients.controller');
   // All other routes should redirect to the index.html
   app.route('/*')
     .get(function(req, res) {
+      console.log('DEBUG', app);
       res.sendfile(app.get('appPath') + '/index.html');
     });
 };

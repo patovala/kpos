@@ -120,4 +120,29 @@ describe('Directive: productsPanel', function () {
     expect(cartService.addToCart).toHaveBeenCalled();
   }));
 
+  /*
+   * TODO: al hacer click en featured deberia llamar a un metodo del controlador
+   * que cambie products a products featured, esto deberia ser una llamada al
+   * backend tambien
+   * */
+  it('should get the featured products', inject(function () {
+    ctrl.getFeatured();
+    ctrl.searchTerm = 'abcd';
+
+    $httpBackend.expectGET('api/products/abcd/featured').respond([{'name': 'abc'}]);
+    $httpBackend.flush();
+  }));
+
+  /*
+   * TODO: al hacer click en onsale deberia llamar a un metodo del controlador
+   * que cambie products a products featured, esto deberia ser una llamada al
+   * backend tambien
+   * */
+  it('should get the onsale products', inject(function () {
+    ctrl.getOnSale();
+    ctrl.searchTerm = 'cdef';
+
+    $httpBackend.expectGET('api/products/cdef/onsale').respond([{'name': 'abc'}]);
+    $httpBackend.flush();
+  }));
 });
