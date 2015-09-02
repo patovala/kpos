@@ -25,11 +25,11 @@ exports.findAll = function(req, res) {
 //Get clients
 exports.findbyQuery = function(req, res) {
   MongoClient.connect(url, function(err, db) {
-    console.log("Connected correctly to server for find filtered");
     var clients = db.collection('clients');
-    var str = req.params.query;
-    var val = str.replace('%20', ' ');
-    clients.find({"name": val }).toArray(function(err, docs){
+    var str = req.params.query || '';
+
+    console.log('DEBUG:', str);
+    clients.find({"name": {$regex: str}}).toArray(function(err, docs){
       res.json(docs);
       db.close();
     });
