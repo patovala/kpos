@@ -9,36 +9,39 @@ var MongoClient = require('mongodb').MongoClient,
     url = 'mongodb://localhost/kpos-test',
     clients;
 
-before(function(done) {
 
-  MongoClient.connect(url, {}, function(err, db) {
+
+describe('GET /api/clients', function() {
+  before(function(done) {
+
+    MongoClient.connect(url, {}, function(err, db) {
     // Get the documents collection
-    var collection = db.collection('clients');
-    // Insert some documents
-    clients = _.map([1, 2, 3, 4, 5], function(i){
-      return {_id: i,  session_id: i * 100, name: 'client ' + i};
-    });
-    collection.insert(clients, function(err, result) {
-      console.log('populando DB');
-    });
-    db.close();
-    done();
-  });
-});
-
-after(function(done){
-  MongoClient.connect(url, {}, function(err, db) {
-    var clients = db.collection('clients');
-
-    clients.drop(function(){
-      console.log('destroying DB');
+      var collection = db.collection('clients');
+      // Insert some documents
+      clients = _.map([1, 2, 3, 4, 5], function(i){
+        return {_id: i,  session_id: i * 100, name: 'client ' + i};
+      });
+      collection.insert(clients, function(err, result) {
+        console.log('populando DB');
+      });
       db.close();
       done();
     });
   });
-});
 
-describe('GET /api/clients', function() {
+  after(function(done){
+    MongoClient.connect(url, {}, function(err, db) {
+      var clients = db.collection('clients');
+
+      clients.drop(function(){
+        console.log('destroying DB');
+        db.close();
+        done();
+      });
+    });
+  });
+
+
   it('should respond with JSON array', function(done) {
     request(app)
       .get('/api/clients')
