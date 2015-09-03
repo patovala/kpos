@@ -126,11 +126,13 @@ describe('Directive: productsPanel', function () {
    * backend tambien
    * */
   it('should get the featured products', inject(function () {
-    ctrl.getFeatured();
     ctrl.searchTerm = 'abcd';
+    ctrl.getProductsFilter('featured');
 
     $httpBackend.expectGET('api/products/abcd/featured').respond([{'name': 'abc'}]);
     $httpBackend.flush();
+    console.log(ctrl.products);
+    expect(ctrl.products[0].name).toEqual('abc');
   }));
 
   /*
@@ -139,10 +141,11 @@ describe('Directive: productsPanel', function () {
    * backend tambien
    * */
   it('should get the onsale products', inject(function () {
-    ctrl.getOnSale();
     ctrl.searchTerm = 'cdef';
+    ctrl.getProductsFilter('onSale');
 
-    $httpBackend.expectGET('api/products/cdef/onsale').respond([{'name': 'abc'}]);
+    $httpBackend.expectGET('api/products/cdef/onSale').respond([{'name': 'abc'}]);
     $httpBackend.flush();
+    expect(ctrl.products[0].name).toEqual('abc');
   }));
 });

@@ -21,6 +21,7 @@ function productsPanel() {
     vm.searchTerm = '';
     vm.search = search;
     vm.addToCart = addToCart;
+    vm.getProductsFilter = getProductsFilter;
 
     init();
     return vm;
@@ -40,10 +41,17 @@ function productsPanel() {
       }
     }
 
+    function getProductsFilter(query){
+      var r = $resource('api/products/:qp/:q', {qp: '@qp', q: '@q'});
+      vm.products = r.query({qp: vm.searchTerm, q: query});
+      console.log(query);
+    }
+
     function addToCart(id){
       cartService.addToCart(id);
     }
   }
+
 }
 
 angular.module('kposApp')
