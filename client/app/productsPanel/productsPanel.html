@@ -7,8 +7,8 @@
         class="form-control"
         placeholder="nombre producto"
         aria-describedby="searchbox"
-        ng-model="searchTerm"
-        ng-change="search">
+        ng-model="vm.searchTerm"
+        ng-change="vm.search()">
     </div>
       <div>
         <ul class="striped">
@@ -23,7 +23,7 @@
                   {{p.price}}
                 </div>
                 <div class="action">
-                  <span class="btn btn-success btn-circle" ng-click="addToCart(p._id)">
+                  <span class="btn btn-success btn-circle" ng-click="vm.addToCart(p._id)">
                     <i class="icon-plus icon-lg"></i>
                   </span>
                 </div>
@@ -33,8 +33,8 @@
         </ul>
       </div>
     </tab>
-    <tab heading="Featured" select="getProductsFilter('featured')">
+    <tab heading="Featured" onSelect="vm.getProductsFilter('featured')">
     </tab>
-    <tab heading="On Sale" select="vm.getProductsFilter('onSale')">
+    <tab heading="On Sale" onSelect="vm.getProductsFilter('onSale')">
     </tab>
 </tabset>

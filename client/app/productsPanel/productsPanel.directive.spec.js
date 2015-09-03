@@ -88,7 +88,7 @@ describe('Directive: productsPanel', function () {
   it('should have a search input for search for product', inject(function () {
     //expect(element.html()).toContain('input');
     expect(element.find('input').attr('type')).toBe('text');
-    expect(element.find('input').attr('ng-model')).toBe('searchTerm');
+    expect(element.find('input').attr('ng-model')).toBe('vm.searchTerm');
   }));
 
   /*
