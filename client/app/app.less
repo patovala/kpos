@@ -3,6 +3,7 @@
 
 @icon-font-path: '/bower_components/bootstrap/fonts/';
 @fa-font-path: '/bower_components/font-awesome/fonts';
+@color1: red;
 
 /**
  * App-wide Styles
@@ -16,7 +17,15 @@
 }
 
 // injector
-@import 'account/login/login.less';
-@import 'admin/admin.less';
 @import 'main/main.less';
+@import 'productsPanel/productsPanel.less';
+@import 'modal/modal.less';
 // endinjector
+
+/**
+ * Inicio de estilos para  la aplicación
+ */
+
+ .userinfo{
+ 	color: @color1;
+ }

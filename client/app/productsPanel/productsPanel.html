@@ -1,0 +1,40 @@
+<tabset>
+    <tab heading="All">
+    <div class="input-group">
+      <span class="input-group-addon" id="searchbox">buscar:</span>
+      <input
+        type="text"
+        class="form-control"
+        placeholder="nombre producto"
+        aria-describedby="searchbox"
+        ng-model="vm.searchTerm"
+        ng-change="vm.search()">
+    </div>
+      <div>
+        <ul class="striped">
+          <li class="simple" ng-repeat="p in products">
+            <div class="item">
+              <div>
+                <div class="img"><img ng-src="{{p.image}}" title="#25"></div>
+                <div class="title">
+                  <strong>{{p.name}}</strong>
+                </div>
+                <div class="price">
+                  {{p.price}}
+                </div>
+                <div class="action">
+                  <span class="btn btn-success btn-circle" ng-click="vm.addToCart(p._id)">
+                    <i class="icon-plus icon-lg"></i>
+                  </span>
+                </div>
+              </div>
+            </div>
+          </li>
+        </ul>
+      </div>
+    </tab>
+    <tab heading="Featured" select="vm.getProductsFilter('featured')">
+    </tab>
+    <tab heading="On Sale" select="vm.getProductsFilter('onSale')">
+    </tab>
+</tabset>
