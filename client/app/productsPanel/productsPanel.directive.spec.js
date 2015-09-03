@@ -114,7 +114,7 @@ describe('Directive: productsPanel', function () {
    * como un item solo
    * */
   it('should call to cartService on click', inject(function () {
-    spyOn(cartService, 'addToCart').andCallThrough();
+    spyOn(cartService, 'addToCart').andReturn();
     ctrl.addToCart(1);
 
     expect(cartService.addToCart).toHaveBeenCalled();
