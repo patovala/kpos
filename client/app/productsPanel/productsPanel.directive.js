@@ -21,6 +21,7 @@ function productsPanel() {
     vm.searchTerm = '';
     vm.search = search;
     vm.addToCart = addToCart;
+    vm.getProductsFilter = getProductsFilter;
 
     init();
     return vm;
@@ -39,17 +40,18 @@ function productsPanel() {
         vm.products = r.query({q: vm.searchTerm});
       }
     }
-    
-    function(query){
-    	vm.productsFilter = r2.query({qp: vm.searchTerm, qf: query});   
-    	console.log(query);  
-    };	
-    	
+
+    function getProductsFilter(query){
+      var r = $resource('api/products/:qp/:q', {qp: '@qp', q: '@q'});
+      vm.products = r.query({qp: vm.searchTerm, q: query});
+      console.log(query);
+    }
+
     function addToCart(id){
       cartService.addToCart(id);
     }
   }
-  
+
 }
 
 angular.module('kposApp')
