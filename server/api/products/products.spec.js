@@ -57,6 +57,32 @@ describe('GET /api/products', function() {
       });
   });
 
+  it('should get the product with a specific id', function(done) {
+    request(app)
+      .get('/api/products?_id=1')
+      .expect(200)
+      .expect('Content-Type', /json/)
+      .end(function(err, res) {
+        if (err) return done(err);
+        res.body.should.be.instanceof(Array);
+        res.body.length.should.equal(1);
+        done();
+      });
+  });
+
+  it('should not get the product because the parameter is not an integer', function(done) {
+    request(app)
+      .get('/api/products?_id=product')
+      .expect(200)
+      .expect('Content-Type', /json/)
+      .end(function(err, res) {
+        if (err) return done(err);
+        res.body.should.be.instanceof(Array);
+        res.body.length.should.equal(0);
+        done();
+      });
+  });
+
   /*
    * we should get the product filtered
    * when we call /api/products/<q>

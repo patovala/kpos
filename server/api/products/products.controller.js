@@ -9,12 +9,17 @@ var MongoClient,
 
 MongoClient = require('mongodb').MongoClient;
 
-// Get list of products
-exports.findAll = function(req, res) {
+/**
+ * Get list of products
+ * /api/products (all products)
+ * /api/products?_id=1 (only product with id = 1)
+ */
+exports.findAllOrById = function(req, res) {
   MongoClient.connect(url, function(err, db) {
     var products = db.collection('products');
+    var query = req.query && req.query._id ? {'_id' : parseInt(req.query._id)} : {};
 
-    products.find({}).toArray(function(err, docs){
+    products.find(query).toArray(function(err, docs){
       res.json(docs);
       db.close();
     });
