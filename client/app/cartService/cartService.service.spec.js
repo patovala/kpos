@@ -13,10 +13,12 @@ describe('Service: cartService', function () {
     $rootScope = _$rootScope_;
 
     cart = {
+              client: {_id: 'defualt', name: 'Consumidor Final', address: ''},
               items: [],
               subtotal: 0,
               tax: 12,
               total: 0,
+              discounts: []
           };
 
     products = [
@@ -50,7 +52,7 @@ describe('Service: cartService', function () {
       $httpBackend.verifyNoOutstandingRequest();
   });
 
-  it('should add to cart by id', function () {
+  it('should add to cart by id and do the broadcast', function () {
     spyOn($rootScope, '$broadcast').andCallThrough();
     $httpBackend.expectGET('api/products?_id=1').respond(products[0]);
     expect(!!cartService.addToCart).toBe(true);
@@ -64,7 +66,10 @@ describe('Service: cartService', function () {
       function(e){return e._id;}
     )).toContain(1);
 
-    expect($rootScope.$broadcast).toHaveBeenCalledWith('_new_item_added_', jasmine.objectContaining({_id:1}));
+    expect($rootScope.$broadcast).toHaveBeenCalledWith(
+      '_new_item_added_',
+      jasmine.objectContaining({_id:1})
+    );
 
   });
 
@@ -81,4 +86,22 @@ describe('Service: cartService', function () {
       function(e){return e._id;}
     )).not.toContain(1);
   });
+
+  /*
+   * TODO: crear un método para agregar descuentos
+   * el descuento deberia ser un objeto que descuente por porcentaje
+   * o por valor {'tipo': 'porcentaje', 'monto': 12}
+   * */
+
+  /*
+   * TODO: should set a client for the cart
+   * */
+
+  /*
+   * TODO: should change the tax in the cart
+   * */
+
+  /*
+   * TODO: should update the qty for an item in the cart
+   * */
 });
