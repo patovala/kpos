@@ -6,10 +6,11 @@ describe('Service: cartService', function () {
   beforeEach(module('kposApp'));
 
   // instantiate service
-  var cartService, cart, products, $httpBackend;
-  beforeEach(inject(function (_cartService_, _$httpBackend_) {
+  var cartService, cart, products, $httpBackend, $rootScope;
+  beforeEach(inject(function (_cartService_, _$httpBackend_, _$rootScope_) {
     cartService = _cartService_;
     $httpBackend = _$httpBackend_;
+    $rootScope = _$rootScope_;
 
     cart = {
               items: [],
@@ -50,6 +51,7 @@ describe('Service: cartService', function () {
   });
 
   it('should add to cart by id', function () {
+    spyOn($rootScope, '$broadcast').andCallThrough();
     $httpBackend.expectGET('api/products?_id=1').respond(products[0]);
     expect(!!cartService.addToCart).toBe(true);
 
@@ -61,6 +63,8 @@ describe('Service: cartService', function () {
     expect(cartService.getCart().items.map(
       function(e){return e._id;}
     )).toContain(1);
+
+    expect($rootScope.$broadcast).toHaveBeenCalledWith('_new_item_added_', jasmine.objectContaining({_id:1}));
 
   });
 

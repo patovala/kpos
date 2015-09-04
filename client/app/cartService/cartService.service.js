@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('kposApp')
-  .service('cartService', function ($resource) {
+  .service('cartService', function ($resource, $rootScope) {
     var cart = {};
 
     return {
@@ -14,9 +14,12 @@ angular.module('kposApp')
       if(!cart.items){
         cart.items = [];
       }
-      var r = $resource('api/products:id', {id: '@id'});
+      //var r = $resource('api/products:id', {id: '@id'});
+      var r = $resource('api/products');
       var promise = r.get({_id: id}, function(item) {
         cart.items.push(item);
+        // notify that we added an item to the cart
+        $rootScope.$broadcast('_new_item_added_', item);
       });
 
       return promise; // return the promise for further handling
