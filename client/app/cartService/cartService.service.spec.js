@@ -14,7 +14,14 @@ describe('Service: cartService', function () {
 
     cart = {
               client: {_id: 'defualt', name: 'Consumidor Final', address: ''},
-              items: [],
+              items: [
+                {
+                  _id: 1,
+                  name: 'Product 1',
+                  price: 0.99,
+                  quantity: 1
+                }
+              ],
               subtotal: 0,
               tax: 12,
               total: 0,
@@ -87,21 +94,42 @@ describe('Service: cartService', function () {
     )).not.toContain(1);
   });
 
-  /*
-   * TODO: crear un método para agregar descuentos
-   * el descuento deberia ser un objeto que descuente por porcentaje
-   * o por valor {'tipo': 'porcentaje', 'monto': 12}
-   * */
+  it('should add discount to cart', function () {
+    var discounts = [{
+      type: 'value',
+      valor: 3
+    }];
 
-  /*
-   * TODO: should set a client for the cart
-   * */
+    cartService.addDiscounts(discounts);
 
-  /*
-   * TODO: should change the tax in the cart
-   * */
+    expect(cartService.getCart().discounts).toEqual(discounts);
+  });
 
-  /*
-   * TODO: should update the qty for an item in the cart
-   * */
+  it('should set a client for the cart', function () {
+    var client = {
+      _id: '1',
+      name: 'Janina'
+    };
+    cartService.setClient(client);
+
+    expect(cartService.getCart().client).toEqual(client);
+  });
+
+  it('should change the tax in the cart', function () {
+    cartService.changeTax(13);
+
+    expect(cartService.getCart().tax).toEqual(13);
+  });
+
+  it('should update the quantity an item in the cart', function () {
+    $httpBackend.expectGET('api/products?_id=1').respond(products[0]);
+    cartService.addToCart(1);
+
+    $httpBackend.flush();
+
+    cart.items[0].quantity = 4;
+
+    cartService.updateItemQuantity(cart.items[0]);
+    expect(cartService.getCart().items[0].quantity).toEqual(4);
+  });
 });

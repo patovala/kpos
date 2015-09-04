@@ -5,7 +5,7 @@ angular.module('kposApp')
     return {
       templateUrl: 'app/cartPanel/cartPanel.html',
       restrict: 'EA',
-      link: function (scope, element, attrs) {
+      link: function () {
       }
     };
   });
