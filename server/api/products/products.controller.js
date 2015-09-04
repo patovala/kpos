@@ -32,7 +32,6 @@ exports.findbyQuery = function(req, res) {
     var products = db.collection('products');
     var str = req.params.query || '';
 
-    console.log('DEBUG:', str);
     products.find({"name": {$regex: str}}).toArray(function(err, docs){
       res.json(docs);
       db.close();
