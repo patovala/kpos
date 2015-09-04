@@ -7,7 +7,11 @@ angular.module('kposApp')
     return {
       addToCart: addToCart,
       removeFromCart: removeFromCart,
-      getCart: getCart
+      getCart: getCart,
+      changeTax: changeTax,
+      updateItemQuantity: updateItemQuantity,
+      setClient: setClient,
+      addDiscounts: addDiscounts
     };
 
     function addToCart(id){
@@ -36,4 +40,24 @@ angular.module('kposApp')
       return cart;
     }
 
+    function changeTax (tax) {
+      cart.tax = tax;
+    }
+
+    function updateItemQuantity (item) {
+      _.forEach(cart.items, function (i) {
+          var itemSaved = _.findWhere(cart.items, {_id: item._id});
+          if (itemSaved) {
+              i.quantity = item.quantity;
+          }
+      });
+    }
+
+    function setClient (client) {
+      cart.client = client;
+    }
+
+    function addDiscounts (discounts) {
+      cart.discounts = discounts;
+    }
   });

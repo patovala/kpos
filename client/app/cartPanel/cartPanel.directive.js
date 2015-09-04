@@ -29,4 +29,12 @@ function cartPanel() {
 }
 
 angular.module('kposApp')
-  .directive('cartPanel', cartPanel);
+  .directive('cartPanel', function () {
+    return {
+      templateUrl: 'app/cartPanel/cartPanel.html',
+      restrict: 'EA',
+      link: function () {
+      }
+    };
+  });
+
