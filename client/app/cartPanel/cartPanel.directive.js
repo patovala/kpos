@@ -32,8 +32,8 @@ function cartPanel() {
     init();
     return cartP;
 
-    function init () {
-      cartService.getCart();
+    function init () {      
+      cartP.cart = cartService.getCart();
     }
   }
 
