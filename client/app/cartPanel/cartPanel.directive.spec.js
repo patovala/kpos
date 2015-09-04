@@ -14,7 +14,7 @@ describe('Directive: cartPanel', function () {
     element = angular.element('<cart-panel></cart-panel>');
     var c = {
               client: {_id: 'default', name: 'Consumidor Final', address: ''},
-              items: [],
+              items: [{quantity:1, product:'coffee',price:0.5, total:0.50}],
               subtotal: 0,
               tax: 12,
               total: 0,
@@ -24,10 +24,12 @@ describe('Directive: cartPanel', function () {
     element = $compile(element)(scope);
   }));
 
+  /*
   it('should make hidden element visible', inject(function () {
     scope.$apply();
     expect(element.text()).toBe('this is the cartPanel directive');
   }));
+  */
 
   /*
    * TODO: Should render a cart with subtotal, tax and total
@@ -43,6 +45,11 @@ describe('Directive: cartPanel', function () {
     expect(cartService.getCart().subtotal).toBe(0);
     expect(cartService.getCart().tax).toBe(12);
     expect(cartService.getCart().total).toBe(0);
+  }));
+
+  iit('should render a cart', inject(function () {
+    scope.$digest();
+    expect(element.html()).toContain('ng-repeat="i in cartP.cart.items"');
   }));
 
   /*
