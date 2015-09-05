@@ -14,7 +14,7 @@ describe('Directive: cartPanel', function () {
     element = angular.element('<cart-panel></cart-panel>');
     var c = {
               client: {_id: 'default', name: 'Consumidor Final', address: ''},
-              items: [{quantity:1, product:'coffee',price:0.5, total:0.50}],
+              items: [{quantity:1, product:'coffee', price:0.5, total:0.50}],
               subtotal: 0,
               tax: 12,
               total: 0,
@@ -40,14 +40,14 @@ describe('Directive: cartPanel', function () {
     scope.$digest();
     ctrl = element.controller('cartPanel');
     expect(cartService.getCart).toHaveBeenCalled();
-    console.log(cartService.getCart());
+    //console.log(cartService.getCart());
     expect(cartService.getCart().client.name).toBe('Consumidor Final');
     expect(cartService.getCart().subtotal).toBe(0);
     expect(cartService.getCart().tax).toBe(12);
     expect(cartService.getCart().total).toBe(0);
   }));
 
-  iit('should render a cart', inject(function () {
+  it('should render a cart', inject(function () {
     scope.$digest();
     expect(element.html()).toContain('ng-repeat="i in cartP.cart.items"');
   }));

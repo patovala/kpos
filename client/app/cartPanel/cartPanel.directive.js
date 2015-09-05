@@ -21,7 +21,7 @@ function cartPanel() {
     init();
     return cartP;
 
-    function init () {      
+    function init () {
       cartP.cart = cartService.getCart();
     }
   }
@@ -29,12 +29,4 @@ function cartPanel() {
 }
 
 angular.module('kposApp')
-  .directive('cartPanel', function () {
-    return {
-      templateUrl: 'app/cartPanel/cartPanel.html',
-      restrict: 'EA',
-      link: function () {
-      }
-    };
-  });
-
+  .directive('cartPanel', cartPanel);
