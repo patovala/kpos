@@ -6,24 +6,51 @@ describe('Directive: cartPanel', function () {
   beforeEach(module('kposApp'));
   beforeEach(module('app/cartPanel/cartPanel.html'));
 
-  var element, scope;
+  var element, scope, cartService, ctrl;
 
-  beforeEach(inject(function ($rootScope) {
+  beforeEach(inject(function ($rootScope, $compile, _cartService_) {
     scope = $rootScope.$new();
+    cartService = _cartService_;
+    element = angular.element('<cart-panel></cart-panel>');
+    var c = {
+              client: {_id: 'default', name: 'Consumidor Final', address: ''},
+              items: [{quantity:1, product:'coffee', price:0.5, total:0.50}],
+              subtotal: 0,
+              tax: 12,
+              total: 0,
+              discounts: []
+            };
+    spyOn(cartService, 'getCart').andReturn(c);
+    element = $compile(element)(scope);
   }));
 
-  it('should make hidden element visible', inject(function ($compile) {
-    element = angular.element('<cart-panel></cart-panel>');
-    element = $compile(element)(scope);
+  /*
+  it('should make hidden element visible', inject(function () {
     scope.$apply();
     expect(element.text()).toBe('this is the cartPanel directive');
   }));
+  */
 
   /*
    * TODO: Should render a cart with subtotal, tax and total
    * - call cartService getCart on init
    * - Should have a customer, even 'consumidor final'
    **/
+  it('should render a cart', inject(function () {
+    scope.$digest();
+    ctrl = element.controller('cartPanel');
+    expect(cartService.getCart).toHaveBeenCalled();
+    //console.log(cartService.getCart());
+    expect(cartService.getCart().client.name).toBe('Consumidor Final');
+    expect(cartService.getCart().subtotal).toBe(0);
+    expect(cartService.getCart().tax).toBe(12);
+    expect(cartService.getCart().total).toBe(0);
+  }));
+
+  it('should render a cart', inject(function () {
+    scope.$digest();
+    expect(element.html()).toContain('ng-repeat="i in cartP.cart.items"');
+  }));
 
   /*
    * TODO: Should allow to change the client from the dropdown
