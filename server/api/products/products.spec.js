@@ -86,20 +86,19 @@ describe('GET /api/products', function() {
 
   /*
    * we should get the product filtered
-   * when we call /api/products/<q>
-   * been <q> the query
+   * when we call /api/products/<f>
+   * been <f> the filter
    * */
-  it('should get the products filtered by ', function(done) {
+  it('should get the products filtered by featured', function(done) {
     request(app)
-      //.get('/api/products/product%201')
-      .get('/api/products/product 1')
-      .expect(200)
-      .expect('Content-Type', /json/)
-      .end(function(err, res) {
-        if (err) return done(err);
-        res.body.should.be.instanceof(Array);
-        res.body.length.should.equal(1);
-        done();
-      });
+    .get('/api/products/featured')
+    .expect(200)
+    .expect('Content-Type', /json/)
+    .end(function(err, res) {
+      if (err) return done(err);
+      res.body.should.be.instanceof(Array);
+      res.body.length.should.equal(1);
+      done();
     });
+  });
 });
