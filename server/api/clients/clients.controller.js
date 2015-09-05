@@ -25,21 +25,18 @@ exports.findAll = function(req, res) {
 exports.findAllOrById = function(req, res) {
   MongoClient.connect(url, function(err, db) {
     var clients = db.collection('clients');
-    //var query = req.query && req.query._id ? {'_id' : parseInt(req.query._id)} : {};
 
-    var query;
+    var query = {};
 
     if(req.query && req.query._id){
       //find one
       clients.findOne({_id: parseInt(req.query._id)}, function(err, doc){
         res.json(doc);
         db.close();
-        return;
       });
+      return;
     }else if(req.query && req.query.query){
       query = {'name': {$regex: req.query.query}};
-    }else{
-      query = {};
     }
 
     clients.find(query).toArray(function(err, docs){
