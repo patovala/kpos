@@ -13,6 +13,7 @@ MongoClient = require('mongodb').MongoClient;
  * Get list of products
  * /api/products (all products)
  * /api/products?_id=1 (only product with id = 1)
+ * /api/products?query=algo (only product with name = algo)
  * /api/products/:filter products by filter
  */
 exports.findProducts = function(req, res) {

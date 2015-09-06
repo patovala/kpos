@@ -6,13 +6,15 @@ describe('Directive: cartPanel', function () {
   beforeEach(module('kposApp'));
   beforeEach(module('app/cartPanel/cartPanel.html'));
 
-  var element, scope, cartService, ctrl;
+  var element, scope, cartService, ctrl, $httpBackend, cart;
 
-  beforeEach(inject(function ($rootScope, $compile, _cartService_) {
+  beforeEach(inject(function ($rootScope, $compile, _cartService_, _$httpBackend_) {
     scope = $rootScope.$new();
     cartService = _cartService_;
+    $httpBackend = _$httpBackend_;
+
     element = angular.element('<cart-panel></cart-panel>');
-    var c = {
+    cart = {
               client: {_id: 'default', name: 'Consumidor Final', address: ''},
               items: [{quantity:1, product:'coffee', price:0.5, total:0.50}],
               subtotal: 0,
@@ -20,25 +22,24 @@ describe('Directive: cartPanel', function () {
               total: 0,
               discounts: []
             };
-    spyOn(cartService, 'getCart').andReturn(c);
+    spyOn(cartService, 'getCart').andReturn(cart);
     element = $compile(element)(scope);
+    scope.$digest();
+
+    ctrl = element.controller('cartPanel');
   }));
 
-  /*
-  it('should make hidden element visible', inject(function () {
-    scope.$apply();
-    expect(element.text()).toBe('this is the cartPanel directive');
-  }));
-  */
+  afterEach(function() {
+      $httpBackend.verifyNoOutstandingExpectation();
+      $httpBackend.verifyNoOutstandingRequest();
+  });
 
   /*
-   * TODO: Should render a cart with subtotal, tax and total
+   * Should render a cart with subtotal, tax and total
    * - call cartService getCart on init
    * - Should have a customer, even 'consumidor final'
    **/
   it('should render a cart', inject(function () {
-    scope.$digest();
-    ctrl = element.controller('cartPanel');
     expect(cartService.getCart).toHaveBeenCalled();
     //console.log(cartService.getCart());
     expect(cartService.getCart().client.name).toBe('Consumidor Final');
@@ -47,15 +48,38 @@ describe('Directive: cartPanel', function () {
     expect(cartService.getCart().total).toBe(0);
   }));
 
-  it('should render a cart', inject(function () {
-    scope.$digest();
-    expect(element.html()).toContain('ng-repeat="i in cartP.cart.items"');
+  it('should render items from a cart', inject(function () {
+    expect(element.html()).toContain('ng-repeat="i in cp.cart.items"');
   }));
 
   /*
-   * TODO: Should allow to change the client from the dropdown
-   * and reset the discounts
+   * Should allow to search for clients from the dropdown
    * */
+  it('should trigger search for client from input', inject(function(){
+    ctrl.searchClient('jua');
+
+    $httpBackend.expectGET('api/clients?query=jua').respond([{'name': 'juanito'}]);
+    $httpBackend.flush();
+
+    // the selected client should be the defaultClient
+    expect(ctrl.cart.client._id).toBe(ctrl.defaultClient._id);
+  }));
+
+  /*
+   * TODO: If the client is changed it should reset the cart discounts and
+   *        set the new client
+   */
+  it('should reset the discount and set the new client', inject(function(){
+    spyOn(cartService, 'resetDiscounts').andCallThrough();
+    ctrl.selectedClient = {_id: '12', name: 'Juanito Pigueave', address: ''};
+
+    ctrl.changeClient({client:{_id:1}}, {}, 'label');
+
+    // the selected client should be the defaultClient
+    expect(ctrl.cart.client._id).toBe(ctrl.selectedClient._id);
+    expect(cartService.resetDiscounts).toHaveBeenCalled();
+  }));
+
 
   /*
    * TODO: Should allow to change the quantity

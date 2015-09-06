@@ -2,7 +2,12 @@
 
 angular.module('kposApp')
   .service('cartService', function ($resource, $rootScope) {
-    var cart = {};
+    var cart = {
+                client: {_id: 'default', name: 'Consumidor Final', address: ''},
+                items:[],
+                subtotal: 0,
+                tax: 12
+    };
 
     return {
       addToCart: addToCart,
@@ -11,7 +16,8 @@ angular.module('kposApp')
       changeTax: changeTax,
       updateItemQuantity: updateItemQuantity,
       setClient: setClient,
-      addDiscounts: addDiscounts
+      addDiscount: addDiscount,
+      resetDiscounts: resetDiscounts
     };
 
     function addToCart(id){
@@ -57,7 +63,12 @@ angular.module('kposApp')
       cart.client = client;
     }
 
-    function addDiscounts (discounts) {
-      cart.discounts = discounts;
+    function addDiscount (discount) {
+      cart.discounts = cart.discounts || [];
+      cart.discounts.push(discount);
+    }
+
+    function resetDiscounts(){
+      cart.discounts = [];
     }
   });

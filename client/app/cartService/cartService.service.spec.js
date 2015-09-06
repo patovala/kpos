@@ -95,14 +95,14 @@ describe('Service: cartService', function () {
   });
 
   it('should add discount to cart', function () {
-    var discounts = [{
+    var discount = {
       type: 'value',
       valor: 3
-    }];
+    };
 
-    cartService.addDiscounts(discounts);
+    cartService.addDiscount(discount);
 
-    expect(cartService.getCart().discounts).toEqual(discounts);
+    expect(cartService.getCart().discounts).toContain(discount);
   });
 
   it('should set a client for the cart', function () {

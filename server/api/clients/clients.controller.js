@@ -22,6 +22,9 @@ exports.findAll = function(req, res) {
 };
 
 //Get clients
+// api/clients
+// api/clients?_id=1
+// api/clients?query=algo
 exports.findAllOrById = function(req, res) {
   MongoClient.connect(url, function(err, db) {
     var clients = db.collection('clients');

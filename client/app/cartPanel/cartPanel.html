@@ -3,13 +3,13 @@
     <thead>
     <tr>
         <th data-field="id" class="col-md-2">Qty</th>
-        <th data-field="name" class="col-md-6">Product</th>        
+        <th data-field="name" class="col-md-6">Product</th>
         <th data-field="price" class="col-md-4">Price</th>
         <th data-field="price" class="col-md-4">Total</th>
     </tr>
     </thead>
     <tbody>
-    	<tr ng-repeat="i in cartP.cart.items">
+    	<tr ng-repeat="i in cp.cart.items">
     		<td>{{i.quantity}}</td>
     		<td>{{i.product}}</td>
     		<td>{{i.price}}</td>
@@ -18,23 +18,29 @@
     </tbody>
     <tfoot >
     	<tr align="right">
-    		<td colspan="3">Subtotal</td><td>{{cart.subtotal}}</td>
+    		<td colspan="3">Subtotal</td><td>{{cp.cart.subtotal}}</td>
     	</tr>
     	<tr align="right">
-    		<td colspan="3">Tax</td><td>{{cart.tax}}</td>
+    		<td colspan="3">Tax</td><td>{{cp.cart.tax}}</td>
     	</tr>
     	<tr align="right">
-    		<td colspan="3">Total</td><td>{{cart.total}}</td>
+    		<td colspan="3">Total</td><td>{{cp.cart.total}}</td>
     	</tr>
     </tfoot>
   </table>
 </div>
-<div class="table-responsive">
-  <table class="table">    
-    <tbody>
-    	<tr>
-    		<td>Client</td>
-    	</tr>
-    </tbody>
-  </table>
+<hr/>
+<div id="client_section">
+  <div class="form-group">
+    <label for="client">Client</label>
+    <input type="text"
+           class="form-control"
+           ng-model="selectedClient"
+           no-results="cp.defaultClient"
+           typeahead-editable="false"
+           typeahead="c.name for c in cp.searchClient($viewValue)"
+           typeahead-on-select="cp.changeClient($item, $model, $label)"
+           placeholder="Consumidor Final">
+  </div>
+  <pre>Model: {{cp.cart.client | json}}</pre>
 </div>
