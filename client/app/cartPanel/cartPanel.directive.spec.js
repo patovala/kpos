@@ -99,17 +99,25 @@ describe('Directive: cartPanel', function () {
    * TODO: If the client is changed it should re calculate the cart discounts and
    *        set the new client
    */
-  xit('should reset the discount and set the new client', inject(function(){
+  it('should reset the discount and set the new client', inject(function(){
     spyOn(cartService, 'resetDiscounts').andCallThrough();
-    spyOn(ctrl, 'getDiscountsForCart').andCallThrough();
+    spyOn(cartService, 'getDiscountsForCart').andCallThrough();
+
     ctrl.selectedClient = {_id: '12', name: 'Juanito Pigueave', address: ''};
 
+    $httpBackend.expectPOST('api/discounts/byclient', function(data){
+      //PV check we have a cart here
+      expect(JSON.parse(data).cart).toBeTruthy();
+      return true;
+    }).respond({'discounts': [{'name': 'Free Margarita'}]});
+
     ctrl.changeClient({client:{_id:1}}, {}, 'label');
+    $httpBackend.flush();
 
     // the selected client should be the defaultClient
     expect(ctrl.cart.client._id).toBe(ctrl.selectedClient._id);
     expect(cartService.resetDiscounts).toHaveBeenCalled();
-    expect(ctrl.getDiscountsForCart).toHaveBeenCalledWith('byclient');
+    expect(cartService.getDiscountsForCart).toHaveBeenCalledWith('byclient');
   }));
 
 
@@ -120,7 +128,7 @@ describe('Directive: cartPanel', function () {
    * a probar, consiste en crear un espía dentro de la función de retorno del
    * metodo.
    * */
-  xit('#newClientModal should open the new client modal on request', inject(function(){
+  it('#newClientModal should open the new client modal on request', inject(function(){
     var mockModalInstance = {
           result: {
             then: function(cb){ // <-- 1. simular el comportamiento que deberia tener
@@ -131,20 +139,13 @@ describe('Directive: cartPanel', function () {
 
     spyOn($modal, 'open').andCallThrough().andReturn(mockModalInstance);
     spyOn(cartService, 'resetDiscounts').andCallThrough();
-    //spyOn(ctrl, 'getDiscountsForCart');
-
-    $httpBackend.expectPOST('api/discounts/byclient', function(data){
-      //PV check we have a cart here
-      expect(JSON.parse(data).cart).toBeTruthy();
-      return true;
-    }).respond({'discounts': [{'name': 'Free Margarita'}]});
+    spyOn(cartService, 'getDiscountsForCart');
 
     ctrl.newClientModal(); // <-- 2. ejecutar la rutina principal
-    $httpBackend.flush();
 
     expect($modal.open).toHaveBeenCalled();
     expect(cartService.resetDiscounts).toHaveBeenCalled(); // <-- 3. Capturar la llamada
-    expect(ctrl.getDiscountsForCart).toHaveBeenCalledWith('byclient'); // <-- 3. Capturar la llamada
+    expect(cartService.getDiscountsForCart).toHaveBeenCalledWith('byclient'); // <-- 3. Capturar la llamada
   }));
 
   /*
@@ -207,8 +208,8 @@ describe('Directive: cartPanel', function () {
    * I think it should be triggered when you open the discount select
    * The generic discounts runs for all kind of clients and or items perhaps
    * */
-  it('#getDiscountsForCart should ask for discounts for this cart', inject(function(){
-    ctrl.getDiscountsForCart('generic');
+  it('#getDiscountsDropdown should ask for discounts for this cart', inject(function(){
+    ctrl.getDiscountsDropdown(true);
 
     $httpBackend.expectPOST('api/discounts/generic', function(data){
       //PV check we have a cart here

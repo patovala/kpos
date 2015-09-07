@@ -573,7 +573,40 @@ module.exports = function (grunt) {
         }
       }
     },
+    mongoimport: {
+      options: {
+      db : 'kpos-dev',
+      host : 'localhost', //optional
+      port: '27017', //optional
+      collections :
+      [
+        {
+          name : 'clients',
+          type : 'json',
+          file : 'server/fixtures/clients.json',
+          jsonArray : true,
+          upsert : true
+        },
+        {
+          name : 'products',
+          type : 'json',
+          file : 'server/fixtures/products.json',
+          jsonArray : true,
+          upsert : true
+        },
+        {
+          name : 'discounts',
+          type : 'json',
+          file : 'server/fixtures/discounts.json',
+          jsonArray : true,
+          upsert : true
+        }
+      ]
+    }
+  }
   });
+
+  grunt.loadNpmTasks('grunt-mongoimport');
 
   // Used for delaying livereload until after server has restarted
   grunt.registerTask('wait', function () {
@@ -618,6 +651,7 @@ module.exports = function (grunt) {
       'wiredep',
       'autoprefixer',
       'express:dev',
+      'mongoimport',
       'wait',
       'open',
       'watch'
