@@ -18,11 +18,39 @@ describe('Directive: cartPanel', function () {
     element = angular.element('<cart-panel></cart-panel>');
     cart = {
               client: {_id: 'default', name: 'Consumidor Final', address: ''},
-              items: [{quantity:1, product:'coffee', price:0.5, total:0.50}],
+              items: 
+                    [
+                      {
+                        quantity:1, 
+                        product:
+                                  {
+                                    _id: 1,
+                                    name: 'Product 1',
+                                    image: 'path/to/image',
+                                    price: 0.99,
+                                    featured: false,
+                                    onSale: false
+                                  }, 
+                        total:0.99
+                      },
+                      {
+                        quantity:2, 
+                        product:
+                                  {
+                                    _id: 3,
+                                    name: 'Product 3',
+                                    image: 'path/to/image',
+                                    price: 0.99,
+                                    featured: false,
+                                    onSale: true
+                                  }, 
+                        total:1.98
+                      }
+                    ],
               subtotal: 0,
               tax: 12,
               total: 0,
-              discounts: []
+              discounts: [{name:"byo",type:"exact",value:0.10}]
             };
     spyOn(cartService, 'getCart').andReturn(cart);
     element = $compile(element)(scope);
@@ -130,6 +158,48 @@ describe('Directive: cartPanel', function () {
    * TODO: Should allow to delete the entire item row
    * and reset the discounts
    * */
+  iit ('#removeItemCart should allow to delete item', inject(function () {
+    spyOn(cartService, 'resetDiscounts').andCallThrough();
+    spyOn(ctrl, 'getDiscountsForCart').andCallThrough();
+    /*
+    cartService.getCart().items = [
+                      {
+                        quantity:1, 
+                        product:
+                                  {
+                                    _id: 1,
+                                    name: 'Product 1',
+                                    image: 'path/to/image',
+                                    price: 0.99,
+                                    featured: false,
+                                    onSale: false
+                                  }, 
+                        total:0.99
+                      },
+                      {
+                        quantity:2, 
+                        product:
+                                  {
+                                    _id: 3,
+                                    name: 'Product 3',
+                                    image: 'path/to/image',
+                                    price: 0.99,
+                                    featured: false,
+                                    onSale: true
+                                  }, 
+                        total:1.98
+                      }
+                    ];
+    console.log("items",cartService.getCart().items[0]);
+    console.log("items length", cartService.getCart().items.length);
+    expect(cartService.getCart().items.length).toBe(2);
+    expect(cartService.getCart().discounts.length).toBe(1);
+    ctrl.removeItemCart(3);
+    expect(cartService.getCart().items.length).toBe(1);
+    expect(cartService.getCart().discounts.length).toBe(0);
+    */
+  }));
+
 
 
   /*TODO: should request the discounts for the filled cart. We need to send the cart to
