@@ -95,14 +95,14 @@ describe('Service: cartService', function () {
   });
 
   it('should add discount to cart', function () {
-    var discounts = [{
+    var discount = {
       type: 'value',
       valor: 3
-    }];
+    };
 
-    cartService.addDiscounts(discounts);
+    cartService.addDiscount(discount);
 
-    expect(cartService.getCart().discounts).toEqual(discounts);
+    expect(cartService.getCart().discounts).toContain(discount);
   });
 
   it('should set a client for the cart', function () {
@@ -121,7 +121,7 @@ describe('Service: cartService', function () {
     expect(cartService.getCart().tax).toEqual(13);
   });
 
-  it('should update the quantity an item in the cart', function () {
+  it('should update the quantity of an item in the cart', function () {
     $httpBackend.expectGET('api/products?_id=1').respond(products[0]);
     cartService.addToCart(1);
 

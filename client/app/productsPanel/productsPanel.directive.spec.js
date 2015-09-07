@@ -104,7 +104,7 @@ describe('Directive: productsPanel', function () {
     ctrl.searchTerm = 'abcd';
     ctrl.search();
 
-    $httpBackend.expectGET('api/products/abcd').respond([{'name': 'abc'}]);
+    $httpBackend.expectGET('api/products?query=abcd').respond([{'name': 'abc'}]);
     $httpBackend.flush();
   }));
 
@@ -129,7 +129,7 @@ describe('Directive: productsPanel', function () {
     ctrl.searchTerm = 'abcd';
     ctrl.getProductsFilter('featured');
 
-    $httpBackend.expectGET('api/products/abcd/featured').respond([{'name': 'abc'}]);
+    $httpBackend.expectGET('api/products/featured?query=abcd').respond([{'name': 'abc'}]);
     $httpBackend.flush();
     console.log(ctrl.products);
     expect(ctrl.products[0].name).toEqual('abc');
@@ -144,7 +144,7 @@ describe('Directive: productsPanel', function () {
     ctrl.searchTerm = 'cdef';
     ctrl.getProductsFilter('onSale');
 
-    $httpBackend.expectGET('api/products/cdef/onSale').respond([{'name': 'abc'}]);
+    $httpBackend.expectGET('api/products/onSale?query=cdef').respond([{'name': 'abc'}]);
     $httpBackend.flush();
     expect(ctrl.products[0].name).toEqual('abc');
   }));

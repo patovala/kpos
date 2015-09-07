@@ -30,21 +30,20 @@ function productsPanel() {
      * Private methods
      */
     function init () {
-        var r = $resource('api/products/:q', {q: '@q'});
+        var r = $resource('api/products');
         vm.products = r.query();
     }
 
     function search (){
-      var r = $resource('api/products/:q', {q: '@q'});
+      var r = $resource('api/products', {query: '@q'});
       if(vm.searchTerm && vm.searchTerm.length > 2){
-        vm.products = r.query({q: vm.searchTerm});
+        vm.products = r.query({query: vm.searchTerm});
       }
     }
 
-    function getProductsFilter(query){
-      var r = $resource('api/products/:qp/:q', {qp: '@qp', q: '@q'});
-      vm.products = r.query({qp: vm.searchTerm, q: query});
-      console.log(query);
+    function getProductsFilter(filter){
+      var r = $resource('api/products/:filter', {filter: '@filter'});
+      vm.products = r.query({filter: filter, query:vm.searchTerm});
     }
 
     function addToCart(id){
