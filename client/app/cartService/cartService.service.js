@@ -17,14 +17,15 @@ angular.module('kposApp')
       updateItemQuantity: updateItemQuantity,
       setClient: setClient,
       addDiscount: addDiscount,
-      resetDiscounts: resetDiscounts
+      resetDiscounts: resetDiscounts,
+      getDiscountsForCart: getDiscountsForCart
     };
 
     function addToCart(id){
       if(!cart.items){
         cart.items = [];
       }
-      //var r = $resource('api/products:id', {id: '@id'});
+
       var r = $resource('api/products');
       var promise = r.get({_id: id}, function(item) {
         cart.items.push(item);
@@ -70,5 +71,18 @@ angular.module('kposApp')
 
     function resetDiscounts(){
       cart.discounts = [];
+    }
+
+    function getDiscountsForCart(filter){
+        var r = $resource('api/discounts/:filter', {filter:'@filter'});
+        var promise = r.save({cart: cart, filter: filter}, function(data){
+            if(filter === 'byclient'){
+              cart.discounts = data.discounts;
+            }else{
+              return data;
+            }
+        });
+
+        return promise;
     }
   });
