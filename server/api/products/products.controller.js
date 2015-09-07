@@ -28,8 +28,8 @@ exports.findProducts = function(req, res) {
         db.close();
       });
       return;
-    }else if(req.query && req.params.query){
-      q = {'name': {$regex: req.params.query}};
+    }else if(req.query && req.query.query){
+      q = {'name': {$regex: req.query.query}};
     }
 
     if(req.params && req.params._filter){

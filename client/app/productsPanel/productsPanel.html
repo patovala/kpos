@@ -12,22 +12,22 @@
     </div>
       <div>
         <ul class="striped">
-          <li class="simple" ng-repeat="p in products">
-            <div class="item">
-              <div>
-                <div class="img"><img ng-src="{{p.image}}" title="#25"></div>
-                <div class="title">
+          <li class="simple" ng-repeat="p in vm.products">
+            <div class="item row">
+                <div class="col-md-3 img">
+                  <img ng-src="{{p.image}}" title="#25">
+                </div>
+                <div class="title col-md-4">
                   <strong>{{p.name}}</strong>
                 </div>
-                <div class="price">
+                <div class="col-md-2 price">
                   {{p.price}}
                 </div>
-                <div class="action">
-                  <span class="btn btn-success btn-circle" ng-click="vm.addToCart(p._id)">
-                    <i class="icon-plus icon-lg"></i>
+                <div class="col-md-2 action">
+                  <span ng-click="vm.addToCart(p._id)">
+                    <i class="fa fa-plus-circle fa-2x"></i>
                   </span>
                 </div>
-              </div>
             </div>
           </li>
         </ul>

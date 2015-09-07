@@ -1,0 +1,37 @@
+[
+  {
+    "_id": 1,
+    "name": "Mocachino 8oz",
+    "price": 1.25,
+    "featured": true,
+    "onSale": false
+  },
+  {
+    "_id": 2,
+    "name": "Filtered coffee",
+    "price": 0.6,
+    "featured": true,
+    "onSale": true
+  },
+  {
+    "_id": 3,
+    "name": "Caramel flat white",
+    "price": 1.25,
+    "featured": false,
+    "onSale": true
+  },
+  {
+    "_id": 4,
+    "name": "Americano",
+    "price": 0.50,
+    "featured": false,
+    "onSale": false
+  },
+  {
+    "_id": 5,
+    "name": "Flat white 8oz",
+    "price": 1.25,
+    "featured": true,
+    "onSale": false
+  }
+]
