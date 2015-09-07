@@ -11,7 +11,7 @@ function cartPanel() {
 
   return directive;
 
-  function cartPanelCtrl($scope, $resource, cartService) {
+  function cartPanelCtrl($scope, $resource, cartService, $modal) {
     var cp = this;
 
     /**
@@ -19,6 +19,8 @@ function cartPanel() {
     */
     cp.searchClient = searchClient;
     cp.changeClient = changeClient;
+    cp.newClientModal = newClientModal;
+    cp.getDiscountsForCart = getDiscountsForCart;
 
     init();
     return cp;
@@ -26,6 +28,7 @@ function cartPanel() {
     function init () {
       cp.cart = cartService.getCart();
       cp.defaultClient = angular.copy(cp.cart.client) || {'name': 'Consumidor Final'};
+      cp.discounts = [];
     }
 
     function searchClient(value){
@@ -41,6 +44,35 @@ function cartPanel() {
       cartService.resetDiscounts();
       cp.cart = cartService.getCart();
       cp.cart.client = cp.selectedClient = $client;
+    }
+
+    function newClientModal(){
+      var modalInstance = $modal.open({
+        animation: false,
+        templateUrl: 'components/clientmodal/clientModal.html',
+        controller: 'clientModalCtrl',
+        size: 'sm'
+        //resolve: {
+        //  algo: function(){}
+        //}
+      });
+
+      modalInstance.result.then(function (createdClient) {
+        cp.cart.client = createdClient;
+        cartService.resetDiscounts();
+      }, function () {
+        console.log('Modal dismissed at: ' + new Date());
+      });
+    }
+
+    function getDiscountsForCart(open){
+      if(open === 'open'){
+        var r = $resource('api/discounts/:filter', {filter:'@filter'});
+        r.save({cart: cp.cart, filter: 'all'})
+          .$promise.then(function(data){
+            cp.discounts = data.discounts;
+        });
+      }
     }
   }
 

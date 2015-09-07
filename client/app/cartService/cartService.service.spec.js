@@ -121,7 +121,7 @@ describe('Service: cartService', function () {
     expect(cartService.getCart().tax).toEqual(13);
   });
 
-  it('should update the quantity an item in the cart', function () {
+  it('should update the quantity of an item in the cart', function () {
     $httpBackend.expectGET('api/products?_id=1').respond(products[0]);
     cartService.addToCart(1);
 
