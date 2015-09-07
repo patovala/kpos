@@ -21,6 +21,7 @@ function cartPanel() {
     cp.changeClient = changeClient;
     cp.newClientModal = newClientModal;
     cp.getDiscountsForCart = getDiscountsForCart;
+    cp.getDiscountsDropdown = getDiscountsDropdown;
 
     init();
     return cp;
@@ -41,9 +42,10 @@ function cartPanel() {
     }
 
     function changeClient($client){
-      cartService.resetDiscounts();
       cp.cart = cartService.getCart();
       cp.cart.client = cp.selectedClient = $client;
+      cartService.resetDiscounts();
+      getDiscountsForCart('byclient');
     }
 
     function newClientModal(){
@@ -60,19 +62,29 @@ function cartPanel() {
       modalInstance.result.then(function (createdClient) {
         cp.cart.client = createdClient;
         cartService.resetDiscounts();
+        getDiscountsForCart('byclient');
+        console.log('enmodal');
       }, function () {
         console.log('Modal dismissed at: ' + new Date());
       });
     }
 
-    function getDiscountsForCart(open){
-      if(open === 'open'){
-        var r = $resource('api/discounts/:filter', {filter:'@filter'});
-        r.save({cart: cp.cart, filter: 'all'})
-          .$promise.then(function(data){
-            cp.discounts = data.discounts;
-        });
+    function getDiscountsDropdown(open){
+      if(open){
+        getDiscountsForCart('generic');
       }
+    }
+
+    function getDiscountsForCart(filter){
+        var r = $resource('api/discounts/:filter', {filter:'@filter'});
+        r.save({cart: cp.cart, filter: filter})
+          .$promise.then(function(data){
+            if(filter==='byclient'){
+              cp.cart.discounts = data.discounts;
+            }else{
+              cp.discounts = data.discounts;
+            }
+        });
     }
   }
 

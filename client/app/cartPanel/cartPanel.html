@@ -6,6 +6,7 @@
         <th data-field="name" class="col-md-6">Product</th>
         <th data-field="price" class="col-md-4">Price</th>
         <th data-field="price" class="col-md-4">Total</th>
+        <th></th>
     </tr>
     </thead>
     <tbody>
@@ -14,6 +15,13 @@
     		<td>{{i.product}}</td>
     		<td>{{i.price}}</td>
     		<td>{{i.total}}</td>
+        <td><!--TODO: icono de dismiss y accion para eliminar del cart--></td>
+    	</tr>
+    	<tr ng-repeat="d in cp.cart.discounts">
+    		<td></td>
+    		<td>{{d.name}}</td>
+        <td>{{d.value}} <span ng-if="d.type=='percent'">%</span></td>
+    		<td>{{d.total}}</td>
     	</tr>
     </tbody>
     <tfoot >
@@ -51,7 +59,7 @@
 </div>
 <hr/>
 <div id="discount_section">
-  <div class="btn-group" dropdown keyboard-nav on-toggle="cp.getDiscountsForCart(open)">
+  <div class="btn-group" dropdown keyboard-nav on-toggle="cp.getDiscountsDropdown(open)">
     <button id="discounts-button" type="button" class="btn btn-success" dropdown-toggle>
       Agregar Descuentos <span class="caret"></span>
     </button>
