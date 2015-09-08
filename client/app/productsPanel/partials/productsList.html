@@ -1,0 +1,20 @@
+<ul>
+  <li class="simple" ng-repeat="p in products= (vm.products | filter:vm.searchTerm)">
+    <div class="item row">
+        <div class="col-md-3 img">
+          <img ng-src="{{p.image}}">
+        </div>
+        <div class="col-md-4 title">
+          <strong>{{p.name}}</strong>
+        </div>
+        <div class="col-md-2 price">
+          $ {{p.price}}
+        </div>
+        <div class="col-md-1 action">
+          <span ng-click="vm.addToCart(p._id)">
+            <i class="fa fa-plus-circle fa-3x"></i>
+          </span>
+        </div>
+    </div>
+  </li>
+</ul>

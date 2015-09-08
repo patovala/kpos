@@ -104,4 +104,17 @@ describe('GET /api/products', function() {
       done();
     });
   });
+
+  it('should not get the products filtered by featured because the query not exist', function(done) {
+    request(app)
+    .get('/api/products/featured?query=coffee')
+    .expect(200)
+    .expect('Content-Type', /json/)
+    .end(function(err, res) {
+      if (err) return done(err);
+      res.body.should.be.instanceof(Array);
+      res.body.length.should.equal(0);
+      done();
+    });
+  });
 });

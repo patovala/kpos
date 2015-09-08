@@ -11,11 +11,11 @@
     </thead>
     <tbody>
     	<tr ng-repeat="i in cp.cart.items">
-    		<td>{{i.quantity}}</td>
-    		<td>{{i.product}}</td>
-    		<td>{{i.price}}</td>
-    		<td>{{i.total}}</td>
-        <td><!--TODO: icono de dismiss y accion para eliminar del cart--></td>
+        <td>{{i.quantity}}</td>
+        <td>{{i.name}}</td>
+        <td>{{i.price}}</td>
+        <td>{{i.total}}</td>
+        <td></td><!--TODO: icono de dismiss y accion para eliminar del cart--></td>
     	</tr>
     	<tr ng-repeat="d in cp.cart.discounts">
     		<td></td>

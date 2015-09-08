@@ -10,7 +10,9 @@ describe('Directive: productsPanel', function () {
 
   // load the directive's module and view
   beforeEach(module('kposApp'));
+
   beforeEach(module('app/productsPanel/productsPanel.html'));
+  beforeEach(module('app/productsPanel/partials/productsList.html'));
 
   var element, scope, $httpBackend, products, ctrl, cartService;
 
