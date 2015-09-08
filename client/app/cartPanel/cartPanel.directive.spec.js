@@ -179,7 +179,7 @@ describe('Directive: cartPanel', function () {
     ctrl.removeItemCart(1);
     expect(cartService.removeFromCart).toHaveBeenCalled();
     expect(cartService.resetDiscounts).toHaveBeenCalled();
-    expect(cartService.getDiscountsForCart).toHaveBeenCalledWith('generic');
+    expect(cartService.getDiscountsForCart).toHaveBeenCalledWith('byclient');
   }));
 
 

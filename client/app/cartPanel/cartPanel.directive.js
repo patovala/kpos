@@ -81,7 +81,7 @@ function cartPanel() {
     function removeItemCart(idProduct){
       cartService.removeFromCart(idProduct);
       cartService.resetDiscounts();
-      cartService.getDiscountsForCart('generic');
+      cartService.getDiscountsForCart('byclient');
     }
   }
 
