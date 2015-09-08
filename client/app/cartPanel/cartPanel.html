@@ -9,20 +9,7 @@
         <th></th>
     </tr>
     </thead>
-    <tbody>
-    <!--
-      <tr>
-        <td>jj</td>
-        <td>hkj</td>
-        <td>kjk</td>
-        <td>klk</td>
-        <td>
-        <button type="button" class="btn-circle" ng-click="cp.removeItemCart(itemIndex)">
-          <span class="glyphicon glyphicon-remove" ></span>
-        </button>
-        </td>
-      </tr>
-    -->  
+    <tbody> 
     	<tr ng-repeat="i in cp.cart.items">
     		<td>{{i.quantity}}</td>
     		<td>{{i.name}}</td>
