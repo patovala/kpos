@@ -84,9 +84,7 @@ function cartPanel() {
       cartService.resetDiscounts();
       cartService.getDiscountsForCart('byclient');
     }
-
   }
-
 }
 
 angular.module('kposApp')
