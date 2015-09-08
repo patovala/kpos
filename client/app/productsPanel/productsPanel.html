@@ -7,7 +7,7 @@
     aria-describedby="searchbox"
     ng-model="vm.searchTerm">
   </input>
-   <span class="input-group-addon"> <span class="fa fa-repeat"></span>
+   <span class="input-group-addon" ng-click="vm.refresh()"> <span class="fa fa-repeat"></span>
 </div>
 <tabset>
     <tab heading="All" ng-click="vm.getProducts()">
