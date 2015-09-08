@@ -21,6 +21,7 @@ function cartPanel() {
     cp.changeClient = changeClient;
     cp.newClientModal = newClientModal;
     cp.getDiscountsDropdown = getDiscountsDropdown;
+    cp.removeItemCart = removeItemCart;
 
     init();
     return cp;
@@ -75,6 +76,12 @@ function cartPanel() {
             cp.discounts = data.discounts;
           });
       }
+    }
+
+    function removeItemCart(idProduct){
+      cartService.removeFromCart(idProduct);
+      cartService.resetDiscounts();
+      cartService.getDiscountsForCart('byclient');
     }
   }
 
