@@ -18,7 +18,33 @@ describe('Directive: cartPanel', function () {
     element = angular.element('<cart-panel></cart-panel>');
     cart = {
               client: {_id: 'default', name: 'Consumidor Final', address: ''},
-              items: [{quantity:1, product:'coffee', price:0.5, total:0.50}],
+              items:
+                    [
+                      {
+                        quantity:1,
+                        product:
+                                  {
+                                    _id: 1,
+                                    name: 'Mocachino 8oz',
+                                    price: 1.25,
+                                    featured: true,
+                                    onSale: false
+                                  },
+                        total:0.99
+                      },
+                      {
+                        quantity:2,
+                        product:
+                                  {
+                                    _id: 3,
+                                    name: 'Caramel flat white',
+                                    price: 1.25,
+                                    featured: false,
+                                    onSale: true
+                                  },
+                        total:1.98
+                      }
+                    ],
               subtotal: 0,
               tax: 12,
               total: 0,
@@ -43,7 +69,7 @@ describe('Directive: cartPanel', function () {
    **/
   it('should render a cart', inject(function () {
     expect(cartService.getCart).toHaveBeenCalled();
-    //console.log(cartService.getCart());
+    console.log('cart: ',cartService.getCart().items[0]);
     expect(cartService.getCart().client.name).toBe('Consumidor Final');
     expect(cartService.getCart().subtotal).toBe(0);
     expect(cartService.getCart().tax).toBe(12);
@@ -131,6 +157,31 @@ describe('Directive: cartPanel', function () {
    * TODO: Should allow to delete the entire item row
    * and reset the discounts
    * */
+  it ('#removeItemCart should allow to delete item', inject(function () {
+    var products =  [
+                      {
+                        _id: 1,
+                        name: 'Mocachino 8oz',
+                        price: 1.25,
+                        featured: true,
+                        onSale: false
+                      }
+                    ];
+    $httpBackend.expectGET('api/products?_id=1').respond(products[0]);
+    expect(!!cartService.addToCart).toBe(true);
+    cartService.addToCart(1).$promise.then(
+      function(){console.log('product adding');}
+    );
+    $httpBackend.flush();
+    spyOn(cartService, 'removeFromCart');
+    spyOn(cartService, 'resetDiscounts').andCallThrough();
+    spyOn(cartService, 'getDiscountsForCart');
+    ctrl.removeItemCart(1);
+    expect(cartService.removeFromCart).toHaveBeenCalled();
+    expect(cartService.resetDiscounts).toHaveBeenCalled();
+    expect(cartService.getDiscountsForCart).toHaveBeenCalledWith('byclient');
+  }));
+
 
 
   /*TODO: should request the discounts for the filled cart. We need to send the cart to
