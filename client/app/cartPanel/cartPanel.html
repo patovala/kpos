@@ -9,14 +9,16 @@
         <th></th>
     </tr>
     </thead>
-    <tbody>
+    <tbody> 
     	<tr ng-repeat="i in cp.cart.items">
-        <td>{{i.quantity}}</td>
-        <td>{{i.name}}</td>
-        <td>{{i.price}}</td>
-        <td>{{i.total}}</td>
+
+    		<td>{{i.quantity}}</td>
+    		<td>{{i.name}}</td>
+    		<td>{{i.price}}</td>
+    		<td>{{i.total}}</td>
         <td>
-          <span ng-click="vcp.removeItemCart(i.product._id)">
+          <span ng-click="cp.removeItemCart(i._id)">
+
             <i class="fa fa-times-circle fa-2x"></i>
           </span>
         </td>
@@ -31,13 +33,15 @@
     </tbody>
     <tfoot >
     	<tr align="right">
-    		<td colspan="3">Subtotal</td><td>{{cp.cart.subtotal}}</td>
+    		<td colspan="3">Cart Subtotal</td><td>{{cp.cart.subtotal}}</td>
     	</tr>
     	<tr align="right">
     		<td colspan="3">Tax</td><td>{{cp.cart.tax}}</td>
     	</tr>
     	<tr align="right">
-    		<td colspan="3"><h3>Order Total</h3></td><td>{{cp.cart.total}}</td>
+
+    		<td colspan="3"><h3>Order Total</h3></td><td><h3>{{cp.cart.total}}</h3></td>
+
     	</tr>
     </tfoot>
   </table>
@@ -61,24 +65,23 @@
     </div>
   </div>
 
-  
 
-  
-</div>
-  <div class="panel panel-info">
-    <div class="panel-heading">Client</div>
-  <div class="panel-body">
-    <table class="table">
-      <tr>
-        <td class="info">Name: </td><td>{{cp.cart.client.name}}</td>
-        <td class="info">Id: </td><td>{{cp.cart.client.id}}</td>
-      </tr>
-      <tr>
-        <td class="info">Address: </td><td>{{cp.cart.client.address}}</td>
-      </tr>
-    </table>
+    <div class="panel panel-info">
+  <div class="panel-heading">
+    Client
   </div>
-</div>
+  <div class="panel-body">
+  <table class="table">
+    <tr>
+      <td class="info">Name: </td><td>{{cp.cart.client.name}}</td>
+      <td class="info">Id: </td><td>{{cp.cart.client.id}}</td>
+    </tr>
+     <tr>
+      <td class="info">Address: </td><td>{{cp.cart.client.address}}</td>
+    </tr>
+  </table>
+  </div>
+  </div>
 
 </div>
 <hr/>
