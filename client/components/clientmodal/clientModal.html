@@ -1,9 +1,21 @@
 <div>
   <div class="modal-header">
-    <h3 class="modal-title">I'm a modal!</h3>
+    <h3 class="modal-title">New Client</h3>
   </div>
   <div class="modal-body">
-  </div>
+    <form role="form">
+      <div class="form-group">
+        <label for="name">Name: </label>
+        <input type="text" class="form-control" ng-model="newClient.name"  id="name" placeholder="Name">
+      </div>
+      <div class="form-group">
+        <label for="address">Address: </label>
+        <input type="text" class="form-control" ng-model="newClient.address" id="address" placeholder="Address">
+      </div>
+      <div class="form-group">
+        <label for="dni">D.N.I: </label>
+        <input type="text" class="form-control" ng-model="newClient.dni" id="dni" placeholder="D.N.I">
+      </div>
   <div class="modal-footer">
     <button class="btn btn-primary" type="button" ng-click="update()">Update</button>
     <button class="btn btn-warning" type="button" ng-click="cancel()">Cancel</button>
