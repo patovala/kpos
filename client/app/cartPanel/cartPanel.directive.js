@@ -76,6 +76,17 @@ function cartPanel() {
           });
       }
     }
+
+    function removeItemCart(idProduct){
+      //cp.cart.items.splice(itemIndex,1);
+      //console.log(idProduct);
+      cartService.removeFromCart(idProduct)
+      cartService.resetDiscounts();
+      cartService.getDiscountsForCart('generic');
+    }
+
+
+
   }
 
 }
