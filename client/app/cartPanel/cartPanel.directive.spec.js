@@ -18,10 +18,10 @@ describe('Directive: cartPanel', function () {
     element = angular.element('<cart-panel></cart-panel>');
     cart = {
               client: {_id: 'default', name: 'Consumidor Final', address: ''},
-              items: 
+              items:
                     [
                       {
-                        quantity:1, 
+                        quantity:1,
                         product:
                                   {
                                     _id: 1,
@@ -29,11 +29,11 @@ describe('Directive: cartPanel', function () {
                                     price: 1.25,
                                     featured: true,
                                     onSale: false
-                                  }, 
+                                  },
                         total:0.99
                       },
                       {
-                        quantity:2, 
+                        quantity:2,
                         product:
                                   {
                                     _id: 3,
@@ -41,14 +41,14 @@ describe('Directive: cartPanel', function () {
                                     price: 1.25,
                                     featured: false,
                                     onSale: true
-                                  }, 
+                                  },
                         total:1.98
                       }
                     ],
               subtotal: 0,
               tax: 12,
               total: 0,
-              discounts: [{name:"byo",type:"exact",value:0.10}]
+              discounts: []
             };
     spyOn(cartService, 'getCart').andReturn(cart);
     element = $compile(element)(scope);
@@ -69,7 +69,7 @@ describe('Directive: cartPanel', function () {
    **/
   it('should render a cart', inject(function () {
     expect(cartService.getCart).toHaveBeenCalled();
-    console.log("cart: ",cartService.getCart().items[0]);
+    console.log('cart: ',cartService.getCart().items[0]);
     expect(cartService.getCart().client.name).toBe('Consumidor Final');
     expect(cartService.getCart().subtotal).toBe(0);
     expect(cartService.getCart().tax).toBe(12);
@@ -77,7 +77,7 @@ describe('Directive: cartPanel', function () {
   }));
 
   it('should render items from a cart', inject(function () {
-    expect(element.html()).toContain('ng-repeat="(itemIndex, i) in cp.cart.items"');
+    expect(element.html()).toContain('ng-repeat="i in cp.cart.items"');
   }));
 
   /*
@@ -174,7 +174,7 @@ describe('Directive: cartPanel', function () {
     );
     $httpBackend.flush();
     spyOn(cartService, 'removeFromCart');
-    spyOn(cartService, 'resetDiscounts').andCallThrough();;
+    spyOn(cartService, 'resetDiscounts').andCallThrough();
     spyOn(cartService, 'getDiscountsForCart');
     ctrl.removeItemCart(1);
     expect(cartService.removeFromCart).toHaveBeenCalled();
