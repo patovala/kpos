@@ -79,12 +79,12 @@ function cartPanel() {
     }
 
     function removeItemCart(idProduct){
-
       cartService.removeFromCart(idProduct);
       cartService.resetDiscounts();
       cartService.getDiscountsForCart('byclient');
     }
   }
+
 }
 
 angular.module('kposApp')

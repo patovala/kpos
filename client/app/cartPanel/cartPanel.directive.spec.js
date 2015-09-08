@@ -184,26 +184,6 @@ describe('Directive: cartPanel', function () {
 
 
 
-    it ('#removeItemCart should allow to delete item', inject(function () {
-    
-    //spyOn(cartService, 'addToCart').andReturn(cartRemove);
-    cartService.addToCart(1);
-    spyOn(cartService, 'removeFromCart');
-    spyOn(cartService, 'resetDiscounts');
-    spyOn(cartService, 'getDiscountsForCart');
-    ctrl.removeItemCart(1);
-    expect(cartService.removeFromCart).toHaveBeenCalled();
-    expect(cartService.resetDiscounts).toHaveBeenCalled();
-    //expect(cartService.getDiscountsForCart).toHaveBeenCalledWith('generic');
-    //expect(cartService.getCart().items.length).toBe(2);
-    //expect(cartService.getCart().discounts.length).toBe(1);
-    //ctrl.removeItemCart(1);
-    //expect(cartService.getCart().items.length).toBe(1);
-    //expect(cartService.getCart().discounts.length).toBe(0);
-  }));
-
-
-
   /*TODO: should request the discounts for the filled cart. We need to send the cart to
    * the backend and the backend should return a discount for us if the cart applies
    * I think it should be triggered when you open the discount select
