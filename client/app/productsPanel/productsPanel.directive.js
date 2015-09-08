@@ -22,14 +22,15 @@ function productsPanel() {
     vm.search = search;
     vm.addToCart = addToCart;
     vm.getProductsFilter = getProductsFilter;
+    vm.getProducts = getProducts;
 
-    init();
+    getProducts();
     return vm;
 
     /**
      * Private methods
      */
-    function init () {
+    function getProducts () {
         var r = $resource('api/products');
         vm.products = r.query();
     }
