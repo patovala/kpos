@@ -19,10 +19,12 @@ function productsPanel() {
      * Public methods
      */
     vm.searchTerm = '';
-    vm.search = search;
+    vm.filter = null;
+
     vm.addToCart = addToCart;
     vm.getProductsFilter = getProductsFilter;
     vm.getProducts = getProducts;
+    vm.refresh = refresh;
 
     getProducts();
     return vm;
@@ -33,22 +35,27 @@ function productsPanel() {
     function getProducts () {
         var r = $resource('api/products');
         vm.products = r.query();
-    }
-
-    function search (){
-      var r = $resource('api/products', {query: '@q'});
-      if(vm.searchTerm && vm.searchTerm.length > 2){
-        vm.products = r.query({query: vm.searchTerm});
-      }
+        vm.filter = null;
     }
 
     function getProductsFilter(filter){
       var r = $resource('api/products/:filter', {filter: '@filter'});
       vm.products = r.query({filter: filter, query:vm.searchTerm});
+      vm.filter = filter;
     }
 
     function addToCart(id){
       cartService.addToCart(id);
+    }
+
+    function refresh () {
+      vm.searchTerm = '';
+
+      if (vm.filter) {
+        getProductsFilter(vm.filter);
+      } else {
+        getProducts();
+      }
     }
   }
 

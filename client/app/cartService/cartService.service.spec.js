@@ -6,14 +6,14 @@ describe('Service: cartService', function () {
   beforeEach(module('kposApp'));
 
   // instantiate service
-  var cartService, cart, products, $httpBackend, $rootScope;
-  beforeEach(inject(function (_cartService_, _$httpBackend_, _$rootScope_) {
+  var $httpBackend, $rootScope, cartService, cart, products, discounts;
+  beforeEach(inject(function (_$httpBackend_, _$rootScope_, _cartService_) {
     cartService = _cartService_;
     $httpBackend = _$httpBackend_;
     $rootScope = _$rootScope_;
 
     cart = {
-              client: {_id: 'defualt', name: 'Consumidor Final', address: ''},
+              client: {_id: 'default', name: 'Consumidor Final', address: ''},
               items: [
                 {
                   _id: 1,
@@ -51,7 +51,6 @@ describe('Service: cartService', function () {
         onSale: true
       }
     ];
-
   }));
 
   afterEach(function() {
@@ -59,7 +58,7 @@ describe('Service: cartService', function () {
       $httpBackend.verifyNoOutstandingRequest();
   });
 
-  it('should add to cart by id and do the broadcast', function () {
+  it('#addToCart should add to cart by id and do the broadcast', function () {
     spyOn($rootScope, '$broadcast').andCallThrough();
     $httpBackend.expectGET('api/products?_id=1').respond(products[0]);
     expect(!!cartService.addToCart).toBe(true);
@@ -80,7 +79,7 @@ describe('Service: cartService', function () {
 
   });
 
-  it('should remove from cart one by one by id', function () {
+  it('#removeFromCart should remove from cart one by one by id', function () {
     expect(!!cartService.removeFromCart).toBe(true);
     $httpBackend.expectGET('api/products?_id=1').respond(products[0]);
 
@@ -94,7 +93,7 @@ describe('Service: cartService', function () {
     )).not.toContain(1);
   });
 
-  it('should add discount to cart', function () {
+  it('#addDiscount should add discount to cart', function () {
     var discount = {
       type: 'value',
       valor: 3
@@ -105,7 +104,7 @@ describe('Service: cartService', function () {
     expect(cartService.getCart().discounts).toContain(discount);
   });
 
-  it('should set a client for the cart', function () {
+  it('#setClient should set a client for the cart', function () {
     var client = {
       _id: '1',
       name: 'Janina'
@@ -115,13 +114,13 @@ describe('Service: cartService', function () {
     expect(cartService.getCart().client).toEqual(client);
   });
 
-  it('should change the tax in the cart', function () {
+  it('#changeTax should change the tax in the cart', function () {
     cartService.changeTax(13);
 
     expect(cartService.getCart().tax).toEqual(13);
   });
 
-  it('should update the quantity of an item in the cart', function () {
+  it('#updateItemQuantity should update the quantity of an item in the cart', function () {
     $httpBackend.expectGET('api/products?_id=1').respond(products[0]);
     cartService.addToCart(1);
 
@@ -132,4 +131,55 @@ describe('Service: cartService', function () {
     cartService.updateItemQuantity(cart.items[0]);
     expect(cartService.getCart().items[0].quantity).toEqual(4);
   });
+
+  it('#resetDiscounts should change the tax in the cart', function () {
+    var discount = {
+      type: 'value',
+      valor: 3
+    };
+
+    cartService.addDiscount(discount);
+    expect(cartService.getCart().discounts[0]).toEqual(discount);
+
+    cartService.resetDiscounts();
+
+    expect(cartService.getCart().discounts).toEqual([]);
+  });
+
+  describe('#getDiscountsForCart', function () {
+      var cartExpect = {
+          client: {_id: 'default', name: 'Consumidor Final', address: ''},
+          items: [],
+          subtotal: 0,
+          tax: 12,
+      };
+    it('should call api/discounts/byclient and set the discounts in the cart', function () {
+      spyOn(cartService, 'getCart').andReturn(cartExpect);
+      $httpBackend.expectPOST('api/discounts/byclient',
+        { cart: cartService.getCart(), filter:'byclient'}).respond(
+          { discounts :[{
+            _id: 1,
+            name: 'Bring your own',
+            type: 'value',
+            value: 0.10
+        }]
+      });
+      cartService.getDiscountsForCart('byclient');
+
+      $httpBackend.flush();
+
+      expect(cartService.getCart().discounts).toEqual(discounts);
+    });
+
+    it('should call the api/discounts/generic and not set the discounts in the cart', function () {
+      spyOn(cartService, 'getCart').andReturn(cartExpect);
+      $httpBackend.expectPOST('api/discounts/generic', { cart: cartService.getCart(), filter:'generic'}).respond({});
+      cartService.getDiscountsForCart('generic');
+
+      $httpBackend.flush();
+
+      expect(cartService.getCart().discounts).toBeUndefined();
+    });
+  });
+
 });

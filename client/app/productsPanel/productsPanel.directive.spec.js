@@ -67,6 +67,7 @@ describe('Directive: productsPanel', function () {
    * */
   it('should get all the products from /api/products', inject(function () {
     expect(ctrl.products.length).toBe(3);
+    expect(ctrl.filter).toBeNull();
   }));
 
   /*
@@ -94,24 +95,6 @@ describe('Directive: productsPanel', function () {
   }));
 
   /*
-   * No debe llamar al search si el query tiene menos de 3 caracteres
-   * Al escribir en el 3er elemento del search deberia llamar al api para
-   * buscar el producto con nombre 'searchTerm' y enviar el request al backend
-   *
-   * */
-  it('should have a search input for search for product', inject(function () {
-    scope.searchTerm = 'ab';
-    ctrl.search();
-
-    ctrl.searchTerm = 'abcd';
-    ctrl.search();
-
-    $httpBackend.expectGET('api/products?query=abcd').respond([{'name': 'abc'}]);
-    $httpBackend.flush();
-  }));
-
-
-  /*
    * Al hacer click en el boton (+) Deberia agregar al cartService el producto
    * como un item solo
    * */
@@ -133,8 +116,8 @@ describe('Directive: productsPanel', function () {
 
     $httpBackend.expectGET('api/products/featured?query=abcd').respond([{'name': 'abc'}]);
     $httpBackend.flush();
-    console.log(ctrl.products);
     expect(ctrl.products[0].name).toEqual('abc');
+    expect(ctrl.filter).toEqual('featured');
   }));
 
   /*
