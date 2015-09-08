@@ -25,13 +25,13 @@
     -->  
     	<tr ng-repeat="(itemIndex, i) in cp.cart.items">
     		<td>{{i.quantity}}</td>
-    		<td>{{i.product.name}}</td>
-    		<td>{{i.product.price}}</td>
+    		<td>{{i.name}}</td>
+    		<td>{{i.price}}</td>
     		<td>{{i.total}}</td>
         <td>
-        <button type="button" class="btn-circle" ng-click="cp.removeItemCart(i.product._id)">
-          <span class="glyphicon glyphicon-remove" ></span>
-        </button>
+          <span ng-click="cp.removeItemCart(i._id)">
+            <i class="fa fa-times-circle fa-2x"></i>
+          </span>
         </td>
     	</tr>
     	<tr ng-repeat="d in cp.cart.discounts">
