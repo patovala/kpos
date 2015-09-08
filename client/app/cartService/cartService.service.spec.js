@@ -51,6 +51,15 @@ describe('Service: cartService', function () {
         onSale: true
       }
     ];
+
+    discounts = [
+      {
+      _id: 1,
+      name: 'Bring your own',
+      type: 'value',
+      value: 0.10
+      }
+    ];
   }));
 
   afterEach(function() {
@@ -147,33 +156,25 @@ describe('Service: cartService', function () {
   });
 
   describe('#getDiscountsForCart', function () {
-      var cartExpect = {
-          client: {_id: 'default', name: 'Consumidor Final', address: ''},
-          items: [],
-          subtotal: 0,
-          tax: 12,
-      };
+    var cartExpect = {
+        client: {_id: 'default', name: 'Consumidor Final', address: ''},
+        items: [],
+        subtotal: 0,
+        tax: 12,
+    };
+
     it('should call api/discounts/byclient and set the discounts in the cart', function () {
-      spyOn(cartService, 'getCart').andReturn(cartExpect);
       $httpBackend.expectPOST('api/discounts/byclient',
-        { cart: cartService.getCart(), filter:'byclient'}).respond(
-          { discounts :[{
-            _id: 1,
-            name: 'Bring your own',
-            type: 'value',
-            value: 0.10
-        }]
-      });
+        { cart: cartExpect, filter:'byclient'}).respond({ discounts : discounts });
+
       cartService.getDiscountsForCart('byclient');
 
       $httpBackend.flush();
-
       expect(cartService.getCart().discounts).toEqual(discounts);
     });
 
     it('should call the api/discounts/generic and not set the discounts in the cart', function () {
-      spyOn(cartService, 'getCart').andReturn(cartExpect);
-      $httpBackend.expectPOST('api/discounts/generic', { cart: cartService.getCart(), filter:'generic'}).respond({});
+      $httpBackend.expectPOST('api/discounts/generic', { cart: cartExpect, filter:'generic'}).respond({});
       cartService.getDiscountsForCart('generic');
 
       $httpBackend.flush();
