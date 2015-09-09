@@ -69,7 +69,6 @@ describe('Directive: cartPanel', function () {
    **/
   it('should render a cart', inject(function () {
     expect(cartService.getCart).toHaveBeenCalled();
-    console.log('cart: ',cartService.getCart().items[0]);
     expect(cartService.getCart().client.name).toBe('Consumidor Final');
     expect(cartService.getCart().subtotal).toBe(0);
     expect(cartService.getCart().tax).toBe(12);

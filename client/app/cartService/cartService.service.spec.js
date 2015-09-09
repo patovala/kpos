@@ -86,6 +86,7 @@ describe('Service: cartService', function () {
       jasmine.objectContaining({_id:1})
     );
 
+    expect(cartService.getCart().items[0].total).toEqual(0.99);
   });
 
   it('#removeFromCart should remove from cart one by one by id', function () {
@@ -134,11 +135,11 @@ describe('Service: cartService', function () {
     cartService.addToCart(1);
 
     $httpBackend.flush();
+    expect(cartService.getCart().items[0].quantity).toEqual(1);
 
-    cart.items[0].quantity = 4;
-
-    cartService.updateItemQuantity(cart.items[0]);
+    cartService.updateItemQuantity(cart.items[0]._id, 4);
     expect(cartService.getCart().items[0].quantity).toEqual(4);
+    expect(cartService.getCart().items[0].total).toEqual(3.96);
   });
 
   it('#resetDiscounts should change the tax in the cart', function () {
