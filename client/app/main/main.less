@@ -36,7 +36,7 @@
     @media (max-width: @screen-sm) {
         margin-right: 65px;
     }
-    color: lighten(@color5, 40%)
+    color: @color6;
 }
 
 /*PV create a resizable window with sticky footer*/
@@ -58,5 +58,14 @@ html,body{height:100%;}
 }
 
 .navbar-brand {
-    color: lighten(@color5, 40%) !important;
+    color: @color6 !important;
+}
+
+.footer {
+  background-color: black;
+  color: @color6;
+  height: 50px;
+  width: 100%;
+  bottom: 0;
+  position: fixed;
 }
