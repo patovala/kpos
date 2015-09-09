@@ -1,0 +1,32 @@
+[
+  {
+    "_id": 1,
+    "name": "Janina Herrera",
+    "address": "Jose A. Equiguren"
+  },
+  {
+    "_id": 2,
+    "name": "Patricio Valarezo",
+    "address": "La argelia"
+  },
+  {
+    "_id": 3,
+    "name": "Marjorie Chinchay",
+    "address": ""
+  },
+  {
+    "_id": 4,
+    "name": "Jimmy Jarammillo",
+    "address": ""
+  },
+  {
+    "_id": 5,
+    "name": "Luis Tinitana",
+    "address": "La Pradera"
+  },
+    {
+    "_id": 6,
+    "name": "Jorge Mejia",
+    "address": "Ciudadela 8 de diciembre"
+  }
+]

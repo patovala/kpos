@@ -10,11 +10,10 @@ module.exports = function(app) {
 var products = require('./api/products/products.controller');
 var clients = require('./api/clients/clients.controller');
   // Insert routes below
-  app.get('/api/clients', clients.findAll);
-  app.get('/api/clients/:query?', clients.findbyQuery);
-  app.get('/api/products', products.findAll);
-  app.get('/api/products/:query?', products.findbyQuery);
-  app.use('/api/things', require('./api/thing'));
+  app.get('/api/clients', clients.findAllOrById);
+  //app.get('/api/clients?query=', clients.findbyQuery);
+  //app.get('/api/products', products.findAllOrById);
+  app.get('/api/products/:_filter?', products.findProducts);
   // All undefined asset or api routes should return a 404
   app.route('/:url(api|auth|components|app|bower_components|assets)/*')
     .get(errors[404]);

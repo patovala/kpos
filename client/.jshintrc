@@ -37,6 +37,7 @@
     "expect": true,
     "browser": true,
     "element": true,
+    "jasmine": true,
     "by": true
   }
 }

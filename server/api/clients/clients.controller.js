@@ -12,7 +12,6 @@ MongoClient = require('mongodb').MongoClient;
 // Get list of clients
 exports.findAll = function(req, res) {
   MongoClient.connect(url, function(err, db) {
-    console.log("Connected correctly to server");
     var clients = db.collection('clients');
 
     clients.find({}).toArray(function(err, docs){
@@ -23,15 +22,30 @@ exports.findAll = function(req, res) {
 };
 
 //Get clients
-exports.findbyQuery = function(req, res) {
+// api/clients
+// api/clients?_id=1
+// api/clients?query=algo
+exports.findAllOrById = function(req, res) {
   MongoClient.connect(url, function(err, db) {
     var clients = db.collection('clients');
-    var str = req.params.query || '';
 
-    console.log('DEBUG:', str);
-    clients.find({"name": {$regex: str}}).toArray(function(err, docs){
+    var query = {};
+
+    if(req.query && req.query._id){
+      //find one
+      clients.findOne({_id: parseInt(req.query._id)}, function(err, doc){
+        res.json(doc);
+        db.close();
+      });
+      return;
+    }else if(req.query && req.query.query){
+      query = {'name': {$regex: req.query.query, $options: 'i'}};
+    }
+
+    clients.find(query).toArray(function(err, docs){
       res.json(docs);
       db.close();
     });
+
   });
 };

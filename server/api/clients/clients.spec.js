@@ -41,7 +41,6 @@ describe('GET /api/clients', function() {
     });
   });
 
-
   it('should respond with JSON array', function(done) {
     request(app)
       .get('/api/clients')
@@ -54,15 +53,29 @@ describe('GET /api/clients', function() {
         done();
       });
   });
-  it('should get the client filtered by ', function(done) {
+
+  it('should get clients filtered by name', function(done) {
     request(app)
-      .get('/api/clients/client%201')
+      .get('/api/clients?query=client%201')
       .expect(200)
       .expect('Content-Type', /json/)
       .end(function(err, res) {
         if (err) return done(err);
           res.body.should.be.instanceof(Array);
           res.body.length.should.equal(1);
+          done();
+        });
+  });
+
+  it('should get the client by id', function(done) {
+    request(app)
+      .get('/api/clients?_id=1')
+      .expect(200)
+      .expect('Content-Type', /json/)
+      .end(function(err, res) {
+        if (err) return done(err);
+          res.body.should.be.instanceof(Object);
+          res.body._id.should.equal(1);
           done();
         });
   });
