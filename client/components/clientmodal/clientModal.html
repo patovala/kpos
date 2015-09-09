@@ -3,21 +3,32 @@
     <h3 class="modal-title">New Client</h3>
   </div>
   <div class="modal-body">
-    <form role="form">
-      <div class="form-group">
+    <form name="vm.clientForm" role="form" ng-submit="submitForm()" novalidate>
+
+      <div class="form-group" ng-class="{'has-error': vm.clientForm.name.$invalid && vm.clientForm.name.$touched }">
         <label for="name">Name: </label>
-        <input type="text" class="form-control" ng-model="newClient.name"  id="name" placeholder="Name">
+        <input type="text" class="form-control" ng-model="vm.client.name" name="name"  id="name" placeholder="Name" ng-required="true">
+         <span ng-show="vm.clientForm.name.$error.required && (vm.clientForm.name.$touched )" class="help-block">You name is required</span>
       </div>
-      <div class="form-group">
+
+      <div class="form-group" ng-class="{'has-error': vm.clientForm.address.$invalid && vm.clientForm.address.$touched }">
         <label for="address">Address: </label>
-        <input type="text" class="form-control" ng-model="newClient.address" id="address" placeholder="Address">
+        <textarea class="form-control" ng-model="vm.client.address" id="address" name="address" placeholder="Address" ng-required="true"> </textarea>
+        <span ng-show="vm.clientForm.address.$error.required && (vm.clientForm.address.$touched )" class="help-block">You address is required</span>
       </div>
-      <div class="form-group">
+
+      <div class="form-group" ng-class="{'has-error': vm.clientForm.dni.$invalid && vm.clientForm.dni.$touched }">
         <label for="dni">D.N.I: </label>
-        <input type="text" class="form-control" ng-model="newClient.dni" id="dni" placeholder="D.N.I">
+        <input type="text" class="form-control" ng-model="vm.client.dni" id="dni" name="dni" placeholder="D.N.I" ng-required ="true">
+        <span ng-show="vm.clientForm.dni.$error.required && (vm.clientForm.dni.$touched )" class="help-block">You dni is required</span>
       </div>
-  <div class="modal-footer">
-    <button class="btn btn-primary" type="button" ng-click="update()">Update</button>
-    <button class="btn btn-warning" type="button" ng-click="cancel()">Cancel</button>
+
+    <div class="modal-footer">
+      <button class="btn btn-primary" type="submit"
+      ng-disabled="vm.clientForm.$invalid"
+      ng-click="vm.updateClient()">Update</button>
+    <button class="btn btn-warning" type="button" ng-click="vm.cancel()">Cancel</button>
   </div>
+    </form>
+
 </div>

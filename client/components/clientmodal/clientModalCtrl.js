@@ -5,14 +5,31 @@
  * */
 
 function ClientModalCtrl($scope, $modalInstance) {
+  var vm = this;
+  vm.updateClient = updateClient;
+  vm.cancel = cancel;
+  vm.clientForm;
+  return vm;
 
-  $scope.update = function () {
-    $modalInstance.close({'TODO': 'this should be the new created client'});
-  };
+  function updateClient(){
+    if(vm.clientForm.$valid){
+      console.log(vm.client.name);
+       alertify.success('Success message');
+       $modalInstance.close({'TODO': 'this should be the new created client'});
+       reset();
 
-  $scope.cancel = function () {
-    $modalInstance.dismiss('cancel');
-  };
+    }else{
+      alertify.error('Error message');
+    }
+
+  }
+  function reset(){
+    vm.client = { name:'', address:'', dni:''};
+  }
+  function cancel(){
+     $modalInstance.dismiss('cancel');
+  }
+
 }
 
 angular.module('kposApp')

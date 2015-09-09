@@ -407,7 +407,9 @@ module.exports = function (grunt) {
         expand: true,
         cwd: '<%= yeoman.client %>',
         dest: '.tmp/',
-        src: ['{app,components}/**/*.css']
+        src: ['{app,components}/**/*.css',
+               'bower_components/alertify.js/themes/alertify.bootstrap.css'
+        ]
       }
     },
 
@@ -576,7 +578,7 @@ module.exports = function (grunt) {
     mongoimport: {
       options: {
       db : 'kpos-dev',
-      host : 'localhost', //optional
+      host : '127.0.0.1', //optional
       port: '27017', //optional
       collections :
       [
@@ -652,6 +654,7 @@ module.exports = function (grunt) {
       'autoprefixer',
       'express:dev',
       'mongoimport',
+
       'wait',
       'open',
       'watch'
