@@ -39,7 +39,7 @@ exports.findAllOrById = function(req, res) {
       });
       return;
     }else if(req.query && req.query.query){
-      query = {'name': {$regex: req.query.query}};
+      query = {'name': {$regex: req.query.query, $options: 'i'}};
     }
 
     clients.find(query).toArray(function(err, docs){
