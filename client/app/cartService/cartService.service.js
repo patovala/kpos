@@ -26,9 +26,14 @@ angular.module('kposApp')
         cart.items = [];
       }
 
+      if (updateItemQuantity(id)) {
+        return;
+      }
+
       var r = $resource('api/products');
       var promise = r.get({_id: id}, function(item) {
         cart.items.push(item);
+        updateItemQuantity(id, 1);
         // notify that we added an item to the cart
         $rootScope.$broadcast('_new_item_added_', item);
       });
@@ -51,13 +56,18 @@ angular.module('kposApp')
       cart.tax = tax;
     }
 
-    function updateItemQuantity (item) {
+    function updateItemQuantity (id, quantity) {
+      var itemSaved, quantityUpdate;
       _.forEach(cart.items, function (i) {
-          var itemSaved = _.findWhere(cart.items, {_id: item._id});
-          if (itemSaved) {
-              i.quantity = item.quantity;
+          if (id === i._id) {
+            quantityUpdate = quantity ? quantity : i.quantity + 1;
+            i.quantity = quantityUpdate;
+            i.total = getTotalItem(i);
+            itemSaved = i;
           }
       });
+
+      return itemSaved;
     }
 
     function setClient (client) {
@@ -84,5 +94,9 @@ angular.module('kposApp')
         });
 
         return promise;
+    }
+
+    function getTotalItem (item) {
+      return  Math.round((item.quantity * item.price) * 100)/100;
     }
   });
