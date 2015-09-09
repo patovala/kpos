@@ -5,7 +5,8 @@ angular.module('kposApp')
     return {
       templateUrl: 'app/changeQuantity/changeQuantity.html',
       restrict: 'EA',
-      link: function (scope, element, attrs) {
+      /*link: function (scope, element, attrs) {*/
+      link: function () {
       }
     };
   });
