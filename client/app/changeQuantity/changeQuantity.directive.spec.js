@@ -1,10 +1,10 @@
 'use strict';
 
-describe('Directive: changueQuantity', function () {
+describe('Directive: changeQuantity', function () {
 
   // load the directive's module and view
   beforeEach(module('kposApp'));
-  beforeEach(module('app/changueQuantity/changueQuantity.html'));
+  beforeEach(module('app/changeQuantity/changeQuantity.html'));
 
   var element, scope;
 
@@ -13,9 +13,9 @@ describe('Directive: changueQuantity', function () {
   }));
 
   it('should make hidden element visible', inject(function ($compile) {
-    element = angular.element('<changue-quantity></changue-quantity>');
+    element = angular.element('<change-quantity></change-quantity>');
     element = $compile(element)(scope);
     scope.$apply();
-    expect(element.text()).toBe('this is the changueQuantity directive');
+    expect(element.text()).toBe('this is the changeQuantity directive');
   }));
 });

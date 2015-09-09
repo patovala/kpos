@@ -1,9 +1,9 @@
 'use strict';
 
 angular.module('kposApp')
-  .directive('changueQuantity', function () {
+  .directive('changeQuantity', function () {
     return {
-      templateUrl: 'app/changueQuantity/changueQuantity.html',
+      templateUrl: 'app/changeQuantity/changeQuantity.html',
       restrict: 'EA',
       link: function (scope, element, attrs) {
       }
