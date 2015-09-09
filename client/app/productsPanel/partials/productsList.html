@@ -1,20 +1,23 @@
 <ul class="products">
   <li class="simple" ng-repeat="p in products= (vm.products | filter:vm.searchTerm)">
     <div class="item row">
-        <div class="col-xs-3 col-sm-2 col-md-3 img">
+        <div class="col-xs-3 col-sm-2 col-md-2 img">
           <img ng-src="{{p.image}}">
         </div>
         <div class="col-xs-4 col-sm-6 col-md-6 title">
           <strong>{{p.name}}</strong>
         </div>
-        <div class="col-xs-3 col-sm-3 col-md-2 price">
+        <div class="col-xs-3 col-sm-3 col-md-3 price">
           $ {{p.price}}
         </div>
         <div class="col-xs-2 col-sm-1 col-md-1 action">
-          <span ng-click="vm.addToCart(p._id)">
+          <span class="add-cart-icon" ng-click="vm.addToCart(p._id)">
             <i class="fa fa-plus-circle fa-3x"></i>
           </span>
         </div>
     </div>
   </li>
 </ul>
+<div class="products-size">
+  Showing {{products.length}} of {{products.length}}
+</div>

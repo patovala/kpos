@@ -31,8 +31,30 @@ img {
 }
 
 .nav-tabs {
-  background-color: lighten(@color5, 40%);
+  background-color: @color6;
+
+  > li > a{
+    color: @color3;
+    font-weight: bold;
+  }
 }
+
 .products {
   margin-bottom: 0;
+}
+
+.add-cart-icon {
+  float: right;
+}
+
+.products-size {
+  background-color: @color6;
+  text-align: right;
+  color: @color5;
+  font-style: italic;
+  font-size: 12px;
+}
+
+.input-group-addon {
+  background-color: @color6;
 }
