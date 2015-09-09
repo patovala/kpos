@@ -3,19 +3,27 @@
     <thead>
     <tr>
         <th data-field="id" class="col-md-2">Qty</th>
-        <th data-field="name" class="col-md-6">Product</th>
-        <th data-field="price" class="col-md-4">Price</th>
-        <th data-field="price" class="col-md-4">Total</th>
+        <th data-field="name" class="col-md-5">Product</th>
+        <th data-field="price" class="col-md-2">Price</th>
+        <th data-field="price" class="col-md-3">Total</th>
         <th></th>
     </tr>
     </thead>
     <tbody>
     	<tr ng-repeat="i in cp.cart.items">
-        <td>{{i.quantity}}</td>
-        <td>{{i.name}}</td>
-        <td>{{i.price}}</td>
-        <td>{{i.total}}</td>
-        <td></td><!--TODO: icono de dismiss y accion para eliminar del cart--></td>
+            <td>
+                <div class="quantity-item">{{i.quantity}}</div>
+            </td>
+    		<td>{{i.name}}</td>
+            <td>
+                <div class="price-item">{{i.price}}</div>
+            </td>
+            <td class="total-item">$ {{i.total}}</td>
+            <td>
+                <span ng-click="cp.removeItemCart(i._id)">
+                    <i class="fa fa-times-circle fa-2x"></i>
+                </span>
+             </td>
     	</tr>
     	<tr ng-repeat="d in cp.cart.discounts">
     		<td></td>
@@ -26,13 +34,13 @@
     </tbody>
     <tfoot >
     	<tr align="right">
-    		<td colspan="3">Subtotal</td><td>{{cp.cart.subtotal}}</td>
+    		<td colspan="3">Cart Subtotal</td><td>{{cp.cart.subtotal}}</td>
     	</tr>
     	<tr align="right">
     		<td colspan="3">Tax</td><td>{{cp.cart.tax}}</td>
     	</tr>
     	<tr align="right">
-    		<td colspan="3">Total</td><td>{{cp.cart.total}}</td>
+    		<td colspan="3"><h3>Order Total</h3></td><td><h3>{{cp.cart.total}}</h3></td>
     	</tr>
     </tfoot>
   </table>
@@ -51,11 +59,27 @@
            typeahead-on-select="cp.changeClient($item, $model, $label)"
            placeholder="Consumidor Final">
       <span class="input-group-btn">
-        <button class="btn btn-default" type="button" ng-click="cp.newClientModal()">Crear</button>
+        <button class="btn btn-success" type="button" ng-click="cp.newClientModal()">Crear</button>
       </span>
     </div>
   </div>
-  <pre>Model: {{cp.cart.client | json}}</pre>
+    <div class="panel panel-info">
+  <div class="panel-heading">
+    Client
+  </div>
+  <div class="panel-body">
+  <table class="table">
+    <tr>
+      <td class="info">Name: </td><td>{{cp.cart.client.name}}</td>
+      <td class="info">Id: </td><td>{{cp.cart.client.id}}</td>
+    </tr>
+     <tr>
+      <td class="info">Address: </td><td>{{cp.cart.client.address}}</td>
+    </tr>
+  </table>
+  </div>
+  </div>
+
 </div>
 <hr/>
 <div id="discount_section">
