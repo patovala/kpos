@@ -3,23 +3,27 @@
     <thead>
     <tr>
         <th data-field="id" class="col-md-2">Qty</th>
-        <th data-field="name" class="col-md-6">Product</th>
-        <th data-field="price" class="col-md-4">Price</th>
-        <th data-field="price" class="col-md-4">Total</th>
+        <th data-field="name" class="col-md-5">Product</th>
+        <th data-field="price" class="col-md-2">Price</th>
+        <th data-field="price" class="col-md-3">Total</th>
         <th></th>
     </tr>
     </thead>
     <tbody>
     	<tr ng-repeat="i in cp.cart.items">
-    		<td>{{i.quantity}}</td>
+            <td>
+                <div class="quantity-item">{{i.quantity}}</div>
+            </td>
     		<td>{{i.name}}</td>
-    		<td>{{i.price}}</td>
-    		<td>{{i.total}}</td>
-        <td>
-          <span ng-click="cp.removeItemCart(i._id)">
-            <i class="fa fa-times-circle fa-2x"></i>
-          </span>
-        </td>
+            <td>
+                <div class="price-item">{{i.price}}</div>
+            </td>
+            <td class="total-item">$ {{i.total}}</td>
+            <td>
+                <span ng-click="cp.removeItemCart(i._id)">
+                    <i class="fa fa-times-circle fa-2x"></i>
+                </span>
+             </td>
     	</tr>
     	<tr ng-repeat="d in cp.cart.discounts">
     		<td></td>
