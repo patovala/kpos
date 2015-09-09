@@ -50,10 +50,10 @@
 <div id="client_section" >  
     <div class="panel-heading panel-client">
       <div class="client row">
-        <div class="col-xs-2 col-sm-1 col-md-2 data">
+        <div class="col-xs-2 col-sm-2 col-md-2 data">
           Client:    
         </div>
-        <div class="col-xs-7 col-sm-8 col-md-7 data">          
+        <div class="col-xs-6 col-sm-8 col-md-7 data">          
             <input type="text"
                 class="form-control"
                 ng-model="selectedClient"
@@ -63,7 +63,7 @@
                 typeahead-on-select="cp.changeClient($item, $model, $label)"
                 placeholder="Consumidor Final">        
         </div>
-        <div class="col-xs-1 col-sm-1 col-md-2 data">          
+        <div class="col-xs-4 col-sm-2 col-md-3 data">          
               <button class="btn btn-success" type="button" ng-click="cp.newClientModal()">New Client</button>
         </div>      
       </div>
@@ -72,26 +72,26 @@
 
     <div class="panel-body panel-data-client">
       <div class="row">
-        <div class="col-xs-2 col-sm-2 col-md-2 tag">
+        <div class="col-xs-3 col-sm-2 col-md-2 tag">
           DNI: 
         </div>
-        <div class="col-xs-7 col-sm-7 col-md-8 ">          
+        <div class="col-xs-9 col-sm-10 col-md-10 ">          
             {{cp.cart.client.id}}     
         </div>           
       </div>      
       <div class="row">
-        <div class="col-xs-2 col-sm-2 col-md-2 tag">
+        <div class="col-xs-3 col-sm-2 col-md-2 tag">
           Name:    
         </div>
-        <div class="col-xs-7 col-sm-7 col-md-8 ">          
+        <div class="col-xs-9 col-sm-10 col-md-10 ">          
             {{cp.cart.client.name}}     
         </div>           
       </div>
       <div class="row">
-        <div class="col-xs-2 col-sm-2 col-md-2 tag">
+        <div class="col-xs-3 col-sm-2 col-md-2 tag">
           Address:    
         </div>
-        <div class="col-xs-7 col-sm-7 col-md-8">          
+        <div class="col-xs-9 col-sm-10 col-md-10">          
             {{cp.cart.client.address}}    
         </div>           
       </div>
