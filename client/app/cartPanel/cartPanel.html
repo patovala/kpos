@@ -9,7 +9,7 @@
         <th></th>
     </tr>
     </thead>
-    <tbody> 
+    <tbody>
     	<tr ng-repeat="i in cp.cart.items">
     		<td>{{i.quantity}}</td>
     		<td>{{i.name}}</td>
@@ -55,7 +55,7 @@
            typeahead-on-select="cp.changeClient($item, $model, $label)"
            placeholder="Consumidor Final">
       <span class="input-group-btn">
-        <button class="btn btn-default" type="button" ng-click="cp.newClientModal()">Crear</button>
+        <button class="btn btn-success" type="button" ng-click="cp.newClientModal()">Crear</button>
       </span>
     </div>
   </div>
