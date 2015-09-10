@@ -30,8 +30,8 @@ describe('DiscountsMachine chain of responsabilities', function() {
                           "appliesToItemCategory":"coffee",
                           "discount":
                             {"name":"Internet Service",
-                             "type":"notvalue",
-                             "comment":"this object has to be resolved in the checkout phase"}
+                              "type":"notvalue",
+                              "comment":"this object has to be resolved in the checkout phase"}
                         };
   before(function(done) {
     done();
