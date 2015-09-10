@@ -93,8 +93,8 @@ describe('Directive: cartPanel', function () {
   }));
 
   /*
-   * TODO: If the client is changed it should re calculate the cart discounts and
-   *        set the new client
+   * If the client is changed it should re calculate the cart discounts and
+   * set the new client
    */
   it('should reset the discount and set the new client', inject(function(){
     spyOn(cartService, 'resetDiscounts').andCallThrough();
