@@ -113,7 +113,15 @@
     </ul>
     <div class="input-group">
       <span class="input-group-addon" id="coupon">coupon:</span>
-      <input type="text" class="form-control" placeholder="claim coupon" aria-describedby="coupon">
+      <input
+      type="text"
+      class="form-control"
+      placeholder="claim coupon"
+      ng-model="cp.selectedCoupon"
+      aria-describedby="coupon">
+      <span class="input-group-btn">
+        <button class="btn btn-success" type="button" ng-click="cp.searchCoupon()">Apply</button>
+      </span>
     </div>
   </div>
   <!--div class="btn-group">

@@ -9,7 +9,7 @@
     {
         "_id": 2,
         "name": "internetservice",
-        "description": "This discount aplies to carts with coffee items"
+        "description": "This discount aplies to carts with coffee items",
         "appliesToItemCategory": "coffee",
         "discount": {
             "id": "internetservice",

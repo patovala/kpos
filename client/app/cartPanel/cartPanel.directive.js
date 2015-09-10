@@ -22,6 +22,7 @@ function cartPanel() {
     cp.newClientModal = newClientModal;
     cp.getDiscountsDropdown = getDiscountsDropdown;
     cp.removeItemCart = removeItemCart;
+    cp.searchCoupon = searchCoupon;
 
     init();
     return cp;
@@ -83,6 +84,9 @@ function cartPanel() {
       cartService.removeFromCart(idProduct);
       cartService.resetDiscounts();
       cartService.getDiscountsForCart('byclient');
+    }
+    function searchCoupon(){
+      cartService.applyCoupon(cp.selectedCoupon);
     }
   }
 

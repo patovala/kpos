@@ -18,6 +18,7 @@ angular.module('kposApp')
       setClient: setClient,
       addDiscount: addDiscount,
       resetDiscounts: resetDiscounts,
+      applyCoupon: applyCoupon,
       getDiscountsForCart: getDiscountsForCart
     };
 
@@ -95,7 +96,14 @@ angular.module('kposApp')
 
         return promise;
     }
+    function applyCoupon (id) {
+      var r = $resource('api/coupons/:id', {id:'@id'});
+      r.get({id: id},function(coupon){
+        cart.coupons = cart.coupons || [];
+        cart.coupons.push(coupon);
+      });
 
+    }
     function getTotalItem (item) {
       return  Math.round((item.quantity * item.price) * 100)/100;
     }
