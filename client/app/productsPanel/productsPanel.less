@@ -5,28 +5,56 @@ ul {
 .item {
   padding: 5px 0;
   border-bottom: dotted 1px @color5;
-  margin-right: 10px;
-  margin-left: -45px;
+  margin-right: 0px;
+  margin-left: -40px;
+  height: 80px;
 }
 
 .fa-plus-circle {
   color: @color4;
 }
 
-.img {
-  width: 40%;
-  height: 100%;
-  display: block;
-}
-.title, .price {
-  padding-top: 80px;
+img {
+  width: 60px;
 }
 
-.action {
-  padding-top: 70px;
+.title, .price, .action, .img {
+  top: 50%;
+  position: relative;
+  -webkit-transform: translateY(-50%);
+  -ms-transform: translateY(-50%);
+  transform: translateY(-50%);
 }
-
 .search {
   padding: 8px;
   background-color: @color3;
+}
+
+.nav-tabs {
+  background-color: @color6;
+
+  > li > a{
+    color: @color3;
+    font-weight: bold;
+  }
+}
+
+.products {
+  margin-bottom: 0;
+}
+
+.add-cart-icon {
+  float: right;
+}
+
+.products-size {
+  background-color: @color6;
+  text-align: right;
+  color: @color5;
+  font-style: italic;
+  font-size: 12px;
+}
+
+.input-group-addon {
+  background-color: @color6;
 }

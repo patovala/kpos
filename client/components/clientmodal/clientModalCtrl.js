@@ -4,15 +4,28 @@
  * TODO: this modal requires unit test
  * */
 
-function ClientModalCtrl($scope, $modalInstance) {
+function ClientModalCtrl($scope, $modalInstance, $resource) {
+  var vm = this;
+  vm.updateClient = updateClient;
+  vm.cancel = cancel;
+  reset();
+  return vm;
 
-  $scope.update = function () {
-    $modalInstance.close({'TODO': 'this should be the new created client'});
-  };
+  function updateClient(){
+    var r = $resource('api/clients');
+    r.save({client: vm.client}, function(){
+        alertify.success('Client Created');
+        $modalInstance.close();
+    });
 
-  $scope.cancel = function () {
+  }
+  function reset(){
+    vm.client = { name:'', address:'', dni:''};
+  }
+  function cancel(){
     $modalInstance.dismiss('cancel');
-  };
+  }
+
 }
 
 angular.module('kposApp')
