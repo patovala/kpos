@@ -33,7 +33,7 @@ function cartPanel() {
     }
 
     function searchClient(value){
-     // var r = $resource('api/clients');
+      var r = $resource('api/clients');
       //cp.clients = r.query({query: value});
       return r.query({query: value}).$promise.then(function(clients){
         cp.clients = clients;

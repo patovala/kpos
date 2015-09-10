@@ -16,6 +16,7 @@
     "method-override": "~1.0.0",
     "mongodb": "^2.0.42",
     "morgan": "~1.0.0",
+    "ng-alertify": "^0.8.0",
     "serve-favicon": "~2.0.1"
   },
   "devDependencies": {

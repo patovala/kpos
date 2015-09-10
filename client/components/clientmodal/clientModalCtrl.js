@@ -4,30 +4,26 @@
  * TODO: this modal requires unit test
  * */
 
-function ClientModalCtrl($scope, $modalInstance) {
+function ClientModalCtrl($scope, $modalInstance, $resource) {
   var vm = this;
   vm.updateClient = updateClient;
   vm.cancel = cancel;
-  vm.clientForm;
+  reset();
   return vm;
 
   function updateClient(){
-    if(vm.clientForm.$valid){
-      console.log(vm.client.name);
-       alertify.success('Success message');
-       $modalInstance.close({'TODO': 'this should be the new created client'});
-       reset();
-
-    }else{
-      alertify.error('Error message');
-    }
+    var r = $resource('api/clients');
+    r.save({client: vm.client}, function(){
+        alertify.success('Client Created');
+        $modalInstance.close();
+    });
 
   }
   function reset(){
     vm.client = { name:'', address:'', dni:''};
   }
   function cancel(){
-     $modalInstance.dismiss('cancel');
+    $modalInstance.dismiss('cancel');
   }
 
 }
