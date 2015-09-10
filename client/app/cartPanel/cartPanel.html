@@ -3,10 +3,10 @@
     <thead>
     <tr>
         <th data-field="id" class="col-md-2">Qty</th>
-        <th data-field="name" class="col-md-5">Product</th>
+        <th data-field="name" class="col-md-4">Product</th>
         <th data-field="price" class="col-md-2">Price</th>
-        <th data-field="price" class="col-md-3">Total</th>
-        <th></th>
+        <th data-field="total" class="col-md-3">Total</th>
+        <th data-field="remove" class="col-md-1"></th>
     </tr>
     </thead>
     <tbody>
@@ -15,7 +15,7 @@
             <td>
                 <div class="quantity-item">{{i.quantity}}</div>
             </td>
-    		<td>{{i.name}}</td>
+            <td>{{i.name}}</td>
             <td>
                 <div class="price-item">{{i.price}}</div>
             </td>
@@ -26,12 +26,17 @@
                 </span>
              </td>
     	</tr>
+      <tr ng-if="cp.cart.discounts">
+        <td colspan="5" class="discounts">
+          DISCOUNTS
+        </td>
+      </tr>
     	<tr ng-repeat="d in cp.cart.discounts">
-    		<td></td>
-    		<td>{{d.name}}</td>
-        <td>{{d.value}} <span ng-if="d.type=='percent'">%</span></td>
-    		<td>{{d.total}}</td>
-        
+        <td colspan="2">{{d.name}}</td>
+        <td>
+          <div class="price-item"> {{d.value}} <span ng-if="d.type=='percent'">%</span></div>
+        </td>
+        <td class="total-item">{{d.total}}</td>
     	</tr>
     </tbody>
     <tfoot >
@@ -39,24 +44,22 @@
     		<td colspan="3">Cart Subtotal</td><td>{{cp.cart.subtotal}}</td>
     	</tr>
     	<tr align="right">
-    		<td colspan="3">Tax</td><td>{{cp.cart.tax}}</td>
+        <td colspan="3">Tax {{cp.cart.tax}} %</td><td>{{cp.totalTax()}}</td>
     	</tr>
     	<tr align="right">
-
-    		<td colspan="3"><h3>Order Total</h3></td><td><h3>{{cp.cart.total}}</h3></td>
-
+        <td colspan="3"><h3>Order Total</h3></td><td><h3>{{cp.totalCart()}}</h3></td>
     	</tr>
     </tfoot>
   </table>
 </div>
 <hr/>
-<div id="client_section" >  
+<div id="client_section" >
     <div class="panel-heading panel-client">
       <div class="client row">
         <div class="col-xs-2 col-sm-2 col-md-2 data">
-          Client:    
+          Client:
         </div>
-        <div class="col-xs-6 col-sm-8 col-md-7 data">          
+        <div class="col-xs-6 col-sm-8 col-md-7 data">
             <input type="text"
                 class="form-control"
                 ng-model="selectedClient"
@@ -64,11 +67,11 @@
                 typeahead-editable="false"
                 typeahead="c.name for c in cp.searchClient($viewValue)"
                 typeahead-on-select="cp.changeClient($item, $model, $label)"
-                placeholder="Consumidor Final">        
+                placeholder="Consumidor Final">
         </div>
-        <div class="col-xs-4 col-sm-2 col-md-3 data">          
+        <div class="col-xs-4 col-sm-2 col-md-3 data">
               <button class="btn btn-success" type="button" ng-click="cp.newClientModal()">New Client</button>
-        </div>      
+        </div>
       </div>
 
     </div>
@@ -76,31 +79,31 @@
     <div class="panel-body panel-data-client">
       <div class="row">
         <div class="col-xs-3 col-sm-2 col-md-2 tag">
-          DNI: 
+          DNI:
         </div>
-        <div class="col-xs-9 col-sm-10 col-md-10 ">          
-            {{cp.cart.client.id}}     
-        </div>           
-      </div>      
-      <div class="row">
-        <div class="col-xs-3 col-sm-2 col-md-2 tag">
-          Name:    
+        <div class="col-xs-9 col-sm-10 col-md-10 ">
+            {{cp.cart.client.id}}
         </div>
-        <div class="col-xs-9 col-sm-10 col-md-10 ">          
-            {{cp.cart.client.name}}     
-        </div>           
       </div>
       <div class="row">
         <div class="col-xs-3 col-sm-2 col-md-2 tag">
-          Address:    
+          Name:
         </div>
-        <div class="col-xs-9 col-sm-10 col-md-10">          
-            {{cp.cart.client.address}}    
-        </div>           
+        <div class="col-xs-9 col-sm-10 col-md-10 ">
+            {{cp.cart.client.name}}
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-xs-3 col-sm-2 col-md-2 tag">
+          Address:
+        </div>
+        <div class="col-xs-9 col-sm-10 col-md-10">
+            {{cp.cart.client.address}}
+        </div>
       </div>
 
     </div>
-  
+
 </div>
 <hr/>
 <div id="discount_section">

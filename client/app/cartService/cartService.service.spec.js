@@ -25,8 +25,7 @@ describe('Service: cartService', function () {
               subtotal: 0,
               tax: 12,
               total: 0,
-              discounts: [],
-              cupons: []
+              discounts: []
           };
 
     products = [
@@ -55,10 +54,10 @@ describe('Service: cartService', function () {
 
     discounts = [
       {
-      _id: 1,
-      name: 'Bring your own',
-      type: 'value',
-      value: 0.10
+        _id: 1,
+        name: 'Bring your own',
+        type: 'value',
+        value: 0.10
       }
     ];
 
@@ -186,22 +185,68 @@ describe('Service: cartService', function () {
     });
   });
 
-  describe('#getCuponForCart', function () {
+  describe('#applyCoupon', function () {
+    var cartExpect = {
+        client: {_id: 'default', name: 'Consumidor Final', address: ''},
+        items: [],
+        subtotal: 0,
+        tax: 12,
+        pendingCoupons: [123]
+    };
 
     it('should call api/discounts/id and set the cupon in the cart', function () {
-      var coupon =
-        {
-          _id: 1,
-          name: 'Mocachino 2x1'
-      };
-      $httpBackend.expectGET('api/coupons/123').respond(coupon);
+      $httpBackend.expectPOST('api/discounts/byclient',
+        { cart: cartExpect, filter:'byclient'}).respond({ discounts : discounts });
 
-      cartService.applyCoupon('123');
-
+      cartService.applyCoupon(123);
       $httpBackend.flush();
-      expect(cartService.getCart().coupons).toBeDefined();
-      expect(cartService.getCart().coupons.length).toEqual(1);
+
+      expect(cartService.getCart().pendingCoupons).toBeDefined();
+      expect(cartService.getCart().pendingCoupons.length).toEqual(1);
     });
   });
 
+  it('#getTotalItem should calculate the total item', function () {
+    var item = cart.items[0];
+    item.quantity = 2;
+
+    expect(cartService.getTotalItem(item)).toEqual(1.98);
+  });
+
+  it('#getSubTotalCart should calculate the subtotal for the cart', function () {
+    $httpBackend.expectGET('api/products?_id=1').respond(products[0]);
+    cartService.addToCart(1);
+
+    $httpBackend.expectGET('api/products?_id=2').respond(products[1]);
+    cartService.addToCart(2);
+
+    $httpBackend.flush();
+
+    cartService.getSubTotalCart();
+    expect(cartService.getCart().subtotal).toEqual(1.98);
+  });
+
+  it('#getTotalTax should calculate the totalTax for the cart', function () {
+    $httpBackend.expectGET('api/products?_id=1').respond(products[0]);
+    cartService.addToCart(1);
+
+    $httpBackend.expectGET('api/products?_id=2').respond(products[1]);
+    cartService.addToCart(2);
+
+    $httpBackend.flush();
+
+    expect(cartService.getTotalTax()).toEqual(0.24);
+  });
+
+  it('#getTotalCart should calculate the total for the cart', function () {
+    $httpBackend.expectGET('api/products?_id=1').respond(products[0]);
+    cartService.addToCart(1);
+
+    $httpBackend.expectGET('api/products?_id=2').respond(products[1]);
+    cartService.addToCart(2);
+
+    $httpBackend.flush();
+
+    expect(cartService.getTotalCart()).toEqual(2.22);
+  });
 });

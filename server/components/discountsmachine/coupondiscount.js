@@ -21,8 +21,8 @@ exports.coupondiscount = function (cart, cb){
     var coupons = db.collection('coupons'),
         ds = [];
 
-    if(cart.pending_coupons && cart.pending_coupons.length){
-      coupons.find({_id: {$in: cart.pending_coupons}}).toArray(function(err, docs){
+    if(cart.pendingCoupons && cart.pendingCoupons.length){
+      coupons.find({_id: {$in: cart.pendingCoupons}}).toArray(function(err, docs){
 
         //find the items with category equal to the one in the discount
         docs && _.each(docs, function(c){
