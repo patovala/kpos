@@ -9,7 +9,6 @@ var MongoClient = require('mongodb').MongoClient,
     url = 'mongodb://localhost/kpos-test',
     clients;
 
-
 describe('GET /api/clients', function() {
   before(function(done) {
 
@@ -77,5 +76,22 @@ describe('GET /api/clients', function() {
           res.body._id.should.equal(1);
           done();
         });
+  });
+
+  it('should add Client with the correct information', function(done) {
+    request(app)
+      .post('/api/clients')
+      .send( {_id: 8, name: "Juan Quishpe", address: "La Paz"} )
+      .expect(200)
+      .expect('Content-Type', /json/)
+      .end(function(err, res) {
+        if (err) return done(err);
+          res.body.should.be.instanceof(Array);
+          res.body.length.should.equal(1);
+          res.body[0]._id.should.equal(8);
+          res.body[0].name.should.equal("Juan Quishpe");
+          res.body[0].address.should.equal("La Paz");
+          done();
+      });
   });
 });
