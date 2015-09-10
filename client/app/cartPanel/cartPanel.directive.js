@@ -53,6 +53,7 @@ function cartPanel() {
         animation: false,
         templateUrl: 'components/clientmodal/clientModal.html',
         controller: 'clientModalCtrl',
+        controllerAs: 'vm',
         size: 'sm'
         //resolve: {
         //  algo: function(){}
