@@ -576,7 +576,7 @@ module.exports = function (grunt) {
     mongoimport: {
       options: {
       db : 'kpos-dev',
-      host : 'localhost', //optional
+      host : '127.0.0.1', //optional
       port: '27017', //optional
       collections :
       [
