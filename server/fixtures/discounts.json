@@ -9,8 +9,10 @@
     {
         "_id": 2,
         "name": "internetservice",
+        "description": "This discount aplies to carts with coffee items"
         "appliesToItemCategory": "coffee",
         "discount": {
+            "id": "internetservice",
             "name": "Internet Service",
             "type": "notvalue",
             "comment": "this object has to be resolved in the checkout phase"

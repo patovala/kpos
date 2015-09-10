@@ -57,6 +57,7 @@ describe('DiscountsMachine chain of responsabilities', function() {
 
     var D = new DiscountsMachine();
     var cart = {};
+
     D.getDiscounts(cart, function(discounts){
       discounts.should.be.instanceof(Array);
       discounts.length.should.equal(1);
