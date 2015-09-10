@@ -10,12 +10,11 @@ var MongoClient = require('mongodb').MongoClient,
     clients;
 
 
-
 describe('GET /api/clients', function() {
   before(function(done) {
 
     MongoClient.connect(url, {}, function(err, db) {
-    // Get the documents collection
+      // Get the documents collection
       var collection = db.collection('clients');
       // Insert some documents
       clients = _.map([1, 2, 3, 4, 5], function(i){
