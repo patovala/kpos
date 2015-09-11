@@ -157,7 +157,7 @@ describe('Service: cartService', function () {
     expect(cartService.getCart().discounts).toEqual([]);
   });
 
-  iit('#resetCart pressing the void', function () {
+  it('#resetCart pressing the void', function () {
     var discount = {
       type: 'value',
       valor: 3

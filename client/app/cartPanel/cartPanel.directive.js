@@ -24,7 +24,6 @@ function cartPanel() {
     cp.removeItemCart = removeItemCart;
     cp.applyCoupon = applyCoupon;
     cp.applyDiscount = applyDiscount;
-    cp.searchCoupon = searchCoupon;
     cp.voidCart = voidCart;
     cp.totalCart = totalCart;
     cp.totalTax = totalTax;
