@@ -31,7 +31,7 @@
     		<td>{{d.name}}</td>
         <td>{{d.value}} <span ng-if="d.type=='percent'">%</span></td>
     		<td>{{d.total}}</td>
-        
+
     	</tr>
     </tbody>
     <tfoot >
@@ -50,13 +50,13 @@
   </table>
 </div>
 <hr/>
-<div id="client_section" >  
+<div id="client_section" >
     <div class="panel-heading panel-client">
       <div class="client row">
         <div class="col-xs-2 col-sm-2 col-md-2 data">
-          Client:    
+          Client:
         </div>
-        <div class="col-xs-6 col-sm-8 col-md-7 data">          
+        <div class="col-xs-6 col-sm-8 col-md-7 data">
             <input type="text"
                 class="form-control"
                 ng-model="selectedClient"
@@ -64,11 +64,11 @@
                 typeahead-editable="false"
                 typeahead="c.name for c in cp.searchClient($viewValue)"
                 typeahead-on-select="cp.changeClient($item, $model, $label)"
-                placeholder="Consumidor Final">        
+                placeholder="Consumidor Final">
         </div>
-        <div class="col-xs-4 col-sm-2 col-md-3 data">          
+        <div class="col-xs-4 col-sm-2 col-md-3 data">
               <button class="btn btn-success" type="button" ng-click="cp.newClientModal()">New Client</button>
-        </div>      
+        </div>
       </div>
 
     </div>
@@ -76,31 +76,31 @@
     <div class="panel-body panel-data-client">
       <div class="row">
         <div class="col-xs-3 col-sm-2 col-md-2 tag">
-          DNI: 
+          DNI:
         </div>
-        <div class="col-xs-9 col-sm-10 col-md-10 ">          
-            {{cp.cart.client.id}}     
-        </div>           
-      </div>      
-      <div class="row">
-        <div class="col-xs-3 col-sm-2 col-md-2 tag">
-          Name:    
+        <div class="col-xs-9 col-sm-10 col-md-10 ">
+            {{cp.cart.client.id}}
         </div>
-        <div class="col-xs-9 col-sm-10 col-md-10 ">          
-            {{cp.cart.client.name}}     
-        </div>           
       </div>
       <div class="row">
         <div class="col-xs-3 col-sm-2 col-md-2 tag">
-          Address:    
+          Name:
         </div>
-        <div class="col-xs-9 col-sm-10 col-md-10">          
-            {{cp.cart.client.address}}    
-        </div>           
+        <div class="col-xs-9 col-sm-10 col-md-10 ">
+            {{cp.cart.client.name}}
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-xs-3 col-sm-2 col-md-2 tag">
+          Address:
+        </div>
+        <div class="col-xs-9 col-sm-10 col-md-10">
+            {{cp.cart.client.address}}
+        </div>
       </div>
 
     </div>
-  
+
 </div>
 <hr/>
 <div id="discount_section">
@@ -128,4 +128,10 @@
     <span class="input-group-addon" id="coupon">coupon</span>
     <input type="text" class="form-control" placeholder="claim coupon" aria-describedby="coupon">
   </div-->
+</div>
+<div id="cart_footer">
+
+    <button type="button" class="btn btn-danger" ng-click="cp.voidCart()">Void</button>
+    <button type="button" class="btn btn-success" ng-click="cp.checkoutCart()">Checkout</button>
+
 </div>

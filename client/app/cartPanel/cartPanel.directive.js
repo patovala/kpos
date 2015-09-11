@@ -23,6 +23,8 @@ function cartPanel() {
     cp.getDiscountsDropdown = getDiscountsDropdown;
     cp.removeItemCart = removeItemCart;
     cp.searchCoupon = searchCoupon;
+    cp.voidCart = voidCart;
+    //cp.checkoutCart = checkoutCart;
 
     init();
     return cp;
@@ -88,6 +90,10 @@ function cartPanel() {
     function searchCoupon(){
       cartService.applyCoupon(cp.selectedCoupon);
     }
+    function voidCart(){
+      cartService.resetCart();
+    }
+
   }
 
 }
