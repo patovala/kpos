@@ -113,9 +113,10 @@ angular.module('kposApp')
     }
 
     function resetCart(){
+      var client = {_id: 'default', name: 'Consumidor Final', address: ''};
       cart.items = [];
       cart.discounts = [];
-      cart.subtotal = 0;
+      setClient(client);
 
     }
     function getSubTotalCart () {
