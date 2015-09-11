@@ -25,7 +25,8 @@ describe('Service: cartService', function () {
               subtotal: 0,
               tax: 12,
               total: 0,
-              discounts: []
+              discounts: [],
+              cupons: []
           };
 
     products = [
@@ -60,6 +61,7 @@ describe('Service: cartService', function () {
       value: 0.10
       }
     ];
+
   }));
 
   afterEach(function() {
@@ -181,6 +183,24 @@ describe('Service: cartService', function () {
       $httpBackend.flush();
 
       expect(cartService.getCart().discounts).toBeUndefined();
+    });
+  });
+
+  describe('#getCuponForCart', function () {
+
+    it('should call api/discounts/id and set the cupon in the cart', function () {
+      var coupon =
+        {
+          _id: 1,
+          name: 'Mocachino 2x1'
+      };
+      $httpBackend.expectGET('api/coupons/123').respond(coupon);
+
+      cartService.applyCoupon('123');
+
+      $httpBackend.flush();
+      expect(cartService.getCart().coupons).toBeDefined();
+      expect(cartService.getCart().coupons.length).toEqual(1);
     });
   });
 

@@ -13,7 +13,7 @@ describe('GET /api/clients', function() {
   before(function(done) {
 
     MongoClient.connect(url, {}, function(err, db) {
-    // Get the documents collection
+      // Get the documents collection
       var collection = db.collection('clients');
       // Insert some documents
       clients = _.map([1, 2, 3, 4, 5], function(i){
@@ -86,11 +86,11 @@ describe('GET /api/clients', function() {
       .expect('Content-Type', /json/)
       .end(function(err, res) {
         if (err) return done(err);
-          res.body.should.be.instanceof(Array);
-          res.body.length.should.equal(1);
-          res.body[0]._id.should.equal(8);
-          res.body[0].name.should.equal("Juan Quishpe");
-          res.body[0].address.should.equal("La Paz");
+          res.body.ops.should.be.instanceof(Array);
+          res.body.ops.length.should.equal(1);
+          res.body.ops[0]._id.should.equal(8);
+          res.body.ops[0].name.should.equal("Juan Quishpe");
+          res.body.ops[0].address.should.equal("La Paz");
           done();
       });
   });
