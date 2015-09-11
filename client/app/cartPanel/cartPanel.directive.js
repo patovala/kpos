@@ -24,7 +24,8 @@ function cartPanel() {
     cp.removeItemCart = removeItemCart;
     cp.searchCoupon = searchCoupon;
     cp.voidCart = voidCart;
-    //cp.checkoutCart = checkoutCart;
+    cp.totalCart = totalCart;
+    cp.totalTax = totalTax;
 
     init();
     return cp;
@@ -87,11 +88,20 @@ function cartPanel() {
       cartService.resetDiscounts();
       cartService.getDiscountsForCart('byclient');
     }
+
     function searchCoupon(){
       cartService.applyCoupon(cp.selectedCoupon);
     }
     function voidCart(){
       cartService.resetCart();
+    }
+
+    function totalCart() {
+      return cartService.getTotalCart();
+    }
+
+    function totalTax() {
+      return cartService.getTotalTax();
     }
 
   }

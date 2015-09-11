@@ -3,19 +3,21 @@
     <thead>
     <tr>
         <th data-field="id" class="col-md-2">Qty</th>
-        <th data-field="name" class="col-md-5">Product</th>
+        <th data-field="name" class="col-md-4">Product</th>
         <th data-field="price" class="col-md-2">Price</th>
-        <th data-field="price" class="col-md-3">Total</th>
-        <th></th>
+        <th data-field="total" class="col-md-3">Total</th>
+        <th data-field="remove" class="col-md-1"></th>
     </tr>
     </thead>
     <tbody>
     	<tr ng-repeat="i in cp.cart.items">
 
             <td>
-                <div class="quantity-item">{{i.quantity}}</div>
+                <!-- <panel-popup> -->
+                  <div class="quantity-item">{{i.quantity}}</div>
+                <!-- </panel-popup> -->
             </td>
-    		<td>{{i.name}}</td>
+            <td>{{i.name}}</td>
             <td>
                 <div class="price-item">{{i.price}}</div>
             </td>
@@ -26,11 +28,18 @@
                 </span>
              </td>
     	</tr>
+      <tr ng-if="cp.cart.discounts && cp.cart.discounts.length>0">
+        <td colspan="5" class="discounts">
+          DISCOUNTS
+        </td>
+      </tr>
     	<tr ng-repeat="d in cp.cart.discounts">
-    		<td></td>
-    		<td>{{d.name}}</td>
-        <td>{{d.value}} <span ng-if="d.type=='percent'">%</span></td>
-    		<td>{{d.total}}</td>
+
+        <td colspan="2">{{d.name}}</td>
+        <td>
+          <div class="price-item"> {{d.value}} <span ng-if="d.type=='percent'">%</span></div>
+        </td>
+        <td class="total-item">{{d.total}}</td>
 
     	</tr>
     </tbody>
@@ -39,12 +48,10 @@
     		<td colspan="3">Cart Subtotal</td><td>{{cp.cart.subtotal}}</td>
     	</tr>
     	<tr align="right">
-    		<td colspan="3">Tax</td><td>{{cp.cart.tax}}</td>
+        <td colspan="3">Tax {{cp.cart.tax}} %</td><td>{{cp.totalTax()}}</td>
     	</tr>
     	<tr align="right">
-
-    		<td colspan="3"><h3>Order Total</h3></td><td><h3>{{cp.cart.total}}</h3></td>
-
+        <td colspan="3"><h3>Order Total</h3></td><td><h3>{{cp.totalCart()}}</h3></td>
     	</tr>
     </tfoot>
   </table>

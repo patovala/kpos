@@ -111,7 +111,7 @@ describe('DiscountsMachine chain of responsabilities', function() {
 
     var D = new DiscountsMachine();
     var cart = {items: [{_id: 1, quantity: 1, name: "mocachino"}, {_id: 2, quantity: 4, name: "mocachino"},
-                        {_id: 3, quantity: 3, name: "flatwhite"}], pending_coupons: ['2x1-1234']};
+                        {_id: 3, quantity: 3, name: "flatwhite"}], pendingCoupons: ['2x1-1234']};
 
     D.getDiscounts(cart, function(discounts){
       discounts.should.be.instanceof(Array);
