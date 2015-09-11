@@ -5,7 +5,7 @@ angular.module('kposApp')
     return {
       templateUrl: 'app/popupField/popupField.html',
       restrict: 'EA',
-      link: function (scope, element, attrs) {
+      link: function () {
       }
     };
   });
