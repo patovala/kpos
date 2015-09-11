@@ -206,6 +206,27 @@ describe('Service: cartService', function () {
     });
   });
 
+  describe('#applyDiscount', function () {
+    var cartExpect = {
+        client: {_id: 'default', name: 'Consumidor Final', address: ''},
+        items: [],
+        subtotal: 0,
+        tax: 12,
+        pendingDiscounts: [1]
+    };
+
+    it('should call api/discounts/id and set the discout in the cart', function () {
+      $httpBackend.expectPOST('api/discounts/byclient',
+        { cart: cartExpect, filter:'byclient'}).respond({ discounts : discounts });
+
+      cartService.applyDiscount(1);
+      $httpBackend.flush();
+
+      expect(cartService.getCart().pendingDiscounts).toBeDefined();
+      expect(cartService.getCart().pendingDiscounts.length).toEqual(1);
+    });
+  });
+
   it('#getTotalItem should calculate the total item', function () {
     var item = cart.items[0];
     item.quantity = 2;

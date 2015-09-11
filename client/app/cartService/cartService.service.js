@@ -19,6 +19,7 @@ angular.module('kposApp')
       addDiscount: addDiscount,
       resetDiscounts: resetDiscounts,
       applyCoupon: applyCoupon,
+      applyDiscount: applyDiscount,
       getDiscountsForCart: getDiscountsForCart,
       getSubTotalCart: getSubTotalCart,
       getTotalItem: getTotalItem,
@@ -105,8 +106,14 @@ angular.module('kposApp')
       cart.pendingCoupons = cart.pendingCoupons || [];
       cart.pendingCoupons.push(idCoupon);
       getDiscountsForCart('byclient');
-
     }
+
+    function applyDiscount (idDiscount) {
+      cart.pendingDiscounts = cart.pendingDiscounts || [];
+      cart.pendingDiscounts.push(idDiscount);
+      getDiscountsForCart('byclient');
+    }
+
     function getTotalItem (item) {
       return  Math.round((item.quantity * item.price) * 100)/100;
     }

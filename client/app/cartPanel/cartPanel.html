@@ -36,20 +36,20 @@
     	<tr ng-repeat="d in cp.cart.discounts">
         <td colspan="2">{{d.name}}</td>
         <td>
-          <div class="price-item"> {{d.value}} <span ng-if="d.type=='percent'">%</span></div>
+          <div class="price-item"> {{d.value | number: 2}} <span ng-if="d.type=='percent'">%</span></div>
         </td>
-        <td class="total-item">{{d.total}}</td>
+        <td class="total-item">{{d.total | number: 2}}</td>
     	</tr>
     </tbody>
     <tfoot >
     	<tr align="right">
-    		<td colspan="3">Cart Subtotal</td><td>{{cp.cart.subtotal}}</td>
+    		<td colspan="3">Cart Subtotal</td><td>{{cp.cart.subtotal | number: 2}}</td>
     	</tr>
     	<tr align="right">
-        <td colspan="3">Tax {{cp.cart.tax}} %</td><td>{{cp.totalTax()}}</td>
+        <td colspan="3">Tax {{cp.cart.tax}} %</td><td>{{cp.totalTax() | number: 2}}</td>
     	</tr>
     	<tr align="right">
-        <td colspan="3"><h3>Order Total</h3></td><td><h3>{{cp.totalCart()}}</h3></td>
+        <td colspan="3"><h3>Order Total</h3></td><td><h3>{{cp.totalCart() | number: 2}}</h3></td>
     	</tr>
     </tfoot>
   </table>
@@ -114,7 +114,9 @@
       Agregar Descuentos <span class="caret"></span>
     </button>
     <ul class="dropdown-menu" role="menu" aria-labelledby="discounts-button">
-      <li role="menuitem" ng-repeat="discount in cp.discounts"><a href="#">{{discount.name}}</a></li>
+      <li role="menuitem" ng-repeat="discount in cp.discounts">
+        <a href="" ng-click="cp.applyDiscount(discount.id)">{{discount.name}}</a>
+      </li>
     </ul>
     <div class="input-group">
       <span class="input-group-addon" id="coupon">coupon:</span>
@@ -125,7 +127,7 @@
       ng-model="cp.selectedCoupon"
       aria-describedby="coupon">
       <span class="input-group-btn">
-        <button class="btn btn-success" type="button" ng-click="cp.searchCoupon()">Apply</button>
+        <button class="btn btn-success" type="button" ng-click="cp.applyCoupon()">Apply</button>
       </span>
     </div>
   </div>
