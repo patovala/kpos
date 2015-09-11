@@ -28,12 +28,13 @@
                 </span>
              </td>
     	</tr>
-      <tr ng-if="cp.cart.discounts">
+      <tr ng-if="cp.cart.discounts && cp.cart.discounts.length>0">
         <td colspan="5" class="discounts">
           DISCOUNTS
         </td>
       </tr>
     	<tr ng-repeat="d in cp.cart.discounts">
+
         <td colspan="2">{{d.name}}</td>
         <td>
           <div class="price-item"> {{d.value | number: 2}} <span ng-if="d.type=='percent'">%</span></div>
@@ -135,4 +136,10 @@
     <span class="input-group-addon" id="coupon">coupon</span>
     <input type="text" class="form-control" placeholder="claim coupon" aria-describedby="coupon">
   </div-->
+</div>
+<div id="cart_footer">
+
+    <button type="button" class="btn btn-danger" ng-click="cp.voidCart()">Void</button>
+    <button type="button" class="btn btn-success" ng-click="cp.checkoutCart()">Checkout</button>
+
 </div>
