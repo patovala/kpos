@@ -1,0 +1,13 @@
+[
+   {
+      "_id" : "2x1-1234",
+      "name" : "Dos por uno en mocachino y flat white",
+      "applyToItems" : [
+         1,
+         3
+      ],
+      "category" : "2x1",
+      "expirationDate" : "",
+      "state" : "new"
+   }
+]
