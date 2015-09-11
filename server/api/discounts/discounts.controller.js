@@ -2,6 +2,8 @@
 
 var _ = require('lodash');
 var config = require('../../config/environment');
+var DiscountsMachine = require('../../components/discountsmachine/discountsmachine.js').DiscountsMachine;
+
 
 // Configure mongo access
 var MongoClient,
@@ -15,16 +17,21 @@ exports.index = function(req, res) {
     var discounts = db.collection('discounts');
 
     var query = {};
+    console.log('discounts', req.body.filter);
 
-    if(req.params && req.params.filter){
-      // we need a cart anylizer to generate the discounts for
-      // each case
+    if(req.body && req.body.filter && req.body.filter === 'byclient'){
+      var D = new DiscountsMachine();
+      console.log('MAQUINA', req.body.filter);
+
+      D.getDiscounts(req.body.cart, function(ds){
+        res.json({discounts: ds});
+      });
+    } else {
       query = {category: req.params.filter};
+      discounts.find(query).toArray(function(err, ds){
+        res.json({discounts: ds});
+        db.close();
+      });
     }
-
-    discounts.find(query).toArray(function(err, docs){
-      res.json(docs);
-      db.close();
-    });
   });
 };

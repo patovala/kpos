@@ -19,7 +19,11 @@ angular.module('kposApp')
       addDiscount: addDiscount,
       resetDiscounts: resetDiscounts,
       applyCoupon: applyCoupon,
-      getDiscountsForCart: getDiscountsForCart
+      getDiscountsForCart: getDiscountsForCart,
+      getSubTotalCart: getSubTotalCart,
+      getTotalItem: getTotalItem,
+      getTotalCart: getTotalCart,
+      getTotalTax: getTotalTax
     };
 
     function addToCart(id){
@@ -68,6 +72,7 @@ angular.module('kposApp')
           }
       });
 
+      getSubTotalCart();
       return itemSaved;
     }
 
@@ -96,15 +101,32 @@ angular.module('kposApp')
 
         return promise;
     }
-    function applyCoupon (id) {
-      var r = $resource('api/coupons/:id', {id:'@id'});
-      r.get({id: id},function(coupon){
-        cart.coupons = cart.coupons || [];
-        cart.coupons.push(coupon);
-      });
+    function applyCoupon (idCoupon) {
+      cart.pendingCoupons = cart.pendingCoupons || [];
+      cart.pendingCoupons.push(idCoupon);
+      getDiscountsForCart('byclient');
 
     }
     function getTotalItem (item) {
       return  Math.round((item.quantity * item.price) * 100)/100;
+    }
+
+    function getSubTotalCart () {
+      var subtotal = 0;
+      _.forEach(cart.items, function (item) {
+        subtotal = subtotal + item.total;
+      });
+      cart.subtotal = subtotal;
+    }
+
+    function getTotalCart () {
+      var totalDiscounts = cart.totalDiscounts || 0,
+          totalCupons = cart.totalCupons || 0,
+          totalTax = getTotalTax(cart.tax);
+      return Math.round(((cart.subtotal + totalTax) - (totalDiscounts + totalCupons)) * 100)/100;
+    }
+
+    function getTotalTax () {
+      return Math.round((cart.subtotal * (cart.tax/100)) * 100)/100;
     }
   });
