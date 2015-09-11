@@ -2,6 +2,7 @@
 
 var _ = require('lodash');
 var config = require('../../config/environment');
+var twoforone = require('./coupondiscount').coupondiscount;
 
 var MongoClient,
     url = config.mongo.uri;
@@ -19,7 +20,7 @@ var DiscountChain = function(cblogic) {
 DiscountChain.prototype = {
     calculate: function(cart, discounts, cb) {
         var that = this;
-        this.discount_logic(cart, function(ds){
+        this.discount_logic && this.discount_logic(cart, function(ds){
           // add the generated discount to the discounts collection
 
           //ds && _.extend(discounts, ds);
@@ -56,7 +57,6 @@ function collectgeneric(cart, cb){
 /*
  * Internet Service Discount
  * */
-
 function internetdiscount(cart, cb){
 
   MongoClient.connect(url, {}, function(err, db) {
@@ -88,11 +88,13 @@ var DiscountsMachine = function () {
   //add the link for the chain internet discount
 
   var genericDiscount = new DiscountChain(collectgeneric),
-      internetDiscount = new DiscountChain(internetdiscount);
+      internetDiscount = new DiscountChain(internetdiscount),
+      twoforoneDiscount = new DiscountChain(twoforone);
   //  byclientDiscount = new ByClientDiscount()
   //  internetDiscount = new InternetDiscount()
 
   genericDiscount.setNextDiscount(internetDiscount);
+  internetDiscount.setNextDiscount(twoforoneDiscount);
 
   // Set the top stack as a property
   this.discountsStack = genericDiscount;
