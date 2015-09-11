@@ -105,11 +105,6 @@ describe('Directive: productsPanel', function () {
     expect(cartService.addToCart).toHaveBeenCalled();
   }));
 
-  /*
-   * TODO: al hacer click en featured deberia llamar a un metodo del controlador
-   * que cambie products a products featured, esto deberia ser una llamada al
-   * backend tambien
-   * */
   it('should get the featured products', inject(function () {
     ctrl.searchTerm = 'abcd';
     ctrl.getProductsFilter('featured');
@@ -120,11 +115,6 @@ describe('Directive: productsPanel', function () {
     expect(ctrl.filter).toEqual('featured');
   }));
 
-  /*
-   * TODO: al hacer click en onsale deberia llamar a un metodo del controlador
-   * que cambie products a products featured, esto deberia ser una llamada al
-   * backend tambien
-   * */
   it('should get the onsale products', inject(function () {
     ctrl.searchTerm = 'cdef';
     ctrl.getProductsFilter('onSale');

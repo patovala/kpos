@@ -46,9 +46,8 @@ describe('#discounts api', function() {
       .expect('Content-Type', /json/)
       .end(function(err, res) {
         if (err) return done(err);
-        res.body.should.be.instanceof(Array);
-        res.body.length.should.equal(2);
-        //console.log('DEBUG:', res.body);
+        res.body.should.be.instanceof(Object);
+        res.body.discounts.length.should.equal(2);
         done();
       });
   });
@@ -60,13 +59,13 @@ describe('#discounts api', function() {
     };
 
     request(app)
-      .post('/api/discounts/byclient', {cart: cart})
+      .post('/api/discounts/byclient')
+      .send(cart)
       .expect(200)
       .expect('Content-Type', /json/)
       .end(function(err, res) {
         if (err) return done(err);
-        res.body.should.be.instanceof(Array);
-        console.log('DEBUG:', res.body);
+        res.body.should.be.instanceof(Object);
         done();
       });
   });
