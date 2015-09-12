@@ -21,7 +21,7 @@
             <td>
                 <div class="price-item">{{i.price}}</div>
             </td>
-            <td class="total-item">$ {{i.total}}</td>
+            <td class="total-item">$ {{(i.price * i.quantity) | number: 2}}</td>
             <td>
                 <span ng-click="cp.removeItemCart(i._id)">
                     <i class="fa fa-times-circle fa-2x"></i>
@@ -44,7 +44,9 @@
     </tbody>
     <tfoot >
     	<tr align="right">
-    		<td colspan="3">Cart Subtotal</td><td>{{cp.cart.subtotal | number: 2}}</td>
+        <td colspan="3">Cart Subtotal</td>
+        <td><span ng-bind="cp.getSubTotal(cp.cart.items)"></span>
+        </td>
     	</tr>
     	<tr align="right">
         <td colspan="3">Tax {{cp.cart.tax}} %</td><td>{{cp.totalTax() | number: 2}}</td>
@@ -132,10 +134,6 @@
       </span>
     </div>
   </div>
-  <!--div class="btn-group">
-    <span class="input-group-addon" id="coupon">coupon</span>
-    <input type="text" class="form-control" placeholder="claim coupon" aria-describedby="coupon">
-  </div-->
 </div>
 <div id="cart_footer">
 

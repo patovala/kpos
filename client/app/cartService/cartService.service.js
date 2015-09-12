@@ -22,8 +22,7 @@ angular.module('kposApp')
       applyDiscount: applyDiscount,
       getDiscountsForCart: getDiscountsForCart,
       resetCart: resetCart,
-      getSubTotalCart: getSubTotalCart,
-      getTotalItem: getTotalItem,
+      getSubTotal: getSubTotal,
       getTotalCart: getTotalCart,
       getTotalTax: getTotalTax
     };
@@ -69,12 +68,10 @@ angular.module('kposApp')
           if (id === i._id) {
             quantityUpdate = quantity ? quantity : i.quantity + 1;
             i.quantity = quantityUpdate;
-            i.total = getTotalItem(i);
             itemSaved = i;
           }
       });
 
-      getSubTotalCart();
       return itemSaved;
     }
 
@@ -115,10 +112,6 @@ angular.module('kposApp')
       getDiscountsForCart('byclient');
     }
 
-    function getTotalItem (item) {
-      return  Math.round((item.quantity * item.price) * 100)/100;
-    }
-
     function resetCart(){
       var client = {_id: 'default', name: 'Consumidor Final', address: ''};
       cart.items = [];
@@ -126,22 +119,24 @@ angular.module('kposApp')
       setClient(client);
 
     }
-    function getSubTotalCart () {
+    function getSubTotal (items) {
       var subtotal = 0;
-      _.forEach(cart.items, function (item) {
-        subtotal = subtotal + item.total;
-      });
-      cart.subtotal = subtotal;
+      if (items) {
+        _.forEach(items, function (item) {
+          subtotal = subtotal + (item.quantity * item.price);
+        });
+      }
+      return subtotal;
     }
 
-    function getTotalCart () {
-      var totalDiscounts = cart.totalDiscounts || 0,
-          totalCupons = cart.totalCupons || 0,
+    function getTotalCart() {
+      var totalDiscounts = getSubTotal(cart.discounts) || 0,
+          subtotal = getSubTotal(cart.items),
           totalTax = getTotalTax(cart.tax);
-      return Math.round(((cart.subtotal + totalTax) - (totalDiscounts + totalCupons)) * 100)/100;
+      return (subtotal + totalTax) - totalDiscounts;
     }
 
     function getTotalTax () {
-      return Math.round((cart.subtotal * (cart.tax/100)) * 100)/100;
+      return getSubTotal(cart.items) * (cart.tax/100);
     }
   });
