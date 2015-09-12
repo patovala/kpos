@@ -10,6 +10,7 @@ module.exports = function(app) {
 var products = require('./api/products/products.controller');
 var clients = require('./api/clients/clients.controller');
   // Insert routes below
+  app.use('/api/orders', require('./api/orders'));
   app.use('/api/discounts', require('./api/discounts'));
   app.get('/api/clients', clients.findAllOrById);
   //app.get('/api/clients?query=', clients.findbyQuery);
