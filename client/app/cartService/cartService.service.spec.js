@@ -86,8 +86,6 @@ describe('Service: cartService', function () {
       '_new_item_added_',
       jasmine.objectContaining({_id:1})
     );
-
-    expect(cartService.getCart().items[0].total).toEqual(0.99);
   });
 
   it('#removeFromCart should remove from cart one by one by id', function () {
@@ -140,7 +138,6 @@ describe('Service: cartService', function () {
 
     cartService.updateItemQuantity(cart.items[0]._id, 4);
     expect(cartService.getCart().items[0].quantity).toEqual(4);
-    expect(cartService.getCart().items[0].total).toEqual(3.96);
   });
 
   it('#resetDiscounts should change the tax in the cart', function () {
@@ -206,6 +203,24 @@ describe('Service: cartService', function () {
     });
   });
 
+  it('#getSubTotal should calculate the subtotal for the cart', function () {
+    var items = [
+      {
+        _id: 1,
+        name: 'Product 1',
+        price: 0.99,
+        quantity: 1
+      },
+      {
+        _id: 1,
+        name: 'Product 1',
+        price: 1.25,
+        quantity: 1
+      }
+    ];
+    expect(cartService.getSubTotal(items)).toEqual(2.24);
+  });
+
   describe('#applyDiscount', function () {
     var cartExpect = {
         client: {_id: 'default', name: 'Consumidor Final', address: ''},
@@ -227,24 +242,23 @@ describe('Service: cartService', function () {
     });
   });
 
-  it('#getTotalItem should calculate the total item', function () {
-    var item = cart.items[0];
-    item.quantity = 2;
+  it('#getSubTotal should calculate the subtotal for the cart', function () {
+    var items = [
+      {
+        _id: 1,
+        name: 'Product 1',
+        price: 0.99,
+        quantity: 1
+      },
+      {
+        _id: 1,
+        name: 'Product 1',
+        price: 1.25,
+        quantity: 1
+      }
+    ];
 
-    expect(cartService.getTotalItem(item)).toEqual(1.98);
-  });
-
-  it('#getSubTotalCart should calculate the subtotal for the cart', function () {
-    $httpBackend.expectGET('api/products?_id=1').respond(products[0]);
-    cartService.addToCart(1);
-
-    $httpBackend.expectGET('api/products?_id=2').respond(products[1]);
-    cartService.addToCart(2);
-
-    $httpBackend.flush();
-
-    cartService.getSubTotalCart();
-    expect(cartService.getCart().subtotal).toEqual(1.98);
+    expect(cartService.getSubTotal(items)).toEqual(2.24);
   });
 
   it('#getTotalTax should calculate the totalTax for the cart', function () {
@@ -256,7 +270,7 @@ describe('Service: cartService', function () {
 
     $httpBackend.flush();
 
-    expect(cartService.getTotalTax()).toEqual(0.24);
+    expect(cartService.getTotalTax()).toEqual(0.23759999999999998);
   });
 
   it('#getTotalCart should calculate the total for the cart', function () {
@@ -268,6 +282,6 @@ describe('Service: cartService', function () {
 
     $httpBackend.flush();
 
-    expect(cartService.getTotalCart()).toEqual(2.22);
+    expect(cartService.getTotalCart()).toEqual(2.2176);
   });
 });

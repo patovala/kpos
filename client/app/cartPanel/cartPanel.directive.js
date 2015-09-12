@@ -26,6 +26,7 @@ function cartPanel() {
     cp.applyDiscount = applyDiscount;
     cp.totalCart = totalCart;
     cp.totalTax = totalTax;
+    cp.getSubTotal = getSubTotal;
 
     init();
     return cp;
@@ -103,6 +104,10 @@ function cartPanel() {
 
     function totalTax() {
       return cartService.getTotalTax();
+    }
+
+    function getSubTotal(items) {
+      return cartService.getSubTotal(items);
     }
   }
 
