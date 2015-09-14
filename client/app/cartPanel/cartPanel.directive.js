@@ -24,6 +24,7 @@ function cartPanel() {
     cp.removeItemCart = removeItemCart;
     cp.applyCoupon = applyCoupon;
     cp.applyDiscount = applyDiscount;
+    cp.voidCart = voidCart;
     cp.totalCart = totalCart;
     cp.totalTax = totalTax;
     cp.getSubTotal = getSubTotal;
@@ -92,6 +93,9 @@ function cartPanel() {
 
     function applyCoupon(){
       cartService.applyCoupon(cp.selectedCoupon);
+    }
+    function voidCart(){
+      cartService.resetCart();
     }
 
     function applyDiscount(idDiscount){

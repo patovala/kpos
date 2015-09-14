@@ -154,6 +154,23 @@ describe('Service: cartService', function () {
     expect(cartService.getCart().discounts).toEqual([]);
   });
 
+  it('#resetCart pressing the void', function () {
+    var discount = {
+      type: 'value',
+      valor: 3
+    };
+    var client = {_id: 'default', name: 'Consumidor Final', address: ''};
+    $httpBackend.expectGET('api/products?_id=1').respond(products[0]);
+    cartService.addToCart(1);
+    $httpBackend.flush();
+    cartService.addDiscount(discount);
+    expect(cartService.getCart().discounts[0]).toEqual(discount);
+    cartService.resetCart();
+    expect(cartService.getCart().discounts).toEqual([]);
+    expect(cartService.getCart().items).toEqual([]);
+    expect(cartService.getCart().client).toEqual(client);
+  });
+
   describe('#getDiscountsForCart', function () {
     var cartExpect = {
         client: {_id: 'default', name: 'Consumidor Final', address: ''},
