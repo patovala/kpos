@@ -22,9 +22,11 @@ function cartPanel() {
     cp.newClientModal = newClientModal;
     cp.getDiscountsDropdown = getDiscountsDropdown;
     cp.removeItemCart = removeItemCart;
-    cp.searchCoupon = searchCoupon;
+    cp.applyCoupon = applyCoupon;
+    cp.applyDiscount = applyDiscount;
     cp.totalCart = totalCart;
     cp.totalTax = totalTax;
+    cp.getSubTotal = getSubTotal;
 
     init();
     return cp;
@@ -88,8 +90,12 @@ function cartPanel() {
       cartService.getDiscountsForCart('byclient');
     }
 
-    function searchCoupon(){
+    function applyCoupon(){
       cartService.applyCoupon(cp.selectedCoupon);
+    }
+
+    function applyDiscount(idDiscount){
+      cartService.applyDiscount(idDiscount);
     }
 
     function totalCart() {
@@ -98,6 +104,10 @@ function cartPanel() {
 
     function totalTax() {
       return cartService.getTotalTax();
+    }
+
+    function getSubTotal(items) {
+      return cartService.getSubTotal(items);
     }
   }
 

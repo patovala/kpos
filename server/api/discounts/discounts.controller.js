@@ -21,7 +21,6 @@ exports.index = function(req, res) {
 
     if(req.body && req.body.filter && req.body.filter === 'byclient'){
       var D = new DiscountsMachine();
-      console.log('MAQUINA', req.body.filter);
 
       D.getDiscounts(req.body.cart, function(ds){
         res.json({discounts: ds});
