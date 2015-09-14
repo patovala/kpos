@@ -1,17 +1,17 @@
 'use strict';
 
-function panelPopup() {
+function popupField() {
   var directive = {
-    templateUrl: 'app/panelPopup/panelField.html',
+    templateUrl: 'app/popupField/panelField.html',
     restrict: 'E',
     link: function () {},
-    controllerAs: 'pp',
-    controller: panelPopupCtrl
+    controllerAs: 'pf',	
+    controller: popupFieldCtrl
   };
   return directive;
-  function panelFieldCtrl($scope, $resource, cartService) {
-    var pp = this;
-    pp.qty="";
+  function popupFieldCtrl($scope, $resource, cartService) {
+    var pf = this;
+    pf.qty="";
 
     function updateQty(idProduct,qty){
       cartService.updateItemQty(idProduct,qty);  
@@ -20,4 +20,4 @@ function panelPopup() {
     }
    }
 angular.module('kposApp')
- .directive('panelField', panelField);
+ .directive('popupField', popupField);
