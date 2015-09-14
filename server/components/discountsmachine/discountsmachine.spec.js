@@ -34,7 +34,7 @@ function createCoupon(data){
 
 describe('DiscountsMachine chain of responsabilities', function() {
 
-  var genericDiscount = {category: 'generic', type:'value', name: 'BYO', value: 0.10},
+  var genericDiscount = {_id: 'BYO', category: 'generic', type:'value', name: 'BYO', value: 0.10, applyToCategory:'coffee'},
       internetDiscount = {"_id":2,
                           "name":"internetservice",
                           "appliesToItemCategory":"coffee",
@@ -70,18 +70,26 @@ describe('DiscountsMachine chain of responsabilities', function() {
   });
 
   /*
-   * Here is how we use the discounts machine
+   * A generic discount is an optional discount that can apply
+   * to a cart. For instance the most common is the BYO, that applies
+   * only to categories of products.
    * */
-  it('should get generic discounts when queried', function(done) {
+  it.only('should get generic discounts when queried and the cart pendingDiscount', function(done) {
     addToCollection(genericDiscount);
     addToCollection(internetDiscount);
 
     var D = new DiscountsMachine();
-    var cart = {};
+    var cart = {pendingDiscounts: [{_id:'BYO', category: 'generic'}],
+                items: [
+                    {_id:1, name: 'item 1', category: 'coffee', quantity: 1},
+                    {_id:2, name: 'item 2', category: 'coffee', quantity: 1},
+                ]};
 
     D.getDiscounts(cart, function(discounts){
+      console.log('DISCOUNTS:', discounts);
       discounts.should.be.instanceof(Array);
-      discounts.length.should.equal(1);
+      //discounts.length.should.equal(1);
+      discounts[0].quantity.should.equal(2);
       done();
     });
   });

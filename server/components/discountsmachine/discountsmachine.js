@@ -40,16 +40,28 @@ DiscountChain.prototype = {
 };
 
 /*
- * Get the generic discounts
+ * Get the generic discounts, when the cart has pendingDiscounts
  * */
 function collectgeneric(cart, cb){
   MongoClient.connect(url, {}, function(err, db) {
 
     var discounts = db.collection('discounts');
 
-    discounts.find({category: 'generic'}).toArray(function(err, docs){
+    //discounts.find({category: 'generic'}).toArray(function(err, docs){
+    discounts.findOne({_id: 'BYO'}, function(err, d){
+      if(d){
+        // buscar en la carta los items que tengan categoria d.applyToCategory
+        var elems = _.filter(cart.items, function(i){return i.category === d.applyToCategory;});
+
+        d.quantity = _.reduce(_.pluck(elems, 'quantity'), function(sum, num){
+            return sum + num;
+        });
+
+        cb([d]);
+      }else{
+        cb([]);
+      }
       db.close();
-      cb(docs);
     });
   });
 }
