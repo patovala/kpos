@@ -56,7 +56,7 @@ exports.addClient = function (req, res) {
 
     var clients = db.collection('clients');
 
-    clients.insert(req.body, function(err, result){
+    clients.insert(req.body.client, function(err, result){
       res.send(
         (err === null) ? result : { msg: err }
       );

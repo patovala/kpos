@@ -21,6 +21,7 @@ angular.module('kposApp')
       applyCoupon: applyCoupon,
       applyDiscount: applyDiscount,
       getDiscountsForCart: getDiscountsForCart,
+      resetCart: resetCart,
       getSubTotal: getSubTotal,
       getTotalCart: getTotalCart,
       getTotalTax: getTotalTax
@@ -111,6 +112,13 @@ angular.module('kposApp')
       getDiscountsForCart('byclient');
     }
 
+    function resetCart(){
+      var client = {_id: 'default', name: 'Consumidor Final', address: ''};
+      cart.items = [];
+      cart.discounts = [];
+      setClient(client);
+
+    }
     function getSubTotal (items) {
       var subtotal = 0;
       if (items) {
