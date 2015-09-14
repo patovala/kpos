@@ -35,9 +35,9 @@ function createCoupon(data){
 describe('DiscountsMachine chain of responsabilities', function() {
 
   var genericDiscount = {_id: 'BYO', category: 'generic', type:'value', name: 'BYO', value: 0.10, applyToCategory:'coffee'},
-      internetDiscount = {"_id":2,
+      internetDiscount = {"_id":"internetservice",
                           "name":"internetservice",
-                          "appliesToItemCategory":"coffee",
+                          "applyToItemCategory":"coffee",
                           "discount":
                             {"name":"Internet Service",
                               "type":"notvalue",
@@ -74,39 +74,60 @@ describe('DiscountsMachine chain of responsabilities', function() {
    * to a cart. For instance the most common is the BYO, that applies
    * only to categories of products.
    * */
-  it.only('should get generic discounts when queried and the cart pendingDiscount', function(done) {
+  it('should get BYO generic discounts', function(done) {
     addToCollection(genericDiscount);
     addToCollection(internetDiscount);
 
     var D = new DiscountsMachine();
-    var cart = {pendingDiscounts: [{_id:'BYO', category: 'generic'}],
+    var cart = {pendingDiscounts: ['BYO'],
                 items: [
                     {_id:1, name: 'item 1', category: 'coffee', quantity: 1},
                     {_id:2, name: 'item 2', category: 'coffee', quantity: 1},
                 ]};
 
     D.getDiscounts(cart, function(discounts){
-      console.log('DISCOUNTS:', discounts);
       discounts.should.be.instanceof(Array);
-      //discounts.length.should.equal(1);
+      discounts.length.should.equal(1);
       discounts[0].quantity.should.equal(2);
       done();
     });
   });
 
   /*
-   * Findout a generic + internet discount
+   * A generic discount is an optional discount that can apply
+   * to a cart. For instance if there is no items with category
+   * it should not add a discount.
    * */
-  it('should get generic + internet discount when queried', function(done) {
+  it('should not get generic discounts', function(done) {
     addToCollection(genericDiscount);
     addToCollection(internetDiscount);
 
     var D = new DiscountsMachine();
-    var cart = {items: [{category:"coffee"}]};
+    var cart = {pendingDiscounts: ['BYO'],
+                items: []};
+
+    D.getDiscounts(cart, function(discounts){
+      console.log('DISCOUNTS:', discounts);
+      discounts.should.be.instanceof(Array);
+      discounts.length.should.equal(0);
+      done();
+    });
+  });
+
+
+  /*
+   * Findout a generic + internet discount
+   * */
+  it('should get internet discount when queried', function(done) {
+    addToCollection(genericDiscount);
+    addToCollection(internetDiscount);
+
+    var D = new DiscountsMachine();
+    var cart = {items: [{category:"coffee"}], pendingDiscounts: ['internetservice']};
 
     D.getDiscounts(cart, function(discounts){
       discounts.should.be.instanceof(Array);
-      discounts.length.should.equal(2);
+      discounts.length.should.equal(1);
       done();
     });
   });

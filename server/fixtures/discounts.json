@@ -1,13 +1,14 @@
 [
     {
-        "_id": 1,
+        "_id": "BYO",
         "name": "Bring your own",
         "category": "generic",
         "type": "value",
-        "value": "0.10"
+        "value": "0.10",
+        "applyToCategory": "coffee"
     },
     {
-        "_id": 2,
+        "_id": "internetservice",
         "name": "internetservice",
         "description": "This discount aplies to carts with coffee items",
         "appliesToItemCategory": "coffee",

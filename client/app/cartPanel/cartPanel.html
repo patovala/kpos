@@ -34,12 +34,14 @@
         </td>
       </tr>
     	<tr ng-repeat="d in cp.cart.discounts">
-
-        <td colspan="2">{{d.name}}</td>
+        <td>
+          <div class="quantity-item">{{d.quantity}}</div>
+        </td>
+        <td>{{d.name}}</td>
         <td>
           <div class="price-item"> {{d.value | number: 2}} <span ng-if="d.type=='percent'">%</span></div>
         </td>
-        <td class="total-item">{{d.total | number: 2}}</td>
+        <td class="total-item">{{d.quantity*d.value | number: 2}}</td>
     	</tr>
     </tbody>
     <tfoot >
@@ -87,7 +89,7 @@
           DNI:
         </div>
         <div class="col-xs-9 col-sm-10 col-md-10 ">
-            {{cp.cart.client.id}}
+            {{cp.cart.client.dni}}
         </div>
       </div>
       <div class="row">
@@ -118,7 +120,7 @@
     </button>
     <ul class="dropdown-menu" role="menu" aria-labelledby="discounts-button">
       <li role="menuitem" ng-repeat="discount in cp.discounts">
-        <a href="" ng-click="cp.applyDiscount(discount.id)">{{discount.name}}</a>
+        <a href="" ng-click="cp.applyDiscount(discount._id)">{{discount.name}}</a>
       </li>
     </ul>
     <div class="input-group">
