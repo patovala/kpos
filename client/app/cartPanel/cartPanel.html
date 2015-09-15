@@ -72,11 +72,14 @@
                 typeahead-editable="false"
                 typeahead="c.name for c in cp.searchClient($viewValue)"
                 typeahead-on-select="cp.changeClient($item, $model, $label)"
-                placeholder="Consumidor Final">
+                placeholder="Consumidor Final"
+                ng-keyup="cp.voidClient(selectedClient)"
+                >
         </div>
         <div class="col-xs-4 col-sm-2 col-md-3 data">
               <button class="btn btn-success" type="button" ng-click="cp.newClientModal()">New Client</button>
         </div>
+
       </div>
 
     </div>
@@ -84,27 +87,27 @@
       <div class="panel-body panel-data-client">
         <div class="row">
           <div class="col-xs-3 col-sm-2 col-md-2 tag">
-            DNI: 
+            DNI:
           </div>
-          <div class="col-xs-9 col-sm-10 col-md-10 ">          
-            {{cp.cart.client.id}}     
-          </div>           
-        </div>      
-        <div class="row">
-          <div class="col-xs-3 col-sm-2 col-md-2 tag">
-            Name:    
+          <div class="col-xs-9 col-sm-10 col-md-10 ">
+            {{cp.cart.client.dni}}
           </div>
-          <div class="col-xs-9 col-sm-10 col-md-10 ">          
-              {{cp.cart.client.name}}     
-          </div>           
         </div>
         <div class="row">
           <div class="col-xs-3 col-sm-2 col-md-2 tag">
-            Address:    
+            Name:
           </div>
-          <div class="col-xs-9 col-sm-10 col-md-10">          
-            {{cp.cart.client.address}}    
-          </div>           
+          <div class="col-xs-9 col-sm-10 col-md-10 ">
+              {{cp.cart.client.name}}
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-xs-3 col-sm-2 col-md-2 tag">
+            Address:
+          </div>
+          <div class="col-xs-9 col-sm-10 col-md-10">
+            {{cp.cart.client.address}}
+          </div>
         </div>
       </div>
     </div>
