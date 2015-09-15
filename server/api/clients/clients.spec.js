@@ -80,7 +80,7 @@ describe('GET /api/clients', function() {
 
   it('should add Client with the correct information', function(done) {
     request(app)
-      .post('/api/clients')
+      .post('/api/clients/add')
       .send({client: {_id: 8, name: "Juan Quishpe", address: "La Paz", dni: '8888'}})
       .expect(200)
       .expect('Content-Type', /json/)

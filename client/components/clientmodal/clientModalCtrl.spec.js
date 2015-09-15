@@ -26,13 +26,17 @@ describe('Controller: clientModalCtrl', function () {
     },
     clientModalCtrl = $controller('clientModalCtrl as vm', dependencies);
   }));
+
   describe('#newClientModal', function () {
     it('#newClientModal save Client', function(){
       spyOn(modalInstanceMock, 'close');
       clientModalCtrl.client = client;
-      $httpBackend.expectPOST('api/clients',
+
+      $httpBackend.expectPOST('api/clients/add',
         { client: client}).respond(201);
+
       clientModalCtrl.updateClient();
+
       $httpBackend.flush();
       expect(modalInstanceMock.close).toHaveBeenCalled();
     });
