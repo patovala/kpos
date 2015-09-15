@@ -5,6 +5,6 @@ var controller = require('./products.controller');
 
 var router = express.Router();
 
-router.get('/', controller.index);
+router.get('/:_filter?', controller.findProducts);
 
 module.exports = router;
