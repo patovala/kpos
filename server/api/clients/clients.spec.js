@@ -78,7 +78,7 @@ describe('GET /api/clients', function() {
         });
   });
 
-  it.only('should add Client with the correct information', function(done) {
+  it('should add Client with the correct information', function(done) {
     request(app)
       .post('/api/clients')
       .send({client: {_id: 8, name: "Juan Quishpe", address: "La Paz", dni: '8888'}})
@@ -86,7 +86,6 @@ describe('GET /api/clients', function() {
       .expect('Content-Type', /json/)
       .end(function(err, res) {
         if (err) return done(err);
-          console.log(res.body);
           res.body.ops.should.be.instanceof(Array);
           res.body.ops.length.should.equal(1);
           res.body.ops[0]._id.should.equal(8);

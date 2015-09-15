@@ -58,14 +58,15 @@ exports.addClient = function (req, res) {
     clients.findOne({'dni': req.body.client.dni}, function(err, doc){
       if(doc !== null){
         res.send({resp:'duplicated'});
+        db.close();
       }else{
         clients.insert(req.body.client, function(err, result){
           res.send(
             (err === null) ? result : { msg: err }
           );
+          db.close();
         });
       }
-      db.close();
     });
   });
 };
