@@ -65,7 +65,6 @@ function collectgeneric(cart, cb){
             cb([]);
           }
         }
-
       });
     });
 

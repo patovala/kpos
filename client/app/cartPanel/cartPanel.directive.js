@@ -28,6 +28,7 @@ function cartPanel() {
     cp.totalCart = totalCart;
     cp.totalTax = totalTax;
     cp.getSubTotal = getSubTotal;
+    cp.checkoutCartModal = checkoutCartModal;
 
     init();
     return cp;
@@ -112,6 +113,24 @@ function cartPanel() {
 
     function getSubTotal(items) {
       return cartService.getSubTotal(items);
+    }
+    function checkoutCartModal(){
+      var modalInstance = $modal.open({
+        animation: false,
+        templateUrl: 'components/checkoutcartmodal/checkoutCartModal.html',
+        controller: 'checkoutCartModalCtrl',
+        controllerAs: 'vmc'
+        //resolve: {
+        //  algo: function(){}
+        //}
+      });
+
+      modalInstance.result.then(function (createdCheckout) {
+        cp.cart.client = createdCheckout;
+        console.log('enmodal');
+      }, function () {
+        console.log('Modal dismissed at: ' + new Date());
+      });
     }
   }
 
