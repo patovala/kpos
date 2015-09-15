@@ -22,7 +22,7 @@ angular.module('kposApp')
       applyDiscount: applyDiscount,
       getDiscountsForCart: getDiscountsForCart,
       resetCart: resetCart,
-      resetClient:resetCart,
+      resetClient:resetClient,
       getSubTotal: getSubTotal,
       getTotalCart: getTotalCart,
       getTotalTax: getTotalTax

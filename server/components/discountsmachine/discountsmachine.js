@@ -40,18 +40,38 @@ DiscountChain.prototype = {
 };
 
 /*
- * Get the generic discounts
+ * Get the generic discounts, when the cart has pendingDiscounts
  * */
 function collectgeneric(cart, cb){
-  MongoClient.connect(url, {}, function(err, db) {
 
-    var discounts = db.collection('discounts');
+  if (cart.pendingDiscounts && _.contains(cart.pendingDiscounts, 'BYO')){
 
-    discounts.find({category: 'generic'}).toArray(function(err, docs){
-      db.close();
-      cb(docs);
+    MongoClient.connect(url, {}, function(err, db) {
+
+      var discounts = db.collection('discounts');
+
+      //discounts.find({category: 'generic'}).toArray(function(err, docs){
+      discounts.findOne({_id: 'BYO'}, function(err, d){
+        db.close();
+        if(d){
+          // buscar en la carta los items que tengan categoria d.applyToCategory
+          var elems = _.filter(cart.items, function(i){return i.category === d.applyToCategory;});
+          if (elems.length) {
+            d.quantity = _.reduce(_.pluck(elems, 'quantity'), function(sum, num){
+              return sum + num;
+            });
+            cb([d]);
+          }else{
+            cb([]); 
+          }
+        }
+        
+      });
     });
-  });
+
+  }else{
+    cb([]);
+  }
 }
 
 /*
@@ -59,23 +79,29 @@ function collectgeneric(cart, cb){
  * */
 function internetdiscount(cart, cb){
 
-  MongoClient.connect(url, {}, function(err, db) {
-    // first check if there is a discount for internet service in the collection
-    var discounts = db.collection('discounts'),
-        ds = [];
+  if (cart.pendingDiscounts && _.contains(cart.pendingDiscounts, 'internetservice')){
 
-    discounts.findOne({name: 'internetservice'}, function(err, discount){
+    MongoClient.connect(url, {}, function(err, db) {
+      // first check if there is a discount for internet service in the collection
+      var discounts = db.collection('discounts'),
+      ds = [];
+
+      discounts.findOne({_id: 'internetservice'}, function(err, discount){
 
       //find the items with category equal to the one in the discount
-      if(discount && _.some(cart.items, {category: discount.appliesToItemCategory})){
+      if(discount && _.some(cart.items, {category: discount.applyToItemCategory})){
         // add the discount to the discount chain
         ds.push(discount.discount);
       }
-      cb(ds);
       db.close();
+      console.log('DEBUG', ds);
+      cb(ds);
     });
-
   });
+
+  }else{
+    cb([]);
+  }
 }
 
 /*

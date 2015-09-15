@@ -1,104 +1,108 @@
 <div class="table-responsive">
   <table class="table">
     <thead>
-    <tr>
+      <tr>
         <th data-field="id" class="col-md-2">Qty</th>
         <th data-field="name" class="col-md-4">Product</th>
         <th data-field="price" class="col-md-2">Price</th>
         <th data-field="total" class="col-md-3">Total</th>
         <th data-field="remove" class="col-md-1"></th>
-    </tr>
+      </tr>
     </thead>
     <tbody>
     	<tr ng-repeat="i in cp.cart.items">
 
-            <td>
-                <!-- <panel-popup> -->
-                  <div class="quantity-item">{{i.quantity}}</div>
-                <!-- </panel-popup> -->
-            </td>
-            <td>{{i.name}}</td>
-            <td>
-                <div class="price-item">{{i.price}}</div>
-            </td>
-            <td class="total-item">$ {{(i.price * i.quantity) | number: 2}}</td>
-            <td>
-                <span ng-click="cp.removeItemCart(i._id)">
-                    <i class="fa fa-times-circle fa-2x"></i>
-                </span>
-             </td>
-    	</tr>
+        <td>
+          <!-- <panel-popup> -->
+          <div class="quantity-item">{{i.quantity}}</div>
+          <!-- </panel-popup> -->
+        </td>
+        <td>{{i.name}}</td>
+        <td>
+          <div class="price-item">{{i.price}}</div>
+        </td>
+        <td class="total-item">$ {{(i.price * i.quantity) | number: 2}}</td>
+        <td>
+          <span ng-click="cp.removeItemCart(i._id)">
+            <i class="fa fa-times-circle fa-2x"></i>
+          </span>
+        </td>
+      </tr>
       <tr ng-if="cp.cart.discounts && cp.cart.discounts.length>0">
         <td colspan="5" class="discounts">
           DISCOUNTS
         </td>
       </tr>
-    	<tr ng-repeat="d in cp.cart.discounts">
-
-        <td colspan="2">{{d.name}}</td>
+      <tr ng-repeat="d in cp.cart.discounts">
+        <td>
+          <div class="quantity-item">{{d.quantity}}</div>
+        </td>
+        <td>{{d.name}}</td>
         <td>
           <div class="price-item"> {{d.value | number: 2}} <span ng-if="d.type=='percent'">%</span></div>
         </td>
-        <td class="total-item">{{d.total | number: 2}}</td>
-    	</tr>
+        <td class="total-item">{{d.quantity*d.value | number: 2}}</td>
+      </tr>
     </tbody>
     <tfoot >
     	<tr align="right">
         <td colspan="3">Cart Subtotal</td>
         <td><span ng-bind="cp.getSubTotal(cp.cart.items)"></span>
         </td>
-    	</tr>
-    	<tr align="right">
+      </tr>
+      <tr align="right">
         <td colspan="3">Tax {{cp.cart.tax}} %</td><td>{{cp.totalTax() | number: 2}}</td>
-    	</tr>
-    	<tr align="right">
+      </tr>
+      <tr align="right">
         <td colspan="3"><h3>Order Total</h3></td><td><h3>{{cp.totalCart() | number: 2}}</h3></td>
-    	</tr>
+      </tr>
     </tfoot>
   </table>
 </div>
 <hr/>
 <div id="client_section" >
-    <div class="panel-heading panel-client">
-      <div class="client row">
-        <div class="col-xs-2 col-sm-2 col-md-2 data">
-          Client:
-        </div>
-        <div class="col-xs-6 col-sm-8 col-md-7 data">
-            <input type="text"
-                class="form-control"
-                ng-model="selectedClient"
-                no-results="cp.defaultClient"
-                typeahead-editable="false"
-                typeahead="c.name for c in cp.searchClient($viewValue)"
-                typeahead-on-select="cp.changeClient($item, $model, $label)"
-                placeholder="Consumidor Final"
-                ng-keyup="cp.voidClient(selectedClient)"
-                >
-        </div>
-        <div class="col-xs-4 col-sm-2 col-md-3 data">
-              <button class="btn btn-success" type="button" ng-click="cp.newClientModal()">New Client</button>
-        </div>
-
+  <div class="panel-heading panel-client">
+    <div class="client row">
+      <div class="col-xs-2 col-sm-2 col-md-2 data">
+        Client:
       </div>
-
+      <div class="col-xs-6 col-sm-8 col-md-7 data">
+        <input type="text"
+        class="form-control"
+        ng-model="selectedClient"
+        no-results="cp.defaultClient"
+        typeahead-editable="false"
+        typeahead="c.name for c in cp.searchClient($viewValue)"
+        typeahead-on-select="cp.changeClient($item, $model, $label)"
+        placeholder="Consumidor Final"
+        ng-keyup="cp.voidClient(selectedClient)"
+        >
+      </div>
+      <div class="col-xs-4 col-sm-2 col-md-3 data">
+        <button class="btn btn-success" type="button" ng-click="cp.newClientModal()">New Client</button>
+      </div>
     </div>
-    <div ng-if="cp.cart.client._id!='default'" class="animate-if">
-      <div class="panel-body panel-data-client">
-        <div class="row">
-          <div class="col-xs-3 col-sm-2 col-md-2 tag">
-            DNI:
-          </div>
-          <div class="col-xs-9 col-sm-10 col-md-10 ">
-            {{cp.cart.client.dni}}
-          </div>
+  </div>
+  <div ng-if="cp.cart.client._id!='default'" class="animate-if">
+    <div class="panel-body panel-data-client">
+      <div class="row">
+        <div class="col-xs-3 col-sm-2 col-md-2 tag">
+          DNI:
+        </div>
+        <div class="col-xs-9 col-sm-10 col-md-10 ">
+          {{cp.cart.client.dni}}
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-xs-3 col-sm-2 col-md-2 tag">
+          Name:
         </div>
         <div class="row">
           <div class="col-xs-3 col-sm-2 col-md-2 tag">
             Name:
           </div>
           <div class="col-xs-9 col-sm-10 col-md-10 ">
-              {{cp.cart.client.name}}
+            {{cp.cart.client.name}}
           </div>
         </div>
         <div class="row">
@@ -111,6 +115,7 @@
         </div>
       </div>
     </div>
+  </div>
 </div>
 <hr/>
 <div id="discount_section">
@@ -120,7 +125,7 @@
     </button>
     <ul class="dropdown-menu" role="menu" aria-labelledby="discounts-button">
       <li role="menuitem" ng-repeat="discount in cp.discounts">
-        <a href="" ng-click="cp.applyDiscount(discount.id)">{{discount.name}}</a>
+        <a href="" ng-click="cp.applyDiscount(discount._id)">{{discount.name}}</a>
       </li>
     </ul>
     <div class="input-group">
@@ -139,7 +144,7 @@
 </div>
 <div id="cart_footer">
 
-    <button type="button" class="btn btn-danger" ng-click="cp.voidCart()">Void</button>
-    <button type="button" class="btn btn-success" ng-click="cp.checkoutCart()">Checkout</button>
+  <button type="button" class="btn btn-danger" ng-click="cp.voidCart()">Void</button>
+  <button type="button" class="btn btn-success" ng-click="cp.checkoutCart()">Checkout</button>
 
 </div>

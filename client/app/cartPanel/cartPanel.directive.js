@@ -99,7 +99,7 @@ function cartPanel() {
       cartService.resetCart();
     }
     function voidClient(idcliente){
-      if(idcliente==''){
+      if(idcliente===''){
         cartService.resetClient();
       }
     }
