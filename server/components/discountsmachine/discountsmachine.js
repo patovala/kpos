@@ -62,10 +62,10 @@ function collectgeneric(cart, cb){
             });
             cb([d]);
           }else{
-            cb([]); 
+            cb([]);
           }
         }
-        
+
       });
     });
 
