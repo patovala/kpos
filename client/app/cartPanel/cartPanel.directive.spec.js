@@ -200,6 +200,20 @@ describe('Directive: cartPanel', function () {
     $httpBackend.flush();
   }));
 
+  it('#newCheckoutCartModal should open the new checkout  modal on request',function(){
+    var mockModalInstance = {
+          result: {
+            then: function(cb){
+              cb();
+            }
+          }
+    };
+
+    spyOn($modal, 'open').andCallThrough().andReturn(mockModalInstance);
+    ctrl.checkoutCartModal();
+    expect($modal.open).toHaveBeenCalled();
+  });
+
   /*
    * TODO: Should add discount if the selected client has
    * discount, should call cartService to add a new

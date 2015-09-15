@@ -4,7 +4,7 @@
  * TODO: this modal requires unit test
  * */
 
-function CheckoutCartModalCtrl($scope, $modalInstance, $resource) {
+function CheckoutCartModalCtrl($scope, $modalInstance) {
   var vmc = this;
 
   vmc.cancel = cancel;

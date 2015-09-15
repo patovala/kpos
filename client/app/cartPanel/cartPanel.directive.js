@@ -28,7 +28,7 @@ function cartPanel() {
     cp.totalCart = totalCart;
     cp.totalTax = totalTax;
     cp.getSubTotal = getSubTotal;
-    cp.checkoutCartModal =checkoutCartModal;
+    cp.checkoutCartModal = checkoutCartModal;
 
     init();
     return cp;

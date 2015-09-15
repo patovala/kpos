@@ -69,7 +69,7 @@
         <div class="col-xs-6 col-sm-8 col-md-7 data">
             <input type="text"
                 class="form-control"
-                ng-model="selectedClient"
+                ng-model="cp.selectedClient"
                 no-results="cp.defaultClient"
                 typeahead-editable="false"
                 typeahead="c.name for c in cp.searchClient($viewValue)"
@@ -93,10 +93,10 @@
         </div>
       </div>
       <div class="row">
-        <div class="col-xs-3 col-sm-2 col-md-2 tag">
+        <div class="col-xs-3 col-sm-2 col-md-2 tag info-client">
           Name:
         </div>
-        <div class="col-xs-9 col-sm-10 col-md-10 ">
+        <div class="col-xs-9 col-sm-10 col-md-10 info-client">
             {{cp.cart.client.name}}
         </div>
       </div>
