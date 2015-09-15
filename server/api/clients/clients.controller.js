@@ -55,12 +55,18 @@ exports.addClient = function (req, res) {
   MongoClient.connect(url, function (err, db) {
 
     var clients = db.collection('clients');
-
-    clients.insert(req.body.client, function(err, result){
-      res.send(
-        (err === null) ? result : { msg: err }
-      );
-      db.close();
+    clients.findOne({'dni': req.body.client.dni}, function(err, doc){
+      if(doc !== null){
+        res.send({resp:'duplicated'});
+        db.close();
+      }else{
+        clients.insert(req.body.client, function(err, result){
+          res.send(
+            (err === null) ? result : { msg: err }
+          );
+          db.close();
+        });
+      }
     });
   });
 };

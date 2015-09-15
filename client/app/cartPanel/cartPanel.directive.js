@@ -25,6 +25,7 @@ function cartPanel() {
     cp.applyCoupon = applyCoupon;
     cp.applyDiscount = applyDiscount;
     cp.voidCart = voidCart;
+    cp.voidClient = voidClient;
     cp.totalCart = totalCart;
     cp.totalTax = totalTax;
     cp.getSubTotal = getSubTotal;
@@ -97,6 +98,11 @@ function cartPanel() {
     }
     function voidCart(){
       cartService.resetCart();
+    }
+    function voidClient(idcliente){
+      if(idcliente===''){
+        cartService.resetClient();
+      }
     }
 
     function applyDiscount(idDiscount){
