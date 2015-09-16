@@ -12,7 +12,7 @@ function ClientModalCtrl($scope, $modalInstance, $resource) {
   return vm;
 
   function updateClient(){
-    var r = $resource('api/clients');
+    var r = $resource('api/clients/add');
     r.save({client: vm.client}, function(data){
       if(data && data.resp === 'duplicated'){
         alertify.error('Client Duplicated');
