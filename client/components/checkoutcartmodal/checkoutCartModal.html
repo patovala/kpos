@@ -1,8 +1,25 @@
 <div class="modal-header">
-    <h3 class="modal-title">I'm a modal!</h3>
+    <h3 class="modal-title">KOKEN</h3>
 </div>
-<div class="modal-body">
 
+<div class="modal-body">
+<div></div>
+</div>
+<div>
+	<input type="checkbox" ng-model="chkcash"/>CASH
+	<input type="checkbox" ng-model="chkcard"/>CARD CREDIT OR DEBIT
+	<input type="checkbox" ng-model="chkpaypal"/>PAYPAL
+	<input type="radio" name="somethign" selected="true" ng-model="checkboxSelection"/> Checkbox 1
+    <input type="radio" name="somethign"  ng-model="checkboxSelection1"/> Checkbox 2
+</div>
+<div ng-if="chkcash==true" class="animate-if">
+	CASH
+</div>
+<div ng-if="chkcard==true" class="animate-if">
+	CARD
+</div>
+<div ng-if="chkpaypal==true" class="animate-if">
+	PAYPAL
 </div>
 <div class="modal-footer">
     <button class="btn btn-primary" type="button" ng-click="ok()">OK</button>
