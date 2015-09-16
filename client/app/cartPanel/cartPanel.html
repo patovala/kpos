@@ -11,23 +11,22 @@
     </thead>
     <tbody>
     	<tr ng-repeat="i in cp.cart.items">
-
-        <td>
-          <!-- <panel-popup> -->
-          <div class="quantity-item">{{i.quantity}}</div>
-          <!-- </panel-popup> -->
-        </td>
-        <td>{{i.name}}</td>
-        <td>
-          <div class="price-item">{{i.price}}</div>
-        </td>
-        <td class="total-item">$ {{(i.price * i.quantity) | number: 2}}</td>
-        <td>
-          <span ng-click="cp.removeItemCart(i._id)">
-            <i class="fa fa-times-circle fa-2x"></i>
-          </span>
-        </td>
-      </tr>
+            <td>
+                <!-- <panel-popup> -->
+                  <div class="quantity-item"  popover-template="'app/cartPanel/partials/kposPopover.html'" popover-trigger="click"  >{{i.quantity}} </div>
+                <!-- </panel-popup> -->
+            </td>
+            <td>{{i.name}}</td>
+            <td>
+                <div class="price-item" >{{i.price}}</div>
+            </td>
+            <td class="total-item">$ {{(i.price * i.quantity) | number: 2}}</td>
+            <td>
+                <span ng-click="cp.removeItemCart(i._id)">
+                    <i class="fa fa-times-circle fa-2x"></i>
+                </span>
+             </td>
+    	</tr>
       <tr ng-if="cp.cart.discounts && cp.cart.discounts.length>0">
         <td colspan="5" class="discounts">
           DISCOUNTS
