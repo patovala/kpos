@@ -5,8 +5,18 @@
     <div class="col-xs-12 col-md-6">
       <products-panel></products-panel>
     </div>
-    <div class="col-xs-12 col-md-6 cart">
+    <div class="col-xs-12 col-md-6 cart" ng-if="!mc.checkout">
       <cart-panel></cart-panel>
+      <div id="cart_footer">
+        <button type="button" class="btn btn-danger" ng-click="cp.voidCart()">Void</button>
+        <button type="button" class="btn btn-success" ng-click="mc.togglePanel()">Checkout</button>
+      </div>
+    </div>
+    <div class="col-xs-12 col-md-6 cart" ng-if="mc.checkout">
+      <checkout-panel></checkout-panel>
+      <div id="cart_footer">
+        <button type="button" class="btn btn-default" ng-click="mc.togglePanel()">Return</button>
+      </div>
     </div>
   </div>
 </div>
