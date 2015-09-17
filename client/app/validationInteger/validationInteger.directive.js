@@ -12,7 +12,6 @@ function validationInteger() {
       function fromUser(text) {
         var transformedInput = text.replace(/[^0-9]/g, '');
         if(transformedInput !== text) {
-          console.log(transformedInput);
             ngModelCtrl.$setViewValue(transformedInput);
             ngModelCtrl.$render();
         }
