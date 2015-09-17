@@ -30,6 +30,7 @@ function cartPanel() {
     cp.totalTax = totalTax;
     cp.getSubTotal = getSubTotal;
     cp.checkoutCartModal = checkoutCartModal;
+    cp.discountsUpdate = discountsUpdate;
 
     init();
     return cp;
@@ -138,6 +139,10 @@ function cartPanel() {
         console.log('Modal dismissed at: ' + new Date());
       });
 
+    }
+
+    function discountsUpdate(){
+      cartService.getDiscountsForCart('byclient');
     }
 
   }
