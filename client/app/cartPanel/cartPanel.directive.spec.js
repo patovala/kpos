@@ -17,39 +17,39 @@ describe('Directive: cartPanel', function () {
 
     element = angular.element('<cart-panel></cart-panel>');
     cart = {
-              client: {_id: 'default', name: 'Consumidor Final', address: ''},
-              items:
-                    [
-                      {
-                        quantity:1,
-                        product:
-                                  {
-                                    _id: 1,
-                                    name: 'Mocachino 8oz',
-                                    price: 1.25,
-                                    featured: true,
-                                    onSale: false
-                                  },
-                        total:0.99
-                      },
-                      {
-                        quantity:2,
-                        product:
-                                  {
-                                    _id: 3,
-                                    name: 'Caramel flat white',
-                                    price: 1.25,
-                                    featured: false,
-                                    onSale: true
-                                  },
-                        total:1.98
-                      }
-                    ],
-              subtotal: 0,
-              tax: 12,
-              total: 0,
-              discounts: []
-            };
+      client: {_id: 'default', name: 'Consumidor Final', address: ''},
+      items:
+      [
+      {
+        quantity:1,
+        product:
+        {
+          _id: 1,
+          name: 'Mocachino 8oz',
+          price: 1.25,
+          featured: true,
+          onSale: false
+        },
+        total:0.99
+      },
+      {
+        quantity:2,
+        product:
+        {
+          _id: 3,
+          name: 'Caramel flat white',
+          price: 1.25,
+          featured: false,
+          onSale: true
+        },
+        total:1.98
+      }
+      ],
+      subtotal: 0,
+      tax: 12,
+      total: 0,
+      discounts: []
+    };
     spyOn(cartService, 'getCart').andReturn(cart);
     element = $compile(element)(scope);
     scope.$digest();
@@ -57,10 +57,10 @@ describe('Directive: cartPanel', function () {
     ctrl = element.controller('cartPanel');
   }));
 
-  afterEach(function() {
-      $httpBackend.verifyNoOutstandingExpectation();
-      $httpBackend.verifyNoOutstandingRequest();
-  });
+afterEach(function() {
+  $httpBackend.verifyNoOutstandingExpectation();
+  $httpBackend.verifyNoOutstandingRequest();
+});
 
   /*
    * Should render a cart with subtotal, tax and total
@@ -127,16 +127,16 @@ describe('Directive: cartPanel', function () {
    * */
   it('#newClientModal should open the new client modal on request', inject(function(){
     var mockModalInstance = {
-          result: {
+      result: {
             then: function(cb){ // <-- 1. simular el comportamiento que deberia tener
               cb();             //        la instancia retornada e inyectar el espía y
             }                   //        llamarlo
           }
-    };
+        };
 
-    spyOn($modal, 'open').andCallThrough().andReturn(mockModalInstance);
-    spyOn(cartService, 'resetDiscounts').andCallThrough();
-    spyOn(cartService, 'getDiscountsForCart');
+        spyOn($modal, 'open').andCallThrough().andReturn(mockModalInstance);
+        spyOn(cartService, 'resetDiscounts').andCallThrough();
+        spyOn(cartService, 'getDiscountsForCart');
 
     ctrl.newClientModal(); // <-- 2. ejecutar la rutina principal
 
@@ -158,19 +158,19 @@ describe('Directive: cartPanel', function () {
    * */
   it ('#removeItemCart should allow to delete item', inject(function () {
     var products =  [
-                      {
-                        _id: 1,
-                        name: 'Mocachino 8oz',
-                        price: 1.25,
-                        featured: true,
-                        onSale: false
-                      }
-                    ];
+    {
+      _id: 1,
+      name: 'Mocachino 8oz',
+      price: 1.25,
+      featured: true,
+      onSale: false
+    }
+    ];
     $httpBackend.expectGET('api/products?_id=1').respond(products[0]);
     expect(!!cartService.addToCart).toBe(true);
     cartService.addToCart(1).$promise.then(
       function(){console.log('product adding');}
-    );
+      );
     $httpBackend.flush();
     spyOn(cartService, 'removeFromCart');
     spyOn(cartService, 'resetDiscounts').andCallThrough();
@@ -202,16 +202,24 @@ describe('Directive: cartPanel', function () {
 
   it('#newCheckoutCartModal should open the new checkout  modal on request',function(){
     var mockModalInstance = {
-          result: {
-            then: function(cb){
-              cb();
-            }
-          }
+      result: {
+        then: function(cb){
+          cb();
+        }
+      }
     };
 
     spyOn($modal, 'open').andCallThrough().andReturn(mockModalInstance);
     ctrl.checkoutCartModal();
     expect($modal.open).toHaveBeenCalled();
+  });
+
+  it('should recalculate the discounts when the quantity is changed',function(){
+    spyOn(cartService, 'getDiscountsForCart').andCallThrough().andReturn();
+
+    ctrl.discountsUpdate();
+
+    expect(cartService.getDiscountsForCart).toHaveBeenCalledWith('byclient');
   });
 
   /*
