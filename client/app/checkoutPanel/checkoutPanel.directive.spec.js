@@ -26,11 +26,10 @@ describe('Directive: checkoutPanel', function () {
   });
 
   it('should call backend whe the payment process button is pressed', function () {
-    
     ctrl.cart = {
       client: {
         _id: '02',
-        name: 'juanito alimana', 
+        name: 'juanito alimana',
       },
       items: []
     };

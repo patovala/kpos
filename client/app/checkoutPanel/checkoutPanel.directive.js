@@ -17,7 +17,6 @@ function checkoutPanel(){
     cc.paymentProcess = paymentProcess;
 
     return cc;
-    
     function getTotalCheck(){
       return cartService.getTotalCart();
     }

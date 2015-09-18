@@ -8,5 +8,5 @@ exports.index = function(req, res) {
 };
 
 exports.addOrder = function(req, res) {
-	res.json([]);
-}
+  res.json([]);
+};
