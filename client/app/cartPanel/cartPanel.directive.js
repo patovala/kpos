@@ -101,7 +101,7 @@ function cartPanel() {
       cartService.resetCart();
     }
     function voidClient(idcliente){
-      if(idcliente == null){
+      if(idcliente === null){
         cartService.resetClient();
       }
     }
