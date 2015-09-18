@@ -1,1 +1,11 @@
-<div>this is the checkoutPanel directive</div>
+<div class="panel panel-primary">
+  <div class="panel-body checkbody text-center">
+    <div>
+    <span class="chspan">To pay: $</span>
+    <span ng-bind="cc.getTotalCheck()" class="chspan"></span>
+  </div>
+  <div>
+    <span class="chspan">Change: $</span>
+  </div>
+  </div>
+</div>
