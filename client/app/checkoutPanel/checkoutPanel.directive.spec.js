@@ -6,11 +6,12 @@ describe('Directive: checkoutPanel', function () {
   beforeEach(module('kposApp'));
   beforeEach(module('app/checkoutPanel/checkoutPanel.html'));
 
-  var element, scope, cartService, ctrl;
+  var element, scope, cartService, ctrl, $httpBackend;
 
-  beforeEach(inject(function ($rootScope, _cartService_,$compile) {
+  beforeEach(inject(function ($rootScope, _cartService_, $compile, _$httpBackend_) {
     scope = $rootScope.$new();
     cartService = _cartService_;
+    $httpBackend = _$httpBackend_;
     element = angular.element('<checkout-panel></checkout-panel>');
     spyOn(cartService, 'getCart');
     element = $compile(element)(scope);
@@ -22,6 +23,22 @@ describe('Directive: checkoutPanel', function () {
     spyOn(cartService, 'getTotalCart');
     ctrl.getTotalCheck();
     expect(cartService.getTotalCart).toHaveBeenCalled();
+  });
+
+  it('should call backend whe the payment process button is pressed', function () {
+    ctrl.cart = {
+      client: {
+        _id: '02',
+        name: 'juanito alimana',
+      },
+      items: []
+    };
+
+    ctrl.paymentProcess();
+
+    $httpBackend.expectPOST('api/orders/newOrder',{cart: ctrl.cart}).respond({});
+    $httpBackend.flush();
+
   });
 
 });

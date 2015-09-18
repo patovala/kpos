@@ -6,3 +6,7 @@ var _ = require('lodash');
 exports.index = function(req, res) {
   res.json([]);
 };
+
+exports.addOrder = function(req, res) {
+  res.json([]);
+};
