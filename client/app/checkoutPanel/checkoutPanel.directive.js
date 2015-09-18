@@ -15,7 +15,7 @@ function checkoutPanel(){
     cc.cart = cartService.getCart;
     cc.getTotalCheck = getTotalCheck;
     cc.paymentProcess = paymentProcess;
-
+    cc.getChangeCheck = getChangeCheck;
     return cc;
     function getTotalCheck(){
       return cartService.getTotalCart();
@@ -27,6 +27,11 @@ function checkoutPanel(){
           console.log(data);
         });
     }
+    function getChangeCheck(incl){
+      console.log('val clien',incl);
+    }
+
+
   }
 }
 angular.module('kposApp')
