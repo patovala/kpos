@@ -104,29 +104,36 @@
 
 
 </div>
-<div class="panel-client " dropdown keyboard-nav on-toggle="cp.getDiscountsDropdown(open)">
+<div class="panel-client " >
+<table>
+  <tr>
+    <td dropdown keyboard-nav on-toggle="cp.getDiscountsDropdown(open)" class="col-xs-3 col-sm-2 col-md-4">
+      <button id="discounts-button" type="button" class="btn btn-success" dropdown-toggle>
+        Add Discounts <span class="caret"></span>
+      </button>
+      <ul class="dropdown-menu" role="menu" aria-labelledby="discounts-button">
+        <li role="menuitem" ng-repeat="discount in cp.discounts">
+          <a href="" ng-click="cp.applyDiscount(discount._id)">{{discount.name}}</a>
+        </li>
+      </ul>
+    </td>
+    <td class="col-xs-9 col-sm-5 col-md-8">
+      <div class="input-group">
+        <span class="input-group-addon" id="coupon">coupon:</span>
+        <input
+          type="text"
+          class="form-control"
+          placeholder="claim coupon"
+          ng-model="cp.selectedCoupon"
+          aria-describedby="coupon">
+        <span class="input-group-btn">
+          <button class="btn btn-success" type="button" ng-click="cp.applyCoupon()">Apply</button>
+        </span>
+      </div>
+    </td>
+  </tr>
+</table>
 
-  <button id="discounts-button" type="button" class="btn btn-success" dropdown-toggle>
-    Add Discounts <span class="caret"></span>
-  </button>
-  <ul class="dropdown-menu" role="menu" aria-labelledby="discounts-button">
-    <li role="menuitem" ng-repeat="discount in cp.discounts">
-      <a href="" ng-click="cp.applyDiscount(discount._id)">{{discount.name}}</a>
-    </li>
-  </ul>
-  <div class="input-group">
 
-    <span class="input-group-addon" id="coupon">coupon:</span>
-    <input
-        type="text"
-        class="form-control"
-        placeholder="claim coupon"
-        ng-model="cp.selectedCoupon"
-        aria-describedby="coupon">
-
-    <span class="input-group-btn">
-      <button class="btn btn-success" type="button" ng-click="cp.applyCoupon()">Apply</button>
-    </span>
-  </div>
 
 </div>

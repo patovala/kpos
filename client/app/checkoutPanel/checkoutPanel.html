@@ -1,1 +1,24 @@
-<div>this is the checkoutPanel directive</div>
+<!-- <div>this is the checkoutPanel directive</div> -->
+<div class="panel panel-primary">
+	<div class="panel-heading" align="center">
+      	<h1 class="modal-title">To Pay : 00.00</h1>
+      	<h2 class="modal-title">Change : 00.00</h2>
+      </div>
+    <div class="panel-body">PayPal</div>
+</div>
+<div class="panel panel-success">
+	<div class="panel-heading" align="left">
+      	<h2>Cash</h2>
+    </div>
+    <div class="panel-body">Amount Tendered</div>
+</div>
+<div class="panel panel-default">
+	<div class="panel-heading" align="left">
+      	<h2 class="modal-title">Card</h2>
+    </div>
+    <div class="panel-body"></div>
+</div>
+<div class="modal-footer">
+    <button class="btn btn-primary" type="button" ng-click="ok()">OK</button>
+    <button class="btn btn-warning" type="button" ng-click="vmc.cancel()">Cancel</button>
+</div>
