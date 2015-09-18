@@ -1,1 +1,22 @@
-<div>this is the checkoutPanel directive</div>
+<div class="checkout-style">
+  <div class="checkbody text-center">
+    <div>
+    <span class="chspan">To pay: $</span>
+    <span ng-bind="cc.getTotalCheck()" class="chspan"></span>
+  </div>
+  <div>
+    <span class="chspan">Change: $</span>
+  </div>
+  </div>
+
+  <div class="payment-panel">
+  <div class="row">
+    <div class="col-md-6">
+      <button class="btn btn-default" ng-click="mc.togglePanel()">Return to sale</button>
+    </div>
+    <div class="col-md-6">
+      <button class="btn btn-success btn-right" ng-click="cc.paymentProcess()">Payment Process</button>
+    </div>
+  </div>
+</div>
+</div>

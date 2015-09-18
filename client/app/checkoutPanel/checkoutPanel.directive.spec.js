@@ -6,34 +6,39 @@ describe('Directive: checkoutPanel', function () {
   beforeEach(module('kposApp'));
   beforeEach(module('app/checkoutPanel/checkoutPanel.html'));
 
-  var element, scope;
+  var element, scope, cartService, ctrl, $httpBackend;
 
-  beforeEach(inject(function ($rootScope) {
+  beforeEach(inject(function ($rootScope, _cartService_, $compile, _$httpBackend_) {
     scope = $rootScope.$new();
-  }));
-
-  /*
-   * TODO: volar este
-   * */
-  it('should make hidden element visible', inject(function ($compile) {
+    cartService = _cartService_;
+    $httpBackend = _$httpBackend_;
     element = angular.element('<checkout-panel></checkout-panel>');
+    spyOn(cartService, 'getCart');
     element = $compile(element)(scope);
-    scope.$apply();
-    expect(element.text()).toBe('this is the checkoutPanel directive');
+    scope.$digest();
+    ctrl = element.controller('checkoutPanel');
   }));
 
-  /*
-   * TODO:should get the cart when loaded
-   * */
+  it('should get the cart when loaded ', function () {
+    spyOn(cartService, 'getTotalCart');
+    ctrl.getTotalCheck();
+    expect(cartService.getTotalCart).toHaveBeenCalled();
+  });
 
-  /*
-   * When the user enters the ammount tendered, the directive should
-   * resolve the change
-   * */
+  it('should call backend whe the payment process button is pressed', function () {
+    ctrl.cart = {
+      client: {
+        _id: '02',
+        name: 'juanito alimana',
+      },
+      items: []
+    };
 
-  /*
-   * Should call backend when checkout button is pressed, the call
-   * should get the cart
-   * */
+    ctrl.paymentProcess();
+
+    $httpBackend.expectPOST('api/orders/newOrder',{cart: ctrl.cart}).respond({});
+    $httpBackend.flush();
+
+  });
 
 });
