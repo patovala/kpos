@@ -1,32 +1,34 @@
 'use strict';
 
-function checkoutPanelController($resource) {
+function checkoutPanel(){
+  var directive = {
+    templateUrl: 'app/checkoutPanel/checkoutPanel.html',
+    restrict: 'E',
+    link: function () {},
+    controller: checkoutPanelCtrl,
+    controllerAs: 'cc'
+  };
 
-	var directive = {
-		templateUrl: 'app/checkoutPanel/checkoutPanel.html',
-      restrict: 'EA',
-      link: function () {},
-      controller: checkoutCtrl,
-      controllerAs: 'ckc'
-	}
-	return directive;
+  return directive;
+  function checkoutPanelCtrl($scope, cartService, $resource){
+    var cc = this;
+    cc.cart = cartService.getCart;
+    cc.getTotalCheck = getTotalCheck;
+    cc.paymentProcess = paymentProcess;
 
-	function checkoutCtrl () {
-		var ckc = this;
+    return cc;
+    
+    function getTotalCheck(){
+      return cartService.getTotalCart();
+    }
 
-		ckc.paymentProcess = paymentProcess;
-		ckc.hola = 'hola';
-
-		return ckc;
-
-		function paymentProcess() {
-			var r = $resource('api/orders/add');
-    		r.save({cart: {saludo: 'hola'}}, function(data){
-    		});
-    	console.log('DEBUG');
-		}
-	}
+    function paymentProcess() {
+      var r = $resource('api/orders/newOrder');
+        r.save({cart: cc.cart}, function(data){
+          console.log(data);
+        });
+    }
+  }
 }
-
 angular.module('kposApp')
-  .directive('checkoutPanel', checkoutPanelController);
+.directive('checkoutPanel', checkoutPanel);
