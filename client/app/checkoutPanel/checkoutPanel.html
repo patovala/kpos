@@ -27,11 +27,25 @@
     class="form-control"
     ng-model="changeClient"
     typeahead-editable="false"
-    value=""
-    ng-keyup="cc.getChangeCheck(changeClient)"
+    placeholder="0.00"
+    ng-change="cc.getChangeCheck()"
     >
   </div>
 </div>
+<div>
+	<div class="paypal-style">
+
+    		<h4 class="paypal">Card:</h4>
+
+  	</div>
+  	<div class="form-inline">
+		<div class="col-md-6">
+      		<button class="btn btn-default" ng-click="mc.togglePanel()">Return to sale</button>
+    	</div>
+    	<div class="col-md-6">
+      		<button class="btn btn-success btn-right" ng-click="cc.paymentProcess()">Payment Process</button>
+    	</div>
+  	</div>
 </div>
 <div class="grey-background low-padding none-margin">
   <h4 class="text-blue ident">
