@@ -1,39 +1,37 @@
-<div class="checkout-style">
-  <div class="checkbody text-center">
-
+<div class="blue-background high-padding text-white">
+  <div class="text-center">
     <div>
-    	<label class="chspan">To Pay: ${{cc.getTotalCheck() | number:2}}</label>
-  	</div>
-  	<div>
-	    <label class="chspan">Change: ${{cc.getChangeCheck() | number:2}}</label>
-  	</div>
+      <span class="">To pay: $</span>
+      <span ng-bind="cc.getTotalCheck() | number: 2" class=""></span>
+    </div>
+    <div>
+     <span class="">Change: $</span>
+     <span ng-bind="cc.getChangeCheck()" class="chspan"></span>
+   </div>
+ </div>
+</div>
+<div class="grey-background low-padding none-margin">
+	<h4 class="text-blue ident">PayPal</h4>
+</div>
+<div class="">
+  <div class="green-background low-padding none-margin">
+   <h4 class="text-white ident">Cash:</h4>
+ </div>
+ <div class="white-background low-padding none-margin">
+  <div class="input-group input-group-lg">
+    <span class="input-group-addon">Amount tendered:</span>
+    <span class="input-group-addon">$</span>
+    <input
+    name="changeClient"
+    type="number"
+    step="any"
+    class="form-control"
+    ng-model="changeClient"
+    typeahead-editable="false"
+    placeholder="0.00"
+    ng-change="cc.getChangeCheck()"
+    >
   </div>
-
-</div>
-<hr/>
-<div>
-	<span class="paypal">PayPal</span>
-</div>
-<div>
-	<div class="cashbody">
-
-    		<h4 class="chspan">Cash:</h4>
-
-  	</div>
-  	<div class="form-inline">
-  		<label>Amount Tendered:</label>
-  		<span>$</span>
-  		<input
-			name="changeClient"
-			type="number"
-			step="any"
-			class="form-input"
-	    	ng-model="cc.changeClient"
-	    	typeahead-editable="false"
-			placeholder="0.00"
-	    	ng-change="cc.getChangeCheck()"
- 		>
-  	</div>
 </div>
 <div>
 	<div class="paypal-style">
@@ -50,5 +48,13 @@
     	</div>
   	</div>
 </div>
-
-
+<div class="grey-background low-padding none-margin">
+  <h4 class="text-blue ident">
+    Card
+  </h4>
+</div>
+<div class="white-background low-padding none-margin">
+  <button class="btn btn-default" ng-click="mc.togglePanel()">Return to sale</button>
+  <button class="btn btn-success btn-right" ng-click="cc.paymentProcess()">Payment Process</button>
+</div>
+</div>
