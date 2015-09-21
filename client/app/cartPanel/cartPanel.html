@@ -2,18 +2,18 @@
   <table class="table">
     <thead>
       <tr>
-        <th data-field="id" class="col-md-2">Qty</th>
+        <th data-field="id" class="col-md-2 text-center">Qty</th>
         <th data-field="name" class="col-md-4">Product</th>
-        <th data-field="price" class="col-md-2">Price</th>
-        <th data-field="total" class="col-md-3">Total</th>
+        <th data-field="price" class="col-md-2 text-center">Price</th>
+        <th data-field="total" class="col-md-3 text-right">Total</th>
         <th data-field="remove" class="col-md-1"></th>
       </tr>
     </thead>
     <tbody>
       <tr ng-repeat="i in cp.cart.items">
 
-        <td>
-            <div class="quantity-item"  popover-template="'app/cartPanel/partials/kposPopover.html'" popover-trigger="click"  >{{i.quantity}} </div>
+        <td class="text-center">
+          <div class="quantity-item"  popover-template="'app/cartPanel/partials/kposPopover.html'" popover-trigger="click"  >{{i.quantity}} </div>
         </td>
         <td>{{i.name}}</td>
         <td>
@@ -59,67 +59,82 @@
 </div>
 <hr/>
 <div class="panel panel-default" id="client_section">
-    <div class="panel-heading">
-        <div class="input-group">
-            <span class="input-group-addon" id="basic-addon1">Client:</span>
-            <input type="text"
-                    class="form-control"
-                    ng-model="selectedClient"
-                    no-results="cp.defaultClient"
-                    typeahead-editable="false"
-                    typeahead="c.name for c in cp.searchClient($viewValue)"
-                    typeahead-on-select="cp.changeClient($item, $model, $label)"
-                    placeholder="Consumidor Final"
-                    aria-describedby="basic-addon1"
-                    ng-keyup="cp.voidClient(selectedClient)">
-            <span class="input-group-btn">
-                <button class="btn btn-success" type="button" ng-click="cp.newClientModal()">New Client</button>
-            </span>
-        </div>
+  <div class="panel-heading">
+    <div class="input-group">
+      <span class="input-group-addon" id="basic-addon1">Client:</span>
+      <input type="text"
+      class="form-control"
+      ng-model="selectedClient"
+      no-results="cp.defaultClient"
+      typeahead-editable="false"
+      typeahead="c.name for c in cp.searchClient($viewValue)"
+      typeahead-on-select="cp.changeClient($item, $model, $label)"
+      placeholder="Consumidor Final"
+      aria-describedby="basic-addon1"
+      ng-keyup="cp.voidClient(selectedClient)">
+      <span class="input-group-btn">
+        <button class="btn btn-success" type="button" ng-click="cp.newClientModal()">New Client</button>
+      </span>
     </div>
+  </div>
 
-    <div ng-if="cp.cart.client._id!='default'" class="animate-if panel-body">
-        <div  data-response-handler="responseHandler">
-            <div>
-                <div data-field="dni" class="col-xs-3 col-sm-2 col-md-2">DNI:</div>
-                <div class="col-xs-9 col-sm-10 col-md-10">{{cp.cart.client.dni}}</div>
+  <div ng-if="cp.cart.client._id!='default'" class="animate-if panel-body client-data">
+
+           <!--  <div>
+               <div data-field="dni" class="col-xs-3 col-sm-2 col-md-2">DNI:</div>
+               <div class="col-xs-9 col-sm-10 col-md-10">{{cp.cart.client.dni}}</div>
+           </div>
+           <div>
+               <div data-field="name"  class="col-xs-3 col-sm-2 col-md-2">Name:</div>
+               <div class="col-xs-9 col-sm-10 col-md-10">{{cp.cart.client.name}}</div>
+           </div>
+           <div>
+               <div data-field="address"  class="col-xs-3 col-sm-2 col-md-2">Address:</div>
+               <div class="col-xs-9 col-sm-10 col-md-10">{{cp.cart.client.address}}</div>
+             </div> -->
+
+             <div class="form-inline">
+              <div class="form-group">
+                <label for="dni">DNI:</label>
+                <span id="dni" class="label label-info">{{cp.cart.client.dni}}</span>
+              </div>
+              <div class="form-group">
+                <label for="name">Name:</label>
+                <span id="name">{{cp.cart.client.name}}</span>
+              </div>
+              <div class="form-group">
+                <label for="address">Address:</label>
+                <span id="address">{{cp.cart.client.address}}</span>
+              </div>
             </div>
-            <div>
-                <div data-field="name"  class="col-xs-3 col-sm-2 col-md-2">Name:</div>
-                <div class="col-xs-9 col-sm-10 col-md-10">{{cp.cart.client.name}}</div>
-            </div>
-            <tr>
-                <div data-field="address"  class="col-xs-3 col-sm-2 col-md-2">Address:</div>
-                <div class="col-xs-9 col-sm-10 col-md-10">{{cp.cart.client.address}}</div>
-            </tr>
+
+          </div>
         </div>
-    </div>
-</div>
-<div class="panel-client">
-    <div class="col-xs-3 col-sm-2 col-md-4">
-        <div dropdown keyboard-nav on-toggle="cp.getDiscountsDropdown(open)">
-            <button id="discounts-button" type="button" class="btn btn-success" dropdown-toggle>
+        <div class="panel-client">
+          <div class="col-xs-3 col-sm-2 col-md-4">
+            <div dropdown keyboard-nav on-toggle="cp.getDiscountsDropdown(open)">
+              <button id="discounts-button" type="button" class="btn btn-success" dropdown-toggle>
                 Add Discounts <span class="caret"></span>
-            </button>
-            <ul class="dropdown-menu" role="menu" aria-labelledby="discounts-button">
+              </button>
+              <ul class="dropdown-menu" role="menu" aria-labelledby="discounts-button">
                 <li role="menuitem" ng-repeat="discount in cp.discounts">
-                <a href="" ng-click="cp.applyDiscount(discount._id)">{{discount.name}}</a>
+                  <a href="" ng-click="cp.applyDiscount(discount._id)">{{discount.name}}</a>
                 </li>
-            </ul>
-        </div>
-    </div>
-    <div class="col-xs-9 col-sm-5 col-md-8">
-        <div class="input-group">
-            <span class="input-group-addon" id="coupon">coupon:</span>
-            <input
-            type="text"
-            class="form-control"
-            placeholder="claim coupon"
-            ng-model="cp.selectedCoupon"
-            aria-describedby="coupon">
-            <span class="input-group-btn">
+              </ul>
+            </div>
+          </div>
+          <div class="col-xs-9 col-sm-5 col-md-8">
+            <div class="input-group">
+              <span class="input-group-addon" id="coupon">coupon:</span>
+              <input
+              type="text"
+              class="form-control"
+              placeholder="claim coupon"
+              ng-model="cp.selectedCoupon"
+              aria-describedby="coupon">
+              <span class="input-group-btn">
                 <button class="btn btn-success" type="button" ng-click="cp.applyCoupon()">Apply</button>
-            </span>
+              </span>
+            </div>
+          </div>
         </div>
-    </div>
-</div>
