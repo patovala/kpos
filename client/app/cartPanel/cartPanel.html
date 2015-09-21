@@ -58,29 +58,27 @@
   </table>
 </div>
 <hr/>
-<div class="panel panel-default" id="client_section" >
+<div class="panel panel-default" id="client_section">
     <div class="panel-heading">
-        <div>
-            <div class="col-xs-2 col-sm-2 col-md-2 ">Client:
-            </div>
-            <div class="col-xs-6 col-sm-8 col-md-7 ">
-                <input type="text"
-                class="form-control"
-                ng-model="selectedClient"
-                no-results="cp.defaultClient"
-                typeahead-editable="false"
-                typeahead="c.name for c in cp.searchClient($viewValue)"
-                typeahead-on-select="cp.changeClient($item, $model, $label)"
-                placeholder="Consumidor Final"
-                ng-keyup="cp.voidClient(selectedClient)"
-                >
-            </div>
-            <div class="col-xs-4 col-sm-2 col-md-3">
-                <button class="btn btn-success" type="button" ng-click="cp.newClientModal()">New Client</button></div>
+        <div class="input-group">
+            <span class="input-group-addon" id="basic-addon1">Client:</span>
+            <input type="text"
+                    class="form-control"
+                    ng-model="selectedClient"
+                    no-results="cp.defaultClient"
+                    typeahead-editable="false"
+                    typeahead="c.name for c in cp.searchClient($viewValue)"
+                    typeahead-on-select="cp.changeClient($item, $model, $label)"
+                    placeholder="Consumidor Final"
+                    aria-describedby="basic-addon1"
+                    ng-keyup="cp.voidClient(selectedClient)">
+            <span class="input-group-btn">
+                <button class="btn btn-success" type="button" ng-click="cp.newClientModal()">New Client</button>
+            </span>
         </div>
     </div>
 
-    <div ng-if="cp.cart.client._id!='default'" class="animate-if">
+    <div ng-if="cp.cart.client._id!='default'" class="animate-if panel-body">
         <div  data-response-handler="responseHandler">
             <div>
                 <div data-field="dni" class="col-xs-3 col-sm-2 col-md-2">DNI:</div>
