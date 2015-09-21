@@ -1,0 +1,47 @@
+[
+  {
+    "_id": 1,
+    "name": "Mocachino 8oz",
+    "price": 1.25,
+    "category": "coffee",
+    "image": "http://kokencoffee.com/pos/wp-content/uploads/2015/06/Moccachino-kava-180x180.jpg",
+    "featured": true,
+    "onSale": false
+  },
+  {
+    "_id": 2,
+    "name": "Filtered coffee / Cafe filtrado",
+    "category": "coffee",
+    "image": "http://kokencoffee.com/pos/wp-content/uploads/2015/06/Drip_Coffee_Machine_928A_845-180x180.jpg",
+    "price": 0.6,
+    "featured": true,
+    "onSale": true
+  },
+  {
+    "_id": 3,
+    "name": "Caramel Flat White",
+    "category": "coffee",
+    "image": "http://kokencoffee.com/pos/wp-content/uploads/2015/06/caramel-180x180.jpg",
+    "price": 1.25,
+    "featured": false,
+    "onSale": true
+  },
+  {
+    "_id": 4,
+    "name": "Americano",
+    "category": "coffee",
+    "image": "http://kokencoffee.com/pos/wp-content/uploads/2015/06/CoffeeCup-180x180.jpg",
+    "price": 0.50,
+    "featured": false,
+    "onSale": false
+  },
+  {
+    "_id": 5,
+    "name": "Flat white 8oz",
+    "category": "coffee",
+    "image": "http://kokencoffee.com/pos/wp-content/uploads/2015/06/flatwhite-180x180.jpg",
+    "price": 1.25,
+    "featured": true,
+    "onSale": false
+  }
+]

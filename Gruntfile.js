@@ -264,10 +264,10 @@ module.exports = function (grunt) {
       dist: {
         files: {
           src: [
-            '<%= yeoman.dist %>/public/{,*/}*.js',
-            '<%= yeoman.dist %>/public/{,*/}*.css',
-            '<%= yeoman.dist %>/public/assets/images/{,*/}*.{png,jpg,jpeg,gif,webp,svg}',
-            '<%= yeoman.dist %>/public/assets/fonts/*'
+            '<%= yeoman.dist %>/scripts/**/*.js',
+            '<%= yeoman.dist %>/styles/**/*.css',
+            '<%= yeoman.dist %>/images/**/*.{png,jpg,jpeg,gif,webp,svg}',
+            '<%= yeoman.dist %>/fonts/**/*.ttf'
           ]
         }
       }
@@ -286,8 +286,8 @@ module.exports = function (grunt) {
     // Performs rewrites based on rev and the useminPrepare configuration
     usemin: {
       html: ['<%= yeoman.dist %>/public/{,*/}*.html'],
-      css: ['<%= yeoman.dist %>/public/{,*/}*.css'],
-      js: ['<%= yeoman.dist %>/public/{,*/}*.js'],
+      css: ['<%= yeoman.dist %>/styles/**/*.css'],
+      js: ['<%= yeoman.dist %>/scripts/**/*.js'],
       options: {
         assetsDirs: [
           '<%= yeoman.dist %>/public',
@@ -407,7 +407,7 @@ module.exports = function (grunt) {
         expand: true,
         cwd: '<%= yeoman.client %>',
         dest: '.tmp/',
-        src: ['{app,components}/**/*.css']
+         src: ['{app,components}/**/*.css']
       }
     },
 
@@ -573,7 +573,47 @@ module.exports = function (grunt) {
         }
       }
     },
+    mongoimport: {
+      options: {
+      db : 'kpos-dev',
+      host : '127.0.0.1', //optional
+      port: '27017', //optional
+      collections :
+      [
+        {
+          name : 'clients',
+          type : 'json',
+          file : 'server/fixtures/clients.json',
+          jsonArray : true,
+          upsert : true
+        },
+        {
+          name : 'products',
+          type : 'json',
+          file : 'server/fixtures/products.json',
+          jsonArray : true,
+          upsert : true
+        },
+        {
+          name : 'discounts',
+          type : 'json',
+          file : 'server/fixtures/discounts.json',
+          jsonArray : true,
+          upsert : true
+        },
+        {
+          name : 'coupons',
+          type : 'json',
+          file : 'server/fixtures/coupons.json',
+          jsonArray : true,
+          upsert : true
+        }
+      ]
+    }
+  }
   });
+
+  grunt.loadNpmTasks('grunt-mongoimport');
 
   // Used for delaying livereload until after server has restarted
   grunt.registerTask('wait', function () {
@@ -616,8 +656,10 @@ module.exports = function (grunt) {
       'concurrent:server',
       'injector',
       'wiredep',
+      'copy:styles',
       'autoprefixer',
       'express:dev',
+      'mongoimport',
       'wait',
       'open',
       'watch'

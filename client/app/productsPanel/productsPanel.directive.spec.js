@@ -10,7 +10,9 @@ describe('Directive: productsPanel', function () {
 
   // load the directive's module and view
   beforeEach(module('kposApp'));
+
   beforeEach(module('app/productsPanel/productsPanel.html'));
+  beforeEach(module('app/productsPanel/partials/productsList.html'));
 
   var element, scope, $httpBackend, products, ctrl, cartService;
 
@@ -65,6 +67,7 @@ describe('Directive: productsPanel', function () {
    * */
   it('should get all the products from /api/products', inject(function () {
     expect(ctrl.products.length).toBe(3);
+    expect(ctrl.filter).toBeNull();
   }));
 
   /*
@@ -92,59 +95,31 @@ describe('Directive: productsPanel', function () {
   }));
 
   /*
-   * No debe llamar al search si el query tiene menos de 3 caracteres
-   * Al escribir en el 3er elemento del search deberia llamar al api para
-   * buscar el producto con nombre 'searchTerm' y enviar el request al backend
-   *
-   * */
-  it('should have a search input for search for product', inject(function () {
-    scope.searchTerm = 'ab';
-    ctrl.search();
-
-    ctrl.searchTerm = 'abcd';
-    ctrl.search();
-
-    $httpBackend.expectGET('api/products/abcd').respond([{'name': 'abc'}]);
-    $httpBackend.flush();
-  }));
-
-
-  /*
    * Al hacer click en el boton (+) Deberia agregar al cartService el producto
    * como un item solo
    * */
   it('should call to cartService on click', inject(function () {
-    spyOn(cartService, 'addToCart').andCallThrough();
+    spyOn(cartService, 'addToCart').andReturn();
     ctrl.addToCart(1);
 
     expect(cartService.addToCart).toHaveBeenCalled();
   }));
 
-  /*
-   * TODO: al hacer click en featured deberia llamar a un metodo del controlador
-   * que cambie products a products featured, esto deberia ser una llamada al
-   * backend tambien
-   * */
   it('should get the featured products', inject(function () {
     ctrl.searchTerm = 'abcd';
     ctrl.getProductsFilter('featured');
 
-    $httpBackend.expectGET('api/products/abcd/featured').respond([{'name': 'abc'}]);
+    $httpBackend.expectGET('api/products/featured?query=abcd').respond([{'name': 'abc'}]);
     $httpBackend.flush();
-    console.log(ctrl.products);
     expect(ctrl.products[0].name).toEqual('abc');
+    expect(ctrl.filter).toEqual('featured');
   }));
 
-  /*
-   * TODO: al hacer click en onsale deberia llamar a un metodo del controlador
-   * que cambie products a products featured, esto deberia ser una llamada al
-   * backend tambien
-   * */
   it('should get the onsale products', inject(function () {
     ctrl.searchTerm = 'cdef';
     ctrl.getProductsFilter('onSale');
 
-    $httpBackend.expectGET('api/products/cdef/onSale').respond([{'name': 'abc'}]);
+    $httpBackend.expectGET('api/products/onSale?query=cdef').respond([{'name': 'abc'}]);
     $httpBackend.flush();
     expect(ctrl.products[0].name).toEqual('abc');
   }));

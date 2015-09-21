@@ -1,28 +1,25 @@
 <div ng-include="'components/navbar/navbar.html'"></div>
 
-<!--header class="hero-unit" id="banner">
-  <div class="container">
-    <h1>'Allo, 'Allo!</h1>
-    <p class="lead">Kick-start your next web app with Angular Fullstack</p>
-    <img src="assets/images/yeoman.png" alt="I'm Yeoman">
-  </div>
-</header-->
-
 <div class="container">
   <div class="row">
-    <div class="col-md-6">
+    <div class="col-xs-12 col-md-6">
       <products-panel></products-panel>
     </div>
-    <div class="col-md-6">
-      TODO: Aqui va el cartPanel
+    <div class="col-xs-12 col-md-6 cart" ng-if="!mc.checkout">
+      <cart-panel></cart-panel>
+      <div id="cart_footer">
+        <button type="button" class="btn btn-danger" ng-click="cp.voidCart()">Void</button>
+        <button type="button" class="btn btn-success" ng-click="mc.togglePanel()">Checkout</button>
+      </div>
+    </div>
+    <div class="col-xs-12 col-md-6 cart" ng-if="mc.checkout">
+      <checkout-panel></checkout-panel>
     </div>
   </div>
 </div>
 
 <footer class="footer">
-  <div class="container">
-      <p>Angular Fullstack v2.0.13 |
-        <a href="https://twitter.com/tyhenkel">@tyhenkel</a> |
-         <a href="https://github.com/DaftMonk/generator-angular-fullstack/issues?state=open">Issues</a></p>
-  </div>
+    <div class="container">
+        <p>&copy the lonely hearts</p>
+    </div>
 </footer>

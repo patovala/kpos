@@ -21,8 +21,11 @@ describe('GET /api/products', function() {
       var collection = db.collection('products');
       // Insert some documents
       products = _.map([1, 2, 3, 4, 5], function(i){
-        return {_id: i, name: 'product ' + i, price: i * 100};
+        return {_id: i, name: 'product ' + i, price: i * 100, featured: false, onsale: false};
       });
+
+      // make one product featured
+      products[0].featured = true;
 
       collection.insert(products);
 
@@ -57,22 +60,61 @@ describe('GET /api/products', function() {
       });
   });
 
-  /*
-   * we should get the product filtered
-   * when we call /api/products/<q>
-   * been <q> the query
-   * */
-  it('should get the products filtered by ', function(done) {
+  it('should get the product with a specific id', function(done) {
     request(app)
-      //.get('/api/products/product%201')
-      .get('/api/products/product 1')
+      .get('/api/products?_id=1')
       .expect(200)
       .expect('Content-Type', /json/)
       .end(function(err, res) {
         if (err) return done(err);
-        res.body.should.be.instanceof(Array);
-        res.body.length.should.equal(1);
+        //TODO: esto deberia ser solo un objeto
+        res.body.should.be.instanceof(Object);
+        res.body._id.should.equal(1);
         done();
       });
+  });
+
+  it('should not get the product because the parameter is not an integer', function(done) {
+    request(app)
+      .get('/api/products?_id=product')
+      .expect(200)
+      .expect('Content-Type', /json/)
+      .end(function(err, res) {
+        if (err) return done(err);
+        res.body.should.be.instanceof(Object);
+        res.body.should.eql({});
+        done();
+      });
+  });
+
+  /*
+   * we should get the product filtered
+   * when we call /api/products/<f>
+   * been <f> the filter
+   * */
+  it('should get the products filtered by featured', function(done) {
+    request(app)
+    .get('/api/products/featured')
+    .expect(200)
+    .expect('Content-Type', /json/)
+    .end(function(err, res) {
+      if (err) return done(err);
+      res.body.should.be.instanceof(Array);
+      res.body.length.should.equal(1);
+      done();
     });
+  });
+
+  it('should not get the products filtered by featured because the query not exist', function(done) {
+    request(app)
+    .get('/api/products/featured?query=coffee')
+    .expect(200)
+    .expect('Content-Type', /json/)
+    .end(function(err, res) {
+      if (err) return done(err);
+      res.body.should.be.instanceof(Array);
+      res.body.length.should.equal(0);
+      done();
+    });
+  });
 });

@@ -1,0 +1,43 @@
+[
+  {
+    "_id": "default",
+    "name": "Consumidor Final",
+    "address": ""
+  },
+  {
+    "_id": 1,
+    "name": "Janina Herrera",
+    "address": "Jose A. Equiguren",
+    "type": ["ioet"]
+  },
+  {
+    "_id": 2,
+    "name": "Patricio Valarezo",
+    "address": "La argelia",
+    "type": ["ioet"]
+  },
+  {
+    "_id": 3,
+    "name": "Marjorie Chinchay",
+    "address": "",
+    "type": ["ioet"]
+  },
+  {
+    "_id": 4,
+    "name": "Jimmy Jarammillo",
+    "address": "",
+    "type": ["ioet"]
+  },
+  {
+    "_id": 5,
+    "name": "Luis Tinitana",
+    "address": "La Pradera",
+    "type": ["ioet"]
+  },
+    {
+    "_id": 6,
+    "name": "Jorge Mejia",
+    "address": "Ciudadela 8 de diciembre",
+    "type": ["ioet"]
+  }
+]

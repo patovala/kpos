@@ -1,0 +1,22 @@
+[
+    {
+        "_id": "BYO",
+        "name": "Bring your own",
+        "category": "generic",
+        "type": "value",
+        "value": "0.10",
+        "applyToCategory": "coffee"
+    },
+    {
+        "_id": "internetservice",
+        "name": "internetservice",
+        "description": "This discount aplies to carts with coffee items",
+        "appliesToItemCategory": "coffee",
+        "discount": {
+            "id": "internetservice",
+            "name": "Internet Service",
+            "type": "notvalue",
+            "comment": "this object has to be resolved in the checkout phase"
+        }
+    }
+]

@@ -16,6 +16,7 @@
     "method-override": "~1.0.0",
     "mongodb": "^2.0.42",
     "morgan": "~1.0.0",
+    "ng-alertify": "^0.8.0",
     "serve-favicon": "~2.0.1"
   },
   "devDependencies": {
@@ -43,6 +44,7 @@
     "grunt-karma": "~0.8.2",
     "grunt-lintspaces": "^0.7.0",
     "grunt-mocha-test": "~0.10.2",
+    "grunt-mongoimport": "^0.1.6",
     "grunt-newer": "~0.7.0",
     "grunt-ng-annotate": "^0.2.3",
     "grunt-node-inspector": "~0.1.5",
@@ -72,7 +74,8 @@
     "requirejs": "~2.1.11",
     "should": "~3.3.1",
     "supertest": "~0.11.0",
-    "time-grunt": "~0.3.1"
+    "time-grunt": "~0.3.1",
+    "pre-commit": "^1.0.10"
   },
   "engines": {
     "node": ">=0.10.0"
@@ -83,6 +86,13 @@
     "jshint": "grunt jshint",
     "test": "grunt test",
     "update-webdriver": "node node_modules/grunt-protractor-runner/node_modules/protractor/bin/webdriver-manager update"
+  },
+  "pre-commit": {
+    "run": [
+      "test",
+      "jshint",
+      "lintspaces"
+    ]
   },
   "private": true
 }

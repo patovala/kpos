@@ -18,6 +18,10 @@
     <!-- build:css({.tmp,client}) app/app.css -->
     <link rel="stylesheet" href="app/app.css">
       <!-- injector:css -->
+      <!-- include the core styles -->
+    <link rel="stylesheet" href="bower_components/alertify.js/themes/alertify.core.css" />
+   <!-- include a theme, can be included into the core instead of 2 separate files -->
+    <link rel="stylesheet" href="bower_components/alertify.js/themes/alertify.default.css" />
       <!-- endinjector -->
     <!-- endbuild -->
   </head>
@@ -27,7 +31,7 @@
     <![endif]-->
 
     <!-- Add your site or application content here -->
-    <div ui-view=""></div>
+    <div ui-view="" class="fill"></div>
 
     <!-- Google Analytics: change UA-XXXXX-X to be your site's ID -->
     <script>
@@ -54,16 +58,23 @@
       <script src="bower_components/angular-bootstrap/ui-bootstrap-tpls.js"></script>
       <script src="bower_components/lodash/dist/lodash.compat.js"></script>
       <script src="bower_components/angular-ui-router/release/angular-ui-router.js"></script>
+      <script src="bower_components/alertify.js/lib/alertify.js"></script>
+      <script src="bower_components/angular-animate/angular-animate.js"></script>
       <!-- endbower -->
     <!-- endbuild -->
 
         <!-- build:js({.tmp,client}) app/app.js -->
         <script src="app/app.js"></script>
           <!-- injector:js -->
+          <script src="app/cartPanel/cartPanel.directive.js"></script>
           <script src="app/cartService/cartService.service.js"></script>
+          <script src="app/checkoutPanel/checkoutPanel.directive.js"></script>
           <script src="app/main/main.controller.js"></script>
           <script src="app/main/main.js"></script>
           <script src="app/productsPanel/productsPanel.directive.js"></script>
+          <script src="app/validationInteger/validationInteger.directive.js"></script>
+          <script src="components/checkoutcartmodal/checkoutCartModalCtrl.js"></script>
+          <script src="components/clientmodal/clientModalCtrl.js"></script>
           <script src="components/modal/modal.service.js"></script>
           <script src="components/navbar/navbar.controller.js"></script>
           <!-- endinjector -->

@@ -5,6 +5,7 @@ var controller = require('./clients.controller');
 
 var router = express.Router();
 
-router.get('/', controller.index);
+router.get('/', controller.findAllOrById);
+router.post('/add', controller.addClient);
 
 module.exports = router;
