@@ -57,10 +57,10 @@ describe('Directive: cartPanel', function () {
     ctrl = element.controller('cartPanel');
   }));
 
-afterEach(function() {
-  $httpBackend.verifyNoOutstandingExpectation();
-  $httpBackend.verifyNoOutstandingRequest();
-});
+  afterEach(function() {
+    $httpBackend.verifyNoOutstandingExpectation();
+    $httpBackend.verifyNoOutstandingRequest();
+  });
 
   /*
    * Should render a cart with subtotal, tax and total
