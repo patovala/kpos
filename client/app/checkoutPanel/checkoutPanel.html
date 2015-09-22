@@ -2,13 +2,13 @@
   <div class="text-center">
     <div>
       <span class="">To pay: $</span>
-      <span ng-bind="cc.getTotalCheck() | number: 2" class=""></span>
+      <span ng-bind="{{cc.getTotalCheck() | number: 2}}" class=""></span>
     </div>
     <div>
      <span class="">Change: $</span>
-     <span ng-bind="cc.getChangeCheck()" class="chspan"></span>
-   </div>
- </div>
+     <span ng-bind="{{cc.getChangeCheck() | number: 2}}" class="chspan"></span>
+    </div>
+  </div>
 </div>
 <div class="grey-background low-padding none-margin">
 	<h4 class="text-blue ident">PayPal</h4>
@@ -16,43 +16,51 @@
 <div class="">
   <div class="green-background low-padding none-margin">
    <h4 class="text-white ident">Cash:</h4>
- </div>
- <div class="white-background low-padding none-margin">
+  </div>
+  <div class="white-background low-padding none-margin">
   <div class="input-group input-group-lg">
     <span class="input-group-addon">Amount tendered:</span>
     <span class="input-group-addon">$</span>
     <input
-    name="changeClient"
+    name="cc.changeClient"
     type="number"
     step="any"
     class="form-control"
-    ng-model="changeClient"
+    ng-model="cc.changeClient"
     typeahead-editable="false"
     placeholder="0.00"
     ng-change="cc.getChangeCheck()"
     >
   </div>
 </div>
-<div>
-	<div class="paypal-style">
 
-    		<h4 class="paypal">Card:</h4>
 
-  	</div>
-  	<div class="form-inline">
-		<div class="col-md-6">
-      		<button class="btn btn-default" ng-click="mc.togglePanel()">Return to sale</button>
-    	</div>
-    	<div class="col-md-6">
-      		<button class="btn btn-success btn-right" ng-click="cc.paymentProcess()">Payment Process</button>
-    	</div>
-  	</div>
+<div class="panel panel-danger">
+  <div class="panel-heading">
+    <h4 class="ident">
+      Card:
+    </h4>
+  </div>
+  <div class="panel-body low-padding none-margin">
+    <div class="input-group input-group-lg">
+      <span class="input-group-addon">Number:</span>
+      <span class="input-group-addon">#</span>
+      <input
+      name="cc.cardClient"
+      type="number"
+      step="any"
+      class="form-control"
+      ng-model="cc.cardClient"
+      typeahead-editable="false"
+      placeholder="0.00"
+      ng-change=""
+      >
+    </div>
+  </div>
 </div>
-<div class="grey-background low-padding none-margin">
-  <h4 class="text-blue ident">
-    Card
-  </h4>
-</div>
+
+
+
 <div class="white-background low-padding none-margin">
   <button class="btn btn-default" ng-click="mc.togglePanel()">Return to sale</button>
   <button class="btn btn-success btn-right" ng-click="cc.paymentProcess()">Payment Process</button>
