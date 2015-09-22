@@ -9,8 +9,13 @@
  </div>
 
 </div>
-<div class="grey-background low-padding none-margin">
-	<h4 class="text-blue ident">PayPal</h4>
+<div class="panel panel-default">
+	<div class="panel-heading paypal-header" ng-click="cc.dissmissPaypal()">
+    <h4 class="">PayPal</h4>
+  </div>
+  <div class="panel-body" ng-hide="cc.hidePaypal">
+    <h4 class="">todo: pay with paypal here</h4>
+  </div>
 </div>
 <div class="panel panel-success">
   <div class="panel-heading cashPanel" ng-click="cc.dissmissCash()">

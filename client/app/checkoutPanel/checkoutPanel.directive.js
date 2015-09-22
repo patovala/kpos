@@ -20,6 +20,7 @@ function checkoutPanel(){
     cc.paymentProcess = paymentProcess;
     cc.getChangeCheck = getChangeCheck;
     cc.dissmissCash = dissmissCash;
+    cc.dissmissPaypal = dissmissPaypal;
     return cc;
 
     function getTotalCheck(){
@@ -35,6 +36,10 @@ function checkoutPanel(){
 
     function dissmissCash(){
       cc.hideCash = !cc.hideCash;
+    }
+
+    function dissmissPaypal(){
+      cc.hidePaypal = !cc.hidePaypal;
     }
 
     function getChangeCheck(){
