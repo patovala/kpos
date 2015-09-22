@@ -19,7 +19,7 @@ function checkoutPanel(){
     cc.getTotalCheck = getTotalCheck;
     cc.paymentProcess = paymentProcess;
     cc.getChangeCheck = getChangeCheck;
-
+    cc.dissmissCash = dissmissCash;
     return cc;
 
     function getTotalCheck(){
@@ -31,6 +31,10 @@ function checkoutPanel(){
         r.save({cart: cc.cart}, function(data){
           console.log(data);
         });
+    }
+
+    function dissmissCash(){
+      cc.hideCash = !cc.hideCash;
     }
 
     function getChangeCheck(){
