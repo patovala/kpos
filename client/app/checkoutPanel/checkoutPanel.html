@@ -4,7 +4,7 @@
       <h1>To pay: $ {{cc.getTotalCheck() | number: 2}}</h1>
     </div>
     <div class="changeCheckout">
-     <h2>Change: $ {{cc.getChangeCheck()}}</h2>
+     <h2>Change: $ {{cc.getChangeCheck() | number: 2}}</h2>
    </div>
  </div>
 </div>
@@ -39,12 +39,12 @@
   </div>
 </div>
 <div class="panel panel-danger">
-  <div class="panel-heading">
+  <div class="panel-heading card-header" ng-click="cc.dissmissCard()">
     <h4 class="ident">
       Card:
     </h4>
   </div>
-  <div class="panel-body low-padding none-margin">
+  <div class="panel-body low-padding none-margin" ng-hide="cc.hideCard">
     <div class="input-group input-group-lg">
       <span class="input-group-addon">Number:</span>
       <span class="input-group-addon">#</span>
