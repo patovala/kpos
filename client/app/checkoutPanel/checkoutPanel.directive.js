@@ -12,11 +12,17 @@ function checkoutPanel(){
   return directive;
   function checkoutPanelCtrl($scope, cartService, $resource){
     var cc = this;
+
+    cc.changeClient = 0;
+
     cc.cart = cartService.getCart;
     cc.getTotalCheck = getTotalCheck;
     cc.paymentProcess = paymentProcess;
     cc.getChangeCheck = getChangeCheck;
+    cc.dissmissCash = dissmissCash;
+    cc.dissmissPaypal = dissmissPaypal;
     return cc;
+
     function getTotalCheck(){
       return cartService.getTotalCart();
     }
@@ -27,11 +33,19 @@ function checkoutPanel(){
           console.log(data);
         });
     }
-    function getChangeCheck(incl){
-      console.log('val clien',incl);
+
+    function dissmissCash(){
+      cc.hideCash = !cc.hideCash;
     }
 
+    function dissmissPaypal(){
+      cc.hidePaypal = !cc.hidePaypal;
+    }
 
+    function getChangeCheck(){
+      var change = cc.changeClient - getTotalCheck();
+      return change > 0 ? change : 0;
+    }
   }
 }
 angular.module('kposApp')
