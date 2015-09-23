@@ -19,7 +19,8 @@ function checkoutPanel(){
     cc.getTotalCheck = getTotalCheck;
     cc.paymentProcess = paymentProcess;
     cc.getChangeCheck = getChangeCheck;
-
+    cc.dissmissCash = dissmissCash;
+    cc.dissmissPaypal = dissmissPaypal;
     return cc;
 
     function getTotalCheck(){
@@ -31,6 +32,14 @@ function checkoutPanel(){
         r.save({cart: cc.cart}, function(data){
           console.log(data);
         });
+    }
+
+    function dissmissCash(){
+      cc.hideCash = !cc.hideCash;
+    }
+
+    function dissmissPaypal(){
+      cc.hidePaypal = !cc.hidePaypal;
     }
 
     function getChangeCheck(){
