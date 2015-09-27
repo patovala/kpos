@@ -6,6 +6,6 @@ var controller = require('./orders.controller');
 var router = express.Router();
 
 router.get('/', controller.index);
-router.post('/add', controller.addOrder);
+router.post('/new', controller.addOrder);
 
 module.exports = router;
