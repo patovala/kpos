@@ -12,7 +12,7 @@
 	<div class="panel-heading paypal-header" ng-click="cc.dissmissPaypal()">
     <h4 class="">PayPal</h4>
   </div>
-  <div class="panel-body" ng-hide="cc.hidePaypal">
+  <div class="panel-body" ng-show="cc.hidePaypal">
     <h4 class="">todo: pay with paypal here</h4>
   </div>
 </div>
@@ -44,7 +44,7 @@
       Card:
     </h4>
   </div>
-  <div class="panel-body low-padding none-margin" ng-hide="cc.hideCard">
+  <div class="panel-body low-padding none-margin" ng-show="cc.hideCard">
     <div class="input-group input-group-lg">
       <span class="input-group-addon">Number:</span>
       <span class="input-group-addon">#</span>
