@@ -98,7 +98,7 @@
   </div>
 </div>
 <div class="panel-client">
-  <div class="col-xs-4 col-sm-4 col-md-4">
+  <div class="col-xs-12 col-sm-4">
     <div dropdown keyboard-nav on-toggle="cp.getDiscountsDropdown(open)">
       <button id="discounts-button" type="button" class="btn btn-success" dropdown-toggle>
         Add Discounts <span class="caret"></span>
@@ -108,9 +108,9 @@
           <a href="" ng-click="cp.applyDiscount(discount._id)">{{discount.name}}</a>
         </li>
       </ul>
-    </div>
-  </div>
-  <div class="col-xs-8 col-sm-8 col-md-8">
+    </div><br>
+  </div>  
+  <div class="col-xs-12 col-sm-8">
     <div class="input-group">
       <span class="input-group-addon" id="coupon">coupon:</span>
       <input
@@ -123,5 +123,5 @@
         <button class="btn btn-success" type="button" ng-click="cp.applyCoupon()">Apply</button>
       </span>
     </div>
-  </div>
+  </div>  
 </div>
