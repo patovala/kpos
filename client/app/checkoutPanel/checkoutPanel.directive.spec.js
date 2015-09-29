@@ -34,9 +34,16 @@ describe('Directive: checkoutPanel', function () {
       items: []
     };
 
+    ctrl.order = {
+      user: ctrl.cart.client.name,
+      cart: ctrl.cart,
+      dateCreated: Date.now(),
+      paymentMethods: [{type: 'cash', value: 10}]
+    };
+
     ctrl.paymentProcess();
 
-    $httpBackend.expectPOST('api/orders/newOrder',{cart: ctrl.cart}).respond({});
+    $httpBackend.expectPOST('api/orders/new', ctrl.order).respond({});
     $httpBackend.flush();
 
   });

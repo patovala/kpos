@@ -58,8 +58,9 @@ function collectgeneric(cart, cb){
           var elems = _.filter(cart.items, function(i){return i.category === d.applyToCategory;});
           if (elems.length) {
             d.quantity = _.reduce(_.pluck(elems, 'quantity'), function(sum, num){
-              return sum + num;
+              return parseInt(sum) + parseInt(num);
             });
+
             cb([d]);
           }else{
             cb([]);

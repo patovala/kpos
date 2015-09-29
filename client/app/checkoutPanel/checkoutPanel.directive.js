@@ -14,6 +14,7 @@ function checkoutPanel(){
     var cc = this;
 
     cc.changeClient = 0;
+    cc.cart = cartService.getCart();
     cc.hidePayPal = false;
     cc.hideCard = false;
     cc.statusButton = true;
@@ -33,8 +34,20 @@ function checkoutPanel(){
     }
 
     function paymentProcess() {
-      var r = $resource('api/orders/newOrder');
-        r.save({cart: cc.cart}, function(data){
+
+      var date = Date.now();
+
+      console.log(cc.cart);
+
+      cc.order = {
+        user: cc.cart.client.name,
+        cart: cc.cart,
+        dateCreated: date,
+        paymentMethods: [{type: 'cash', value: 10}]
+      };
+
+      var r = $resource('api/orders/new');
+        r.save(cc.order, function(data){
           console.log(data);
         });
     }

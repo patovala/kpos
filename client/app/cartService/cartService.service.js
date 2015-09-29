@@ -120,15 +120,18 @@ angular.module('kposApp')
       setClient(client);
 
     }
+
     function resetClient(){
       var client = {_id: 'default', name: 'Consumidor Final', address: ''};
       setClient(client);
     }
+
     function getSubTotal (items) {
       var subtotal = 0;
       if (items) {
         _.forEach(items, function (item) {
-          subtotal = subtotal + (item.quantity * item.price);
+          var itemValue = item.price || item.value;
+          subtotal = subtotal + (item.quantity * itemValue);
         });
       }
       return subtotal;
