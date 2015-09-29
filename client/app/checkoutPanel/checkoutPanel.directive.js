@@ -14,7 +14,8 @@ function checkoutPanel(){
     var cc = this;
 
     cc.changeClient = 0;
-
+    cc.hideCard = false;
+    cc.hidePaypal = false;
     cc.cart = cartService.getCart;
     cc.getTotalCheck = getTotalCheck;
     cc.paymentProcess = paymentProcess;
