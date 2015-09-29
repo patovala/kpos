@@ -22,13 +22,14 @@ function ClientModalCtrl($scope, $modalInstance, $resource) {
       }
     });
   }
+
   function reset(){
     vm.client = { name:'', address:'', dni:''};
   }
+
   function cancel(){
     $modalInstance.dismiss('cancel');
   }
-
 }
 
 angular.module('kposApp')
