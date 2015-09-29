@@ -60,7 +60,6 @@ function checkoutPanel(){
         cc.statusButton=true;
         return  0;
       }
-      //return change > 0 ? change : 0;
     }
   }
 }
