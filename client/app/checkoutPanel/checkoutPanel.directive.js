@@ -14,9 +14,9 @@ function checkoutPanel(){
     var cc = this;
 
     cc.changeClient = 0;
-    cc.hidePayPal=false;
-    cc.hideCard=false;
-    cc.statusButton=true;
+    cc.hidePayPal = false;
+    cc.hideCard = false;
+    cc.statusButton = true;
 
     cc.cart = cartService.getCart;
     cc.getTotalCheck = getTotalCheck;
@@ -53,11 +53,11 @@ function checkoutPanel(){
 
     function getChangeCheck(){
       var change = cc.changeClient - getTotalCheck();
-      if(change>0){
-        cc.statusButton=false;
+      if(change > 0){
+        cc.statusButton = false;
         return change;
       }else{
-        cc.statusButton=true;
+        cc.statusButton = true;
         return  0;
       }
     }
