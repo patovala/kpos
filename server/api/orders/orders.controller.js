@@ -23,8 +23,7 @@ exports.addOrder = function(req, res) {
 
   if(_.all(['cart', 'dateCreated', 'paymentMethods', 'user'],
     _.partial(_.has, order)) && order.user !== '' &&
-    order.cart.client && order.paymentMethods.length !== 0 &&
-    _.some(order.paymentMethods, {type: 'cash'})){
+    order.cart.client && order.paymentMethods.length !== 0){
 
       MongoClient.connect(url, function (err, db) {
         var orders = db.collection('orders');

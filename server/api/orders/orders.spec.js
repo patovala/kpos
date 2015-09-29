@@ -31,7 +31,8 @@ describe('POST /api/orders/new', function() {
   });
 
   /*
-   * TODO: Una orden debería contener los siguientes aspectos importantes:
+   * TODO: fix the test with order store and check if it was stored
+   * Una orden debería contener los siguientes aspectos importantes:
    * - cliente: alguien o consumidor final
    * - cart: el cart para poder verificar descuentos y costos del lado del servidor
    * - forma de pago: la forma de pago con el total recaudado
@@ -39,7 +40,7 @@ describe('POST /api/orders/new', function() {
    * Luego de recibir la orden se debería procesar antes de contestar algo.
    *
    * */
-  it('should have basic entities', function(done) {
+  it('should have basic entities and should store the order', function(done) {
     request(app)
       .post('/api/orders/new')
       .send(completeOrder)
@@ -71,7 +72,7 @@ describe('POST /api/orders/new', function() {
       });
   });
 
-  /*TODO:
+  /*:
    * Deberia dar error si el cliente no esta seteado (objeto)
    * */
   it('should have a client into the cart', function(done) {
@@ -89,11 +90,12 @@ describe('POST /api/orders/new', function() {
       });
   });
 
-  /*TODO:
+  /*
    * Deberia dar error si la cart no tiene formas de pago
    * */
   it('should have basic entities', function(done) {
-    completeOrder.paymentMethods = [];
+    delete completeOrder.paymentMethods;
+
     request(app)
       .post('/api/orders/new')
       .send(completeOrder)
@@ -106,27 +108,16 @@ describe('POST /api/orders/new', function() {
       });
   });
 
-  /*TODO:
-   * Por lo menos deberia haber un payment method con forma de pago cash
+  /*
+   * Por lo menos deberia haber un payment method
    * */
-  it('should have almost one cash payment method', function(done) {
-    request(app)
-      .post('/api/orders/new')
-      .send(completeOrder)
-      .expect(200)
-      .expect('Content-Type', /json/)
-      .end(function(err, res) {
-        if (err) return done(err);
-        assert(res.body.resp === 'success');
-        done();
-      });
-  });
+  it('should have almost one payment method', function(done) {
+    var incompleteOrder = completeOrder;
+    incompleteOrder.paymentMethods = [];
 
-  it('should trow error if dont have almost one cash payment method', function(done) {
-    completeOrder.paymentMethods = [{type: 'paypal'}]
     request(app)
       .post('/api/orders/new')
-      .send(completeOrder)
+      .send(incompleteOrder)
       .expect(200)
       .expect('Content-Type', /json/)
       .end(function(err, res) {
