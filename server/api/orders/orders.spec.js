@@ -5,6 +5,10 @@ var app = require('../../app');
 var request = require('supertest');
 var assert = require("assert");
 
+var MongoClient = require('mongodb').MongoClient,
+    orders,
+    url = 'mongodb://localhost/kpos-test';
+
 describe('POST /api/orders/new', function() {
 
   var completeOrder;
@@ -28,6 +32,18 @@ describe('POST /api/orders/new', function() {
       }
     };
     done();
+  });
+
+  after(function(done){
+    MongoClient.connect(url, {}, function(err, db) {
+      var orders = db.collection('orders');
+
+      orders.drop(function(){
+        console.log('destroying DB');
+        db.close();
+        done();
+      });
+    });
   });
 
   /*
