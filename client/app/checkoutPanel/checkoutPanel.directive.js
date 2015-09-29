@@ -14,8 +14,10 @@ function checkoutPanel(){
     var cc = this;
 
     cc.changeClient = 0;
+    cc.hidePayPal = false;
     cc.hideCard = false;
-    cc.hidePaypal = false;
+    cc.statusButton = true;
+
     cc.cart = cartService.getCart;
     cc.getTotalCheck = getTotalCheck;
     cc.paymentProcess = paymentProcess;
@@ -27,6 +29,7 @@ function checkoutPanel(){
 
     function getTotalCheck(){
       return cartService.getTotalCart();
+
     }
 
     function paymentProcess() {
@@ -50,7 +53,13 @@ function checkoutPanel(){
 
     function getChangeCheck(){
       var change = cc.changeClient - getTotalCheck();
-      return change > 0 ? change : 0;
+      if(change > 0){
+        cc.statusButton = false;
+        return change;
+      }else{
+        cc.statusButton = true;
+        return  0;
+      }
     }
   }
 }
