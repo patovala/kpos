@@ -6,23 +6,29 @@ var request = require('supertest');
 var assert = require("assert");
 
 describe('POST /api/orders/new', function() {
-  var completeOrder = {
-    'user': 'trueuser',
-    'dateCreated': new Date().getTime(),
-    'paymentMethods': [{type:'cash'}],
-    'cart': {
-      client: {
-        "_id": "default",
-        "name": "Consumidor Final",
-        "address": ""
-      },
-      items: [
-        {'name': 'product1'},
-        {'name': 'product2'},
-        {'name': 'product3'},
-      ],
-    }
-  };
+
+  var completeOrder;
+
+  beforeEach(function(done) {
+    completeOrder = {
+      'user': 'trueuser',
+      'dateCreated': new Date().getTime(),
+      'paymentMethods': [{type:'cash'}],
+      'cart': {
+        client: {
+          "_id": "default",
+          "name": "Consumidor Final",
+          "address": ""
+        },
+        items: [
+          {'name': 'product1'},
+          {'name': 'product2'},
+          {'name': 'product3'},
+        ],
+      }
+    };
+    done();
+  });
 
   /*
    * TODO: Una orden debería contener los siguientes aspectos importantes:
@@ -41,7 +47,7 @@ describe('POST /api/orders/new', function() {
       .expect('Content-Type', /json/)
       .end(function(err, res) {
         if (err) return done(err);
-        assert(res.body.resp === 'ok');
+        assert(res.body.resp === 'success');
         done();
       });
   });
@@ -50,7 +56,7 @@ describe('POST /api/orders/new', function() {
    * deberia retornar error si no hay user
    *
    * */
-  it('should have basic entities', function(done) {
+  it('should have user', function(done) {
     completeOrder.user = '';
 
     request(app)
@@ -68,12 +74,66 @@ describe('POST /api/orders/new', function() {
   /*TODO:
    * Deberia dar error si el cliente no esta seteado (objeto)
    * */
+  it('should have a client into the cart', function(done) {
+    delete completeOrder.cart.client;
+
+    request(app)
+      .post('/api/orders/new')
+      .send(completeOrder)
+      .expect(200)
+      .expect('Content-Type', /json/)
+      .end(function(err, res) {
+        if (err) return done(err);
+        assert(res.body.resp === 'error');
+        done();
+      });
+  });
 
   /*TODO:
    * Deberia dar error si la cart no tiene formas de pago
    * */
+  it('should have basic entities', function(done) {
+    completeOrder.paymentMethods = [];
+    request(app)
+      .post('/api/orders/new')
+      .send(completeOrder)
+      .expect(200)
+      .expect('Content-Type', /json/)
+      .end(function(err, res) {
+        if (err) return done(err);
+        assert(res.body.resp === 'error');
+        done();
+      });
+  });
 
   /*TODO:
    * Por lo menos deberia haber un payment method con forma de pago cash
    * */
+  it('should have almost one cash payment method', function(done) {
+    request(app)
+      .post('/api/orders/new')
+      .send(completeOrder)
+      .expect(200)
+      .expect('Content-Type', /json/)
+      .end(function(err, res) {
+        if (err) return done(err);
+        assert(res.body.resp === 'success');
+        done();
+      });
+  });
+
+  it('should trow error if dont have almost one cash payment method', function(done) {
+    completeOrder.paymentMethods = [{type: 'paypal'}]
+    request(app)
+      .post('/api/orders/new')
+      .send(completeOrder)
+      .expect(200)
+      .expect('Content-Type', /json/)
+      .end(function(err, res) {
+        if (err) return done(err);
+        assert(res.body.resp === 'error');
+        done();
+      });
+  });
+
 });
