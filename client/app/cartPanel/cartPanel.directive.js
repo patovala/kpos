@@ -97,9 +97,11 @@ function cartPanel() {
     function applyCoupon(){
       cartService.applyCoupon(cp.selectedCoupon);
     }
+
     function voidCart(){
       cartService.resetCart();
     }
+
     function voidClient(idcliente){
       if(idcliente === null){
         cartService.resetClient();
@@ -121,6 +123,7 @@ function cartPanel() {
     function getSubTotal(items) {
       return cartService.getSubTotal(items);
     }
+
     function checkoutCartModal(){
       var modalInstance = $modal.open({
         animation: false,
