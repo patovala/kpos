@@ -9,7 +9,7 @@
         <th data-field="remove" class="col-md-1"></th>
       </tr>
     </thead>
-    <tbody>
+    <tbody class="client-data">
       <tr ng-repeat="i in cp.cart.items">
         <td class="text-center">
           <div class="quantity-item"  popover-template="'app/cartPanel/partials/kposPopover.html'" popover-trigger="click">{{i.quantity}} </div>
@@ -41,17 +41,20 @@
         <td class="total-item">{{d.quantity*d.value | number: 2}}</td>
       </tr>
     </tbody>
-    <tfoot >
+    <tfoot class="client-data" >
       <tr align="right">
         <td colspan="3">Cart Subtotal</td>
         <td><span ng-bind="cp.getSubTotal(cp.cart.items)"></span>
         </td>
+        <td></td>
       </tr>
       <tr align="right">
         <td colspan="3">Tax {{cp.cart.tax}} %</td><td>{{cp.totalTax() | number: 2}}</td>
+        <td></td>
       </tr>
       <tr align="right">
         <td colspan="3"><h3>Order Total</h3></td><td><h3>{{cp.totalCart() | number: 2}}</h3></td>
+        <td></td>
       </tr>
     </tfoot>
   </table>
