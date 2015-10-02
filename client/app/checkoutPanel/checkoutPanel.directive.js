@@ -13,7 +13,7 @@ function checkoutPanel(){
   function checkoutPanelCtrl($scope, cartService, $resource){
     var cc = this;
 
-    cc.changeClient = 0;
+    cc.amountTendered = '';
     cc.cart = cartService.getCart();
     cc.hidePayPal = false;
     cc.hideCard = false;
@@ -65,7 +65,7 @@ function checkoutPanel(){
     }
 
     function getChangeCheck(){
-      var change = cc.changeClient - getTotalCheck();
+      var change = cc.amountTendered - getTotalCheck();
       if(change > 0){
         cc.statusButton = false;
         return change;
