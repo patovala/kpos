@@ -58,7 +58,7 @@ describe('Directive: checkoutPanel', function () {
 
   it('should get the change of cart 2', function () {
     spyOn(cartService, 'getTotalCart').andReturn(3.75);
-    ctrl.amountTendered = 5;
+    ctrl.amountTendered= 5;
     expect(ctrl.getChangeCheck()).toEqual(1.25);
   });
 
