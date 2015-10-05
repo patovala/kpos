@@ -31,7 +31,7 @@ describe('Service: authenticationService', function () {
     expect(authenticationService.getLogId()).toEqual('0105220347');
   });
 
-  it('#checkStatus evaluates the state user2', function() {
+  it('#checkStatus evaluates the state user', function() {
     authenticationService.checkStatus();
     expect(authenticationService.getLogId()).toBeUndefined();
   });
