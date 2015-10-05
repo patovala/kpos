@@ -31,10 +31,9 @@ describe('Service: authenticationService', function () {
     expect(authenticationService.getLogId()).toEqual('0105220347');
   });
 
-  it('#checkStatus evaluates the state user', function() {
-    $httpBackend.expectPOST('api/authentication/logged', {user:'cris', password:'guncay'}).respond({logid:'undefined'});
-    authenticationService.logIn('cris', 'guncay');
-    $httpBackend.flush();
-    expect(authenticationService.getLogId()).toEqual('undefined');
+  it('#checkStatus evaluates the state user2', function() {
+    authenticationService.checkStatus();
+    expect(authenticationService.getLogId()).toBeUndefined();
   });
+
 });
