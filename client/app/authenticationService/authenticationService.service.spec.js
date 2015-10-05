@@ -22,6 +22,7 @@ describe('Service: authenticationService', function () {
     authenticationService.logIn('cris', 'guncay');
     $httpBackend.flush();
     expect(authenticationService.getMsg()).toEqual('Credenciales inválidas');
+    expect(authenticationService.getLogId()).toBeUndefined();
   });
 
   it('#logIn evaluates the value of id the user', function() {
