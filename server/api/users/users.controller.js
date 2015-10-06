@@ -68,7 +68,7 @@ exports.updateUser = function (req, res) {
         db.close();
       }else{
         users.findAndModify({_id: req.body.user._id}, [['_id','asc']],
-        {$set: {dni: req.body.user.dni, firstname: req.body.user.firstname,
+        {$set: {dni: req.body.user.dni, email: req.body.user.email, firstname: req.body.user.firstname,
                 lastname: req.body.user.lastname, username: req.body.user.username,
                 password: req.body.user.password, session_id: req.body.user.session_id}},
         {},function(err, result) {
