@@ -1,33 +1,35 @@
 'use strict';
 
 angular.module('kposApp')
-  .service('authenticationService', function ($cookies, $cookieStore, $resource, $location) {
-    // AngularJS will instantiate a singleton by calling "new" on this function
+  .service('authenticationService', function ($resource, $cookies, $cookieStore, $location) {
+    var msg='', logid;
 
-    var msg = null, logid;
-
-    return{
-      logIn : logIn,
-      logOut : logOut,
-      checkStatus : checkStatus
+    return {
+      logIn: logIn,
+      log0ut: logOut,
+      getMsg: getMsg,
+      getLogId: getLogId,
+      checkStatus: checkStatus
     };
 
-    function logIn(user, pass){
-        var r = $resource('api/users/');
-        r.save({'user':user,'pass':pass}, function(data){
+    function logIn(user, password){
+      var r = $resource('api/authentication/logged');
+      var promise = r.save({user: user, password: password}, function(data){
         logid = data.logid;
         if(logid){
             $cookies.logid = logid;
-            $location.path('/index');
+            $location.path('/home');
             msg = 'good login';
         }else{
             msg = 'Credenciales inválidas';
             $location.path('/login');
         }
-        });
+
+      });
+      return promise;
     }
 
-    function logOut(){
+    function logOut (){
         $cookieStore.remove('logid');
         $location.path('/login');
     }
@@ -35,11 +37,19 @@ angular.module('kposApp')
 
     function checkStatus(){
         if(typeof($cookies.logid) === 'undefined'){
-          $location.path('/login');
+            $location.path('/login');
         }else{
-          logid = $cookies.logid;
-          $location.path('/index');
+            logid = $cookies.logid;
+            $location.path('/home');
         }
+    }
+
+    function getMsg(){
+        console.log('debug:' + msg); return msg;
+    }
+
+    function getLogId (){
+        return logid;
     }
 
   });
