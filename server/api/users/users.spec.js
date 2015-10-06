@@ -57,7 +57,7 @@ describe('GET /api/users', function() {
 
   it('should get the user by username and/or email and password', function(done) {
     request(app)
-      .get('/api/users/logged?username=1ab@ioet.com&password=pass1')
+      .get('/api/users/logged?username=user1&password=pass1')
       .expect(200)
       .expect('Content-Type', /json/)
       .end(function(err, res) {
