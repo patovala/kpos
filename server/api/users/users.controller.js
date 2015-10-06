@@ -25,12 +25,12 @@ exports.loggedUser = function(req, res) {
   MongoClient.connect(url, function(err, db) {
     var users = db.collection('users');
     if(req.query && req.query.username && req.query.password){
-        users.findOne({$and:[{username: req.query.username},{password: req.query.password}]},function(err, doc){
+        users.findOne({$and:[{$or:[{email: req.query.email},{username: req.query.username}]},
+                      {password: req.query.password}]}, function(err, doc){
             res.json(doc);
             db.close();
         });
     }
-
   });
 };
 
@@ -38,7 +38,9 @@ exports.loggedUser = function(req, res) {
 exports.addUser = function (req, res) {
   MongoClient.connect(url, function (err, db) {
     var users = db.collection('users');
-    users.findOne({'username': req.body.user.username}, function(err, doc){
+    users.findOne({$or:[{dni: req.body.user.dni},
+                  {email: req.body.user.email},
+                  {username: req.body.user.username}]}, function(err, doc){
       if(doc !== null){
         res.send({resp:'duplicated'});
         db.close();
@@ -58,13 +60,22 @@ exports.addUser = function (req, res) {
 exports.updateUser = function (req, res) {
   MongoClient.connect(url, function (err, db) {
     var users = db.collection('users');
-    users.findAndModify({_id: req.body.user._id}, [['_id','asc']],
+    users.findOne({$or:[{dni: req.body.user.dni},
+                  {email: req.body.user.email},
+                  {username: req.body.user.username}]}, function(err, doc){
+      if(doc !== null){
+        res.send({resp:'elements duplicated'});
+        db.close();
+      }else{
+        users.findAndModify({_id: req.body.user._id}, [['_id','asc']],
         {$set: {dni: req.body.user.dni, firstname: req.body.user.firstname,
-              lastname: req.body.user.lastname, username: req.body.user.username,
-              password: req.body.user.password, session_id: req.body.user.session_id}},
+                lastname: req.body.user.lastname, username: req.body.user.username,
+                password: req.body.user.password, session_id: req.body.user.session_id}},
         {},function(err, result) {
           res.send((err === null) ? result : { msg: err });
           db.close();
+        });
+      }
     });
   });
 };

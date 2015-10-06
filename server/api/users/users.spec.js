@@ -20,7 +20,7 @@ describe('GET /api/users', function() {
       // Insert some documents
       users = _.map([1, 2, 3, 4, 5], function(i){
         return {_id: i, dni: i+'123', firstname: 'nameuser'+i, lastname: 'lastnameuser'+i,
-                  username: 'user' + i, password: 'pass'+i,  session_id: i * 100};
+                  email: i+'ab@ioet.com', username: 'user' + i, password: 'pass'+i,  session_id: i * 100};
       });
       collection.insert(users, function(err, result) {
         console.log('populando DB users');
@@ -55,9 +55,9 @@ describe('GET /api/users', function() {
       });
   });
 
-  it('should get the user by username and password', function(done) {
+  it('should get the user by username and/or email and password', function(done) {
     request(app)
-      .get('/api/users/logged?username=user1&password=pass1')
+      .get('/api/users/logged?username=1ab@ioet.com&password=pass1')
       .expect(200)
       .expect('Content-Type', /json/)
       .end(function(err, res) {
@@ -72,7 +72,7 @@ describe('GET /api/users', function() {
     request(app)
       .post('/api/users/add')
       .send({user: {_id: 25, dni: 1234, firstname: 'Jimmy', lastname: 'Jaramillo',
-                    username: "jim", password: "jj", session_id: 1234}})
+                    email: 'loja@ioet.com', username: "jim", password: "jj", session_id: 1234}})
       .expect(200)
       .expect('Content-Type', /json/)
       .end(function(err, res) {
@@ -86,11 +86,28 @@ describe('GET /api/users', function() {
       });
   });
 
+
+  it('should control user repet', function(done) {
+    request(app)
+      .post('/api/users/add')
+      .send({user: {_id: 12, dni: 1234, firstname: 'fernando', lastname: 'loja',
+                    email: 'loja@ioet.com', username: "jim", password: "ll", session_id: 6789}})
+      .expect(200)
+      .expect('Content-Type', /json/)
+      .end(function(err, res) {
+        if (err) return done(err);
+          res.body.resp.should.equal("duplicated");
+          done();
+      });
+  });
+
+
+
   it('should update user by username', function(done) {
     request(app)
       .post('/api/users/update')
       .send({user: {_id: 1, dni:101010, firstname: 'nameuser101010', lastname: 'lastnameuser101010',
-            username: "user101010", password: "101010", session_id: 101010}})
+            email: 'abc@ioet.com', username: "user101010", password: "101010", session_id: 101010}})
       .expect(200)
       .expect('Content-Type', /json/)
       .end(function(err, res) {
@@ -99,6 +116,23 @@ describe('GET /api/users', function() {
           done();
       });
   });
+
+
+  it('should control data repet in update user by username', function(done) {
+    request(app)
+      .post('/api/users/update')
+      .send({user: {_id: 2, dni:101010, firstname: 'nameuser22222', lastname: 'lastnameuser22222',
+            email: 'abc@ioet.com', username: "user101010", password: "101010", session_id: 101010}})
+      .expect(200)
+      .expect('Content-Type', /json/)
+      .end(function(err, res) {
+        if (err) return done(err);
+          res.body.resp.should.equal("elements duplicated");
+          done();
+      });
+  });
+
+
 
   it('should delete the user by id', function(done) {
     request(app)
