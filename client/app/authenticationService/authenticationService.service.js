@@ -13,7 +13,7 @@ angular.module('kposApp')
     };
 
     function logIn(user, password){
-      var r = $resource('api/authentication/logged');
+      var r = $resource('api/users/logged');
       var promise = r.save({user: user, password: password}, function(data){
         logid = data.logid;
         if(logid){
@@ -24,6 +24,7 @@ angular.module('kposApp')
             msg = 'Credenciales inválidas';
             $location.path('/login');
         }
+
       });
       return promise;
     }
@@ -32,6 +33,7 @@ angular.module('kposApp')
         $cookieStore.remove('logid');
         $location.path('/login');
     }
+
 
     function checkStatus(){
         if(typeof($cookies.logid) === 'undefined'){

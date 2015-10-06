@@ -18,7 +18,7 @@ describe('Service: authenticationService', function () {
   });
 
   it('#logIn evaluates if the credentials are incorrect', function() {
-    $httpBackend.expectPOST('api/authentication/logged', {user:'cris', password:'guncay'}).respond({result:'error'});
+    $httpBackend.expectPOST('api/users/logged', {user:'cris', password:'guncay'}).respond({result:'error'});
     authenticationService.logIn('cris', 'guncay');
     $httpBackend.flush();
     expect(authenticationService.getMsg()).toEqual('Credenciales inválidas');
@@ -26,7 +26,7 @@ describe('Service: authenticationService', function () {
   });
 
   it('#logIn evaluates the value of id the user', function() {
-    $httpBackend.expectPOST('api/authentication/logged', {user:'cris', password:'guncay'}).respond({logid:'0105220347'});
+    $httpBackend.expectPOST('api/users/logged', {user:'cris', password:'guncay'}).respond({logid:'0105220347'});
     authenticationService.logIn('cris', 'guncay');
     $httpBackend.flush();
     expect(authenticationService.getLogId()).toEqual('0105220347');
