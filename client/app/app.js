@@ -12,4 +12,8 @@ angular.module('kposApp', [
       .otherwise('/');
 
     $locationProvider.html5Mode(true);
+
+  })
+  .constant('CONFIG', {
+    logo: 'assets/images/logoIcon.png',
   });

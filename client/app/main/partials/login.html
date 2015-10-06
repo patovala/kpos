@@ -1,0 +1,29 @@
+<div class="container container-center">
+	<div class="panel panel-default col-sm-8 col-sm-offset-2">
+		<div class="logo">
+			<img ng-src="{{mc.logo}}" class="image">
+		</div>
+		<div class="panel-heading">Log In</div>
+		<div class="panel-body">
+			<form name="loginForm" role="form" ng-submit="" novalidate class="userLess">
+				<div class="form-group" ng-class="{'has-error': loginForm.userName.$invalid && loginForm.userName.$touched }">
+					<label class="sr-only" for="userName">Username: </label>
+					<div class="input-group input-group-lg">
+						<span class="input-group-addon" id="addon1"  aria-hidden="true"><i class="fa fa-user"></i></span>
+						<input type="text" name="userName" class="form-control" placeholder="Username" aria-describedby="addon1" ng-model="userName" ng-required="true">
+					</div>
+					<span ng-show="loginForm.userName.$error.required && (loginForm.userName.$touched)" class="help-block">You user name is required</span>
+				</div>
+				<div class="form-group" ng-class="{'has-error': loginForm.password.$invalid && loginForm.password.$touched }">
+					<label class="sr-only" for="password">Password: </label>
+					<div class="input-group input-group-lg">
+						<span class=" input-group-addon" id="addon2" aria-hidden="true"><i class="fa fa-lock"></i></span>
+						<input type="password" name="password" class="form-control" placeholder="Password" aria-describedby="addon2" ng-model="password" ng-required="true">
+					</div>
+					<span ng-show="loginForm.password.$error.required && (loginForm.password.$touched)" class="help-block">You password is required</span>
+				</div>
+				<button class="btn btn-lg center-block" type="submit" ng-disabled="loginForm.$invalid" ng-click="">Log In</button>
+			</form>
+		</div>
+	</div>
+</div>
