@@ -1,0 +1,47 @@
+<form name="registerForm" role="form" ng-submit="" novalidate class="userLess">
+	<div class="row">
+		<div class="form-group col-sm-4" ng-class="{'has-error': registerForm.dni.$invalid && registerForm.dni.$touched }">
+			<label class="sr-only" for="dni">DNI:</label>
+			<input type="text" name="dni" class="form-control input-lg" placeholder="DNI" ng-model="dni" ng-required="true">
+			<span ng-show="registerForm.dni.$error.required && (registerForm.dni.$touched)" class="help-block">You DNI is required</span>
+		</div>
+		<div class="form-group col-sm-4" ng-class="{'has-error': registerForm.firstName.$invalid && registerForm.firstName.$touched }">
+			<label class="sr-only" for="firstName">First Name:</label>
+			<input type="text" name="firstName" class="form-control input-lg" placeholder="First Name" ng-model="firstName" ng-required="true">
+			<span ng-show="registerForm.firstName.$error.required && (registerForm.firstName.$touched)" class="help-block">You first name is required</span>
+		</div>
+		<div class="form-group col-sm-4" ng-class="{'has-error': registerForm.lastName.$invalid && registerForm.lastName.$touched }">
+			<label class="sr-only" for="lastName">Last Name:</label>
+			<input type="text" name="lastName" class="form-control input-lg" placeholder="Last Name" ng-model="lastName" ng-required="true">
+			<div>
+				<span ng-show="registerForm.lastName.$error.required && (registerForm.lastName.$touched)" class="help-block">You last name is required</span>
+			</div>
+		</div>
+	</div>
+	<div class="form-group" ng-class="{'has-error': registerForm.email.$invalid && registerForm.email.$touched }">
+		<label class="sr-only" for="email">Email:</label>
+		<div class="input-group input-group-lg">
+			<span class="input-group-addon" id="addon3" aria-hidden="true"><i class="fa fa-envelope"></i></span>
+			<input type="email" name="email" class="form-control" placeholder="Email" aria-describedby="addon3" ng-model="email" ng-required="true">
+		</div>
+		<span ng-show="registerForm.email.$error.required && (registerForm.email.$touched)" class="help-block">You email is required</span>
+		<span ng-show="registerForm.email.$error.email" class="help-block"> Not valid email</span>
+	</div>
+	<div class="form-group" ng-class="{'has-error': registerForm.user.$invalid && registerForm.user.$touched }">
+		<label class="sr-only" for="user">Username: </label>
+		<div class="input-group input-group-lg">
+			<span class="input-group-addon" id="addon4" aria-hidden="true"><i class="fa fa-user"></i></span>
+			<input type="text" name="user" class="form-control" placeholder="Username" aria-describedby="addon4" ng-model="user" ng-required="true">
+		</div>
+		<span ng-show="registerForm.user.$error.required && (registerForm.user.$touched)" class="help-block">You user name is required</span>
+	</div>
+	<div class="form-group" ng-class="{'has-error': registerForm.pass.$invalid && registerForm.pass.$touched }">
+		<label class="sr-only" for="pass">Password: </label>
+		<div class="input-group input-group-lg">
+			<span class=" input-group-addon" id="addon5" aria-hidden="true"><i class="fa fa-lock"></i></span>
+			<input type="pass" name="pass" class="form-control" placeholder="Password" aria-describedby="addon5" ng-model="pass" ng-required="true">
+		</div>
+		<span ng-show="registerForm.pass.$error.required && (registerForm.pass.$touched)" class="help-block">You password is required</span>
+	</div>
+	<button class="btn btn-lg center-block" type="submit" ng-disabled="registerForm.$invalid" ng-click="">Create User</button>
+</form>

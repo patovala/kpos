@@ -1,6 +1,6 @@
 'use strict';
 
-function mainController() {
+function mainController(CONFIG) {
   var mc = this;
 
   mc.user = {
@@ -12,6 +12,7 @@ function mainController() {
 
   mc.checkout = false;
   mc.togglePanel = togglePanel;
+  mc.logo = CONFIG.logo;
 
   return mc;
 

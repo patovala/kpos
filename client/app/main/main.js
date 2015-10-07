@@ -5,6 +5,12 @@ angular.module('kposApp')
     $stateProvider
       .state('main', {
         url: '/',
+        templateUrl: 'app/main/partials/login.html',
+        controller: 'MainCtrl',
+        controllerAs: 'mc'
+      })
+      .state('home', {
+        url: '/home',
         templateUrl: 'app/main/main.html',
         controller: 'MainCtrl',
         controllerAs: 'mc'
