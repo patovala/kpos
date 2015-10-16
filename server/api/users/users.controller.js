@@ -24,12 +24,12 @@ exports.findAll = function(req, res) {
 exports.loggedUser = function(req, res) {
   MongoClient.connect(url, function(err, db) {
     var users = db.collection('users');
-    if(req.query && req.query.username && req.query.password){
-        users.findOne({$and:[{$or:[{email: req.query.email},{username: req.query.username}]},
-                      {password: req.query.password}]}, function(err, doc){
-            res.json(doc);
-            db.close();
-        });
+    if(req.body && req.body.userName && req.body.password){
+      users.findOne({$and:[{$or:[{email: req.body.userName},{userName: req.body.userName}]},
+      {password: req.body.password}]}, function(err, doc){
+        res.json({result: doc});
+        db.close();
+      });
     }
   });
 };

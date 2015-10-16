@@ -31,7 +31,7 @@ describe('Controller: MainCtrl', function () {
    * ver gráfico (admin)
    * */
   it('should validate user', function(){
-    expect(MainCtrl.user.name).toEqual('admin');
+    expect(MainCtrl.user).toBeNull();
   });
 
   /* Test para comprobar la creación del div con el icono y nombre de usuario*/

@@ -20,7 +20,7 @@ describe('GET /api/users', function() {
       // Insert some documents
       users = _.map([1, 2, 3, 4, 5], function(i){
         return {_id: i, dni: i+'123', firstname: 'nameuser'+i, lastname: 'lastnameuser'+i,
-                  email: i+'ab@ioet.com', username: 'user' + i, password: 'pass'+i,  session_id: i * 100};
+                  email: i+'ab@ioet.com', userName: 'user' + i, password: 'pass'+i,  session_id: i * 100};
       });
       collection.insert(users, function(err, result) {
         console.log('populando DB users');
@@ -57,13 +57,14 @@ describe('GET /api/users', function() {
 
   it('should get the user by username and/or email and password', function(done) {
     request(app)
-      .get('/api/users/logged?username=user1&password=pass1')
+      .post('/api/users/logged')
+      .send({userName: "user1", password: "pass1"})
       .expect(200)
       .expect('Content-Type', /json/)
       .end(function(err, res) {
         if (err) return done(err);
-          res.body.should.be.instanceof(Object);
-          res.body._id.should.equal(1);
+          res.body.result.should.be.instanceof(Object);
+          res.body.result._id.should.equal(1);
           done();
         });
   });

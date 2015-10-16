@@ -1,0 +1,32 @@
+[
+   {
+      "_id":"1",
+      "dni" : "1111",
+      "firstName" : "juan",
+      "lastName" : "lopez",
+      "email" : "j@hotmail.com",
+      "userName" : "juanl",
+      "password" : "juanl",
+      "session_id" : "11"
+   },
+   {
+      "_id":"2",
+      "dni" : "2222",
+      "firstName" : "martha",
+      "lastName" : "perez",
+      "email" : "m@hotmail.com",
+      "userName" : "marthap",
+      "password" : "marthap",
+      "session_id" : "22"
+   },
+   {
+      "_id":"3",
+      "dni" : "3333",
+      "firstName" : "pedro",
+      "lastName" : "gomez",
+      "email" : "p@hotmail.com",
+      "userName" : "pedrog",
+      "password" : "pedrog",
+      "session_id" : "33"
+   }
+]

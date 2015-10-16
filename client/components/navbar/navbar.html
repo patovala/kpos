@@ -19,7 +19,17 @@
   </div>
 
   <div class="pull-right panel-default account" >
-      <i class="fa fa-user"></i>
-      <label class="userinfo">{{mc.user.name}}</label>
+    <div dropdown keyboard-nav >
+      <button id="user-button" class="btn btn-default" type="button" dropdown-toggle>
+        <i class="fa fa-user"></i>
+        <label class="userinfo">{{mc.user.userName}}</label>
+        <span class="caret"></span>
+      </button>
+      <ul class="dropdown-menu" role="menu" aria-labelledby="user-button">
+        <li role="menuitem" >
+          <a ng-click="mc.logOut()" >LogOut</a>
+        </li>
+      </ul>
+    </div>
   </div>
 </div>
