@@ -1,55 +1,44 @@
 'use strict';
 
 angular.module('kposApp')
-  .service('authenticationService', function ($resource, $cookies, $cookieStore, $location) {
-    var msg='', logid;
+  .service('authenticationService', function ($resource, $cookies, $location, $q) {
+    var flag = false;
 
     return {
       logIn: logIn,
-      log0ut: logOut,
-      getMsg: getMsg,
-      getLogId: getLogId,
-      checkStatus: checkStatus
+      logOut: logOut,
+      checkStatus: checkStatus,
+      getCookie:getCookie
     };
 
     function logIn(user, password){
+      var deferred = $q.defer();
       var r = $resource('api/users/logged');
-      var promise = r.save({user: user, password: password}, function(data){
-        logid = data.logid;
-        if(logid){
-            $cookies.logid = logid;
-            $location.path('/home');
-            msg = 'good login';
+      r.save({userName: user, password: password}, function(data){
+        if(data && data.result){
+          $cookies.putObject('user',data.result);
+          flag = true;
+          deferred.resolve(flag);
         }else{
-            msg = 'Credenciales inválidas';
-            $location.path('/login');
+          flag = false;
+          deferred.resolve(flag);
         }
-
       });
-      return promise;
+      return deferred.promise;
     }
 
-    function logOut (){
-        $cookieStore.remove('logid');
-        $location.path('/login');
+    function logOut(){
+      $cookies.remove('user');
     }
-
 
     function checkStatus(){
-        if(typeof($cookies.logid) === 'undefined'){
-            $location.path('/login');
-        }else{
-            logid = $cookies.logid;
-            $location.path('/home');
-        }
+      if($cookies.getObject('user') === 'undefined'){
+        $location.path('/login');
+      }else{
+        $location.path('/home');
+      }
     }
-
-    function getMsg(){
-        console.log('debug:' + msg); return msg;
+    function getCookie(){
+      return $cookies.getObject('user');
     }
-
-    function getLogId (){
-        return logid;
-    }
-
-  });
+});

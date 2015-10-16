@@ -3,7 +3,7 @@
 angular.module('kposApp')
   .config(function ($stateProvider) {
     $stateProvider
-      .state('main', {
+      .state('login', {
         url: '/',
         templateUrl: 'app/main/partials/login.html',
         controller: 'MainCtrl',

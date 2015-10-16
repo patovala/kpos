@@ -607,6 +607,13 @@ module.exports = function (grunt) {
           file : 'server/fixtures/coupons.json',
           jsonArray : true,
           upsert : true
+        },
+        {
+          name : 'users',
+          type : 'json',
+          file : 'server/fixtures/users.json',
+          jsonArray : true,
+          upsert : true
         }
       ]
     }

@@ -17,24 +17,26 @@ describe('Service: authenticationService', function () {
       $httpBackend.verifyNoOutstandingRequest();
   });
 
-  it('#logIn evaluates if the credentials are incorrect', function() {
-    $httpBackend.expectPOST('api/users/logged', {user:'cris', password:'guncay'}).respond({result:'error'});
-    authenticationService.logIn('cris', 'guncay');
+  it('#logIn evaluates if the credentials are correct', function() {
+    $httpBackend.expectPOST('api/users/logged', {userName:'cris', password:'guncay'}).respond({result: {nombre: ''}});
+    authenticationService.logIn('cris','guncay').then(function (data){
+      expect(data).toEqual(true);
+    });
     $httpBackend.flush();
-    expect(authenticationService.getMsg()).toEqual('Credenciales inválidas');
-    expect(authenticationService.getLogId()).toBeUndefined();
+    authenticationService.logOut();
   });
 
-  it('#logIn evaluates the value of id the user', function() {
-    $httpBackend.expectPOST('api/users/logged', {user:'cris', password:'guncay'}).respond({logid:'0105220347'});
-    authenticationService.logIn('cris', 'guncay');
+  it('#logIn evaluates if the credentials are incorrect', function() {
+    $httpBackend.expectPOST('api/users/logged', {userName:'cris', password:'guncay'}).respond({result: undefined});
+    authenticationService.logIn('cris','guncay').then(function (data){
+      expect(data).toEqual(false);
+    });
     $httpBackend.flush();
-    expect(authenticationService.getLogId()).toEqual('0105220347');
+    authenticationService.logOut();
   });
 
   it('#checkStatus evaluates the state user', function() {
     authenticationService.checkStatus();
-    expect(authenticationService.getLogId()).toBeUndefined();
+    expect(authenticationService.getCookie()).toBeUndefined();
   });
-
 });
