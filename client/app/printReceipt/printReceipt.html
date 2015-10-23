@@ -1,0 +1,17 @@
+<div class="panel panel-default">
+	<div >
+		<h3 align="center">ORDER:</h3>
+		<label>Name:</label>
+		<span>{{pr.client}}</span>
+	</div>
+	<cart></cart>
+	<div>
+		<label>Ticket:</label></br>
+		<label>User:</label>
+		<span>{{mc.user.userName}}</span>
+	</div>
+</div>
+<div class="white-background low-padding none-margin btn-print">
+  <button class="btn btn-default" ng-click="pr.newOrder()">New order</button>
+  <button class="btn btn-success btn-right" ng-click="pr.printTicked()" ng-disabled="cc.statusButton">Print</button>
+</div>

@@ -7,7 +7,8 @@ angular.module('kposApp')
                 items:[],
                 subtotal: 0,
                 tax: 12
-    };
+    }, order;
+
 
     return {
       addToCart: addToCart,
@@ -25,7 +26,10 @@ angular.module('kposApp')
       resetClient:resetClient,
       getSubTotal: getSubTotal,
       getTotalCart: getTotalCart,
-      getTotalTax: getTotalTax
+      getTotalTax: getTotalTax,
+      getOrder: getOrder,
+      setOrder: setOrder,
+      setCart: setCart
     };
 
     function addToCart(id){
@@ -57,6 +61,18 @@ angular.module('kposApp')
     /* get the cart from somewhere */
     function getCart(){
       return cart;
+    }
+
+    function setCart(cart){
+      cart = cart;
+    }
+
+    function setOrder(order){
+      order = order;
+    }
+
+    function getOrder(){
+      return order;
     }
 
     function changeTax (tax) {

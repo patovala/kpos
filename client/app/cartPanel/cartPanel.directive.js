@@ -4,7 +4,6 @@ function cartPanel() {
   var directive = {
     templateUrl: 'app/cartPanel/cartPanel.html',
     restrict: 'E',
-    link: function () {},
     controllerAs: 'cp',
     controller: cartPanelCtrl
   };
@@ -26,9 +25,6 @@ function cartPanel() {
     cp.applyDiscount = applyDiscount;
     cp.voidCart = voidCart;
     cp.voidClient = voidClient;
-    cp.totalCart = totalCart;
-    cp.totalTax = totalTax;
-    cp.getSubTotal = getSubTotal;
     cp.checkoutCartModal = checkoutCartModal;
     cp.discountsUpdate = discountsUpdate;
 
@@ -110,18 +106,6 @@ function cartPanel() {
 
     function applyDiscount(idDiscount){
       cartService.applyDiscount(idDiscount);
-    }
-
-    function totalCart() {
-      return cartService.getTotalCart();
-    }
-
-    function totalTax() {
-      return cartService.getTotalTax();
-    }
-
-    function getSubTotal(items) {
-      return cartService.getSubTotal(items);
     }
 
     function checkoutCartModal(){

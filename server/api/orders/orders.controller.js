@@ -28,7 +28,7 @@ exports.addOrder = function(req, res) {
       MongoClient.connect(url, function (err, db) {
         var orders = db.collection('orders');
         orders.insert(order, function(err, result){
-          res.send({resp:'success'});
+          res.send(result);
           db.close();
         });
       });
