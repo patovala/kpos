@@ -10,7 +10,7 @@ function checkoutPanel(){
   };
 
   return directive;
-  function checkoutPanelCtrl($scope, cartService, $resource){
+  function checkoutPanelCtrl($scope, cartService, $resource, $rootScope){
     var cc = this;
 
     cc.amountTendered = '';
@@ -40,7 +40,7 @@ function checkoutPanel(){
       console.log(cc.cart);
 
       cc.order = {
-        user: cc.cart.client.name,
+        user: cc.cart.client,
         cart: cc.cart,
         dateCreated: date,
         paymentMethods: [{type: 'cash', value: 10}]
@@ -48,7 +48,9 @@ function checkoutPanel(){
 
       var r = $resource('api/orders/new');
         r.save(cc.order, function(data){
-          console.log(data);
+          cartService.setCart(data.cart);
+          cartService.setOrder(data);
+          $rootScope.$emit('changePanel', 3);
         });
     }
 

@@ -6,6 +6,7 @@ describe('Directive: cartPanel', function () {
   beforeEach(module('kposApp'));
   beforeEach(module('app/cartPanel/cartPanel.html'));
   beforeEach(module('components/clientmodal/clientModal.html'));
+  beforeEach(module('app/cart/cart.html'));
 
   var element, scope, cartService, ctrl, $httpBackend, cart, $modal;
 
@@ -73,10 +74,6 @@ describe('Directive: cartPanel', function () {
     expect(cartService.getCart().subtotal).toBe(0);
     expect(cartService.getCart().tax).toBe(12);
     expect(cartService.getCart().total).toBe(0);
-  }));
-
-  it('should render items from a cart', inject(function () {
-    expect(element.html()).toContain('ng-repeat="i in cp.cart.items"');
   }));
 
   /*

@@ -64,7 +64,7 @@ describe('POST /api/orders/new', function() {
       .expect('Content-Type', /json/)
       .end(function(err, res) {
         if (err) return done(err);
-        assert(res.body.resp === 'success');
+        assert(res.body.result.ok === 1);
         done();
       });
   });

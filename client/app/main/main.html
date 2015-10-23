@@ -2,18 +2,21 @@
 
 <div class="container">
   <div class="row">
-    <div class="col-xs-12 col-md-6">
+    <div class="col-xs-12 col-md-6 products-panel">
       <products-panel></products-panel>
     </div>
-    <div class="col-xs-12 col-md-6 cart" ng-if="!mc.checkout">
+    <div class="col-xs-12 col-md-6 cart" ng-if="mc.checkout==1">
       <cart-panel></cart-panel>
       <div id="cart_footer">
         <button type="button" class="btn btn-danger" ng-click="cp.voidCart()">Void</button>
-        <button type="button" class="btn btn-success" ng-click="mc.togglePanel()">Checkout</button>
+        <button type="button" class="btn btn-success" ng-click="mc.togglePanel(2)">Checkout</button>
       </div>
     </div>
-    <div class="col-xs-12 col-md-6 cart" ng-if="mc.checkout">
+    <div class="col-xs-12 col-md-6 cart" ng-if="mc.checkout==2">
       <checkout-panel></checkout-panel>
+    </div>
+    <div class="col-xs-12 col-md-6 cart" ng-if="mc.checkout==3">
+      <print-receipt></print-receipt>
     </div>
   </div>
 </div>
