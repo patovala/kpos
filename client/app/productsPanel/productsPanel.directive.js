@@ -45,7 +45,10 @@ function productsPanel() {
     }
 
     function addToCart(id){
-      cartService.addToCart(id);
+      if($scope.mc.checkout === 1){
+        cartService.addToCart(id);
+      }
+
     }
 
     function refresh () {
