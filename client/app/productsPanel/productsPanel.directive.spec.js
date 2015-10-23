@@ -99,10 +99,25 @@ describe('Directive: productsPanel', function () {
    * como un item solo
    * */
   it('should call to cartService on click', inject(function () {
+    scope.mc = {
+      checkout:1
+    };
+
     spyOn(cartService, 'addToCart').andReturn();
     ctrl.addToCart(1);
 
     expect(cartService.addToCart).toHaveBeenCalled();
+  }));
+
+  it('should call to cartService on click2', inject(function () {
+    scope.mc = {
+      checkout:2
+    };
+
+    spyOn(cartService, 'addToCart').andReturn();
+    ctrl.addToCart(1);
+
+    expect(cartService.addToCart).not.toHaveBeenCalled();
   }));
 
   it('should get the featured products', inject(function () {
