@@ -10,8 +10,9 @@
     {
         "_id": "internetservice",
         "name": "internetservice",
+        "category": "generic",
         "description": "This discount aplies to carts with coffee items",
-        "appliesToItemCategory": "coffee",
+        "applyToItemCategory": "coffee",
         "discount": {
             "id": "internetservice",
             "name": "Internet Service",
