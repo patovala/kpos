@@ -34,6 +34,7 @@ exports.addOrder = function(req, res) {
       });
 
   }else{
+    console.log('DEBUG:', order);
     res.json({resp: 'error', msg: 'invalid order'});
   }
 };

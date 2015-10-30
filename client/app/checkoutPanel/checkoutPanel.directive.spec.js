@@ -25,7 +25,7 @@ describe('Directive: checkoutPanel', function () {
     expect(cartService.getTotalCart).toHaveBeenCalled();
   });
 
-  it('should call backend whe the payment process button is pressed', function () {
+  it('should call backend when the payment process button is pressed', function () {
     ctrl.cart = {
       client: {
         _id: '02',
@@ -52,13 +52,13 @@ describe('Directive: checkoutPanel', function () {
    el total del cart*/
   it('should get the change of cart ', function () {
     spyOn(cartService, 'getTotalCart').andReturn(2);
-    ctrl.amountTendered = 5;
+    ctrl.cashPayment.amountTendered = 5;
     expect(ctrl.getChangeCheck()).toEqual(3);
   });
 
   it('should get the change of cart 2', function () {
     spyOn(cartService, 'getTotalCart').andReturn(3.75);
-    ctrl.amountTendered= 5;
+    ctrl.cashPayment.amountTendered= 5;
     expect(ctrl.getChangeCheck()).toEqual(1.25);
   });
 

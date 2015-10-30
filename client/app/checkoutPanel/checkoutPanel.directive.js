@@ -10,22 +10,20 @@ function checkoutPanel(){
   };
 
   return directive;
-  function checkoutPanelCtrl($scope, cartService, $resource, $rootScope){
+  function checkoutPanelCtrl($scope, cartService, $resource, $rootScope, authenticationService){
     var cc = this;
 
-    cc.amountTendered = '';
-    cc.cart = cartService.getCart();
+    cc.cashPayment = {type: 'cash', amountTendered: 0.00};
     cc.hidePayPal = false;
     cc.hideCard = false;
     cc.statusButton = true;
 
-    cc.cart = cartService.getCart;
+    //cc.cart = cartService.getCart;
     cc.getTotalCheck = getTotalCheck;
     cc.paymentProcess = paymentProcess;
     cc.getChangeCheck = getChangeCheck;
-    cc.dissmissCash = dissmissCash;
-    cc.dissmissPaypal = dissmissPaypal;
-    cc.dissmissCard = dissmissCard;
+    cc.dissmissPanel = dissmissPanel;
+
     return cc;
 
     function getTotalCheck(){
@@ -35,16 +33,18 @@ function checkoutPanel(){
 
     function paymentProcess() {
 
-      var date = Date.now();
+      var cart = cartService.getCart();
 
-      console.log(cc.cart);
+      console.log(cart);
 
       cc.order = {
-        user: cc.cart.client,
-        cart: cc.cart,
-        dateCreated: date,
-        paymentMethods: [{type: 'cash', value: 10}]
+        user: authenticationService.getCookie(),
+        cart: cart,
+        dateCreated: Date.now(),
+        paymentMethods: []
       };
+
+      cc.order.paymentMethods.push(cc.cashPayment);
 
       var r = $resource('api/orders/new');
         r.save(cc.order, function(data){
@@ -54,20 +54,13 @@ function checkoutPanel(){
         });
     }
 
-    function dissmissCash(){
-      cc.hideCash = !cc.hideCash;
-    }
-
-    function dissmissPaypal(){
-      cc.hidePaypal = !cc.hidePaypal;
-    }
-
-    function dissmissCard(){
-      cc.hideCard = !cc.hideCard;
+    function dissmissPanel(panel){
+      cc[panel] = !cc[panel];
     }
 
     function getChangeCheck(){
-      var change = cc.amountTendered - getTotalCheck();
+      var change = cc.cashPayment.amountTendered - cartService.getTotalCart();
+
       if(change > 0){
         cc.statusButton = false;
         return change;
@@ -78,5 +71,6 @@ function checkoutPanel(){
     }
   }
 }
+
 angular.module('kposApp')
 .directive('checkoutPanel', checkoutPanel);

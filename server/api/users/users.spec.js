@@ -17,7 +17,8 @@ describe('GET /api/users', function() {
     MongoClient.connect(url, {}, function(err, db) {
       // Get the documents collection
       var collection = db.collection('users');
-      // Insert some documents
+
+      // TODO: al hacer login se deberia actualizar en user UNICAMENTE el session_id del usuario
       users = _.map([1, 2, 3, 4, 5], function(i){
         return {_id: i, dni: i+'123', firstname: 'nameuser'+i, lastname: 'lastnameuser'+i,
                   email: i+'ab@ioet.com', userName: 'user' + i, password: 'pass'+i,  session_id: i * 100};
@@ -42,6 +43,7 @@ describe('GET /api/users', function() {
   });
 
 
+  //TODO: no necesitamos obtener la lista de usuarios desde el POS
   it('should respond with JSON array', function(done) {
     request(app)
       .get('/api/users')
@@ -55,6 +57,10 @@ describe('GET /api/users', function() {
       });
   });
 
+  // TODO: Este test deberia ser: should login when username and password are
+  // correclty provided, cambiar mensaje y cambiar endpoint a /api/users/login.
+  //
+  // El login deberia crear una session y retornar ese id de session
   it('should get the user by username and/or email and password', function(done) {
     request(app)
       .post('/api/users/logged')
@@ -69,6 +75,8 @@ describe('GET /api/users', function() {
         });
   });
 
+
+  // TODO: comentar este test, porque no estamos nunca creando usuarios desde el POS
   it('should add user with the correct information', function(done) {
     request(app)
       .post('/api/users/add')
@@ -88,6 +96,7 @@ describe('GET /api/users', function() {
   });
 
 
+  // TODO: igual este test es para otro sistema
   it('should control user repet', function(done) {
     request(app)
       .post('/api/users/add')
@@ -103,7 +112,7 @@ describe('GET /api/users', function() {
   });
 
 
-
+  // TODO: users/update no deberia existir
   it('should update user by username', function(done) {
     request(app)
       .post('/api/users/update')
@@ -119,6 +128,7 @@ describe('GET /api/users', function() {
   });
 
 
+  // TODO: users/update no deberia existir
   it('should control data repet in update user by username', function(done) {
     request(app)
       .post('/api/users/update')
@@ -134,7 +144,7 @@ describe('GET /api/users', function() {
   });
 
 
-
+  // TODO: users/delete no debería existir
   it('should delete the user by id', function(done) {
     request(app)
       .get('/api/users/delete?_id=25')

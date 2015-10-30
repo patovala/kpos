@@ -94,7 +94,7 @@ function internetdiscount(cart, cb){
         ds.push(discount.discount);
       }
       db.close();
-      console.log('DEBUG', ds);
+      console.log('DEBUG internetservice:', ds);
       cb(ds);
     });
   });

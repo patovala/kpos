@@ -9,29 +9,29 @@
  </div>
 </div>
 <div class="panel panel-default">
-	<div class="panel-heading paypal-header" ng-click="cc.dissmissPaypal()">
+	<div class="panel-heading paypal-header" ng-click="cc.dissmissPanel('Paypal')">
     <h4 class="">PayPal</h4>
   </div>
-  <div class="panel-body" ng-show="cc.hidePaypal">
+  <div class="panel-body" ng-show="cc.Paypal">
     <h4 class="">todo: pay with paypal here</h4>
   </div>
 </div>
 
 <div class="panel panel-success">
-  <div class="panel-heading cashPanel" ng-click="cc.dissmissCash()">
+  <div class="panel-heading cashPanel" ng-click="cc.dissmissPanel('Cash')">
       <h4>Cash:</h4>
   </div>
-  <div class= "panel-body" ng-hide="cc.hideCash">
+  <div class= "panel-body" ng-hide="cc.Cash">
     <div class="input-group input-group-lg">
       <span class="input-group-addon">Amount tendered:</span>
       <span class="input-group-addon">$</span>
       <input
         validation-numbers
         validation-type="float"
-        name="cc.amountTendered"
+        name="cc.cashPayment.amountTendered"
         type="text"
         class="form-control"
-        ng-model="cc.amountTendered"
+        ng-model="cc.cashPayment.amountTendered"
         typeahead-editable="false"
         placeholder="0.00"
         ng-change="cc.getChangeCheck()"
@@ -40,12 +40,12 @@
   </div>
 </div>
 <div class="panel panel-danger">
-  <div class="panel-heading card-header" ng-click="cc.dissmissCard()">
+  <div class="panel-heading card-header" ng-click="cc.dissmissPanel('Card')">
     <h4>
       Card:
     </h4>
   </div>
-  <div class="panel-body low-padding none-margin" ng-show="cc.hideCard">
+  <div class="panel-body low-padding none-margin" ng-show="cc.Card">
     <div class="input-group input-group-lg">
       <span class="input-group-addon">Number:</span>
       <span class="input-group-addon">#</span>
