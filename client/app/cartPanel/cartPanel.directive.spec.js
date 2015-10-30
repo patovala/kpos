@@ -143,14 +143,7 @@ describe('Directive: cartPanel', function () {
   }));
 
   /*
-   * TODO: the new client modal should call the backend to create
-   * a new client: TODO: esto deberia ir en el controlador del modal
-   * y no aqui... refactorizar
-   * */
-
-
-  /*
-   * TODO: Should allow to delete the entire item row
+   * Should allow to delete the entire item row
    * and reset the discounts
    * */
   it ('#removeItemCart should allow to delete item', inject(function () {
@@ -180,7 +173,7 @@ describe('Directive: cartPanel', function () {
 
 
 
-  /*TODO: should request the discounts for the filled cart. We need to send the cart to
+  /* should request the discounts for the filled cart. We need to send the cart to
    * the backend and the backend should return a discount for us if the cart applies
    * I think it should be triggered when you open the discount select
    * The generic discounts runs for all kind of clients and or items perhaps
@@ -218,24 +211,5 @@ describe('Directive: cartPanel', function () {
 
     expect(cartService.getDiscountsForCart).toHaveBeenCalledWith('byclient');
   });
-
-  /*
-   * TODO: Should add discount if the selected client has
-   * discount, should call cartService to add a new
-   * discount, the api should be:
-   * /api/discounts?_id='byo' returns a nounce for the discount
-   * in this cart. This should be POST to add the cart
-   * */
-
-  /*
-   * TODO: Should not add a discount if the api denies
-   * the discount maybe /api/discounts?_id='byo' returns
-   * not allowed.
-   * */
-
-  /*
-   * TODO; Deberia permitir agregar otro tipo de descuento
-   * ej. BYO (bring your own mug)
-   * */
 
 });

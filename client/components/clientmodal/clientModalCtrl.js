@@ -1,9 +1,5 @@
 'use strict';
 
-/*
- * TODO: this modal requires unit test
- * */
-
 function ClientModalCtrl($scope, $modalInstance, $resource) {
   var vm = this;
   vm.updateClient = updateClient;

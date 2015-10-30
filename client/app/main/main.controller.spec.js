@@ -45,9 +45,4 @@ describe('Controller: MainCtrl', function () {
     expect(div.hasClass('userinfo')).toBe(true);
   }));
 
-
-  /*
-   * TODO: deberia renderizar dos panels el de productos y el de cartPanel
-   * */
-
 });

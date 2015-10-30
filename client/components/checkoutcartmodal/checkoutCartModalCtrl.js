@@ -1,7 +1,7 @@
 'use strict';
 
 /*
- * TODO: this modal requires unit test
+ * DEPRECATED: this modal requires unit test
  * */
 
 function CheckoutCartModalCtrl($scope, $modalInstance) {
