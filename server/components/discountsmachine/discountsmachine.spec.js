@@ -44,12 +44,16 @@ describe('<Unit test> DiscountsMachine chain of responsabilities', function() {
                             "discount":
                               {"name":"Internet Service",
                                 "type":"notvalue",
-                                "comment":"this object has to be resolved in the checkout phase"}
-                          };
+                                "comment":"this object has to be resolved in the checkout phase"},
+                              },
+        discountsClientsDiscount = {_id: 'DiscountClients', category: 'client', type:'percent', name: 'DiscountsClients', value: 15, applyToCategory:'coffee'};
+
+
     beforeEach(function(done) {
       var discounts =[];
       discounts.push(genericDiscount);
       discounts.push(internetDiscount);
+      discounts.push(discountsClientsDiscount);
       addToCollection(discounts, done);
     });
 
@@ -85,7 +89,6 @@ describe('<Unit test> DiscountsMachine chain of responsabilities', function() {
         done();
       });
     });
-
     /*
      * A generic discount is an optional discount that can apply
      * to a cart. For instance if there is no items with category
@@ -117,7 +120,47 @@ describe('<Unit test> DiscountsMachine chain of responsabilities', function() {
         done();
       });
     });
+
+    /* */
+    it('should get DiscountClients of client discounts', function(done) {
+      var D = new DiscountsMachine();
+      var cart = {pendingDiscounts: ['DiscountClients'],
+                  items: [
+                      {_id:1, name: 'item 1', category: 'coffee', quantity: 1, price:0.60},
+                      {_id:2, name: 'item 2', category: 'coffee', quantity: 1, price:0.30},
+                      {_id:3, name: 'item 2', category: 'coffee', quantity: 1, price:0.50},
+                      {_id:4, name: 'item 2', category: 'coffee', quantity: 3, price:0.70},
+                  ]};
+
+      D.getDiscounts(cart, function(discounts){
+        discounts.should.be.instanceof(Array);
+        discounts.length.should.equal(1);
+        discounts[0].quantity.should.equal(0.51);
+        done();
+      });
+    });
+
+    it('should not get client discounts, the not category is coffee ', function(done) {
+      var D = new DiscountsMachine();
+      var cart = {pendingDiscounts: ['DiscountClients'],
+                  items: [
+                      {_id:1, name: 'item 1', category: 'tea', quantity: 1, price:0.60},
+                      {_id:2, name: 'item 2', category: 'tea', quantity: 1, price:0.30},
+                      {_id:3, name: 'item 2', category: 'tea', quantity: 1, price:0.50},
+                      {_id:4, name: 'item 2', category: 'tea', quantity: 3, price:0.70},
+                      {_id:4, name: 'item 2', category: 'tea', quantity: 3, price:0.90},
+                  ]};
+
+      D.getDiscounts(cart, function(discounts){
+        discounts.should.be.instanceof(Array);
+        discounts.length.should.equal(0);
+        done();
+      });
+    });
+
   });
+
+
 
   describe('#coupons', function() {
     var coupon = {
