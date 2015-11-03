@@ -19,5 +19,13 @@
             "type": "notvalue",
             "comment": "this object has to be resolved in the checkout phase"
         }
+    },
+    {
+      "_id": "DiscountClients",
+      "name": "Discount by client",
+      "category": "client",
+      "type": "percent",
+      "value": "15",
+      "applyToCategory": "coffee"
     }
 ]
