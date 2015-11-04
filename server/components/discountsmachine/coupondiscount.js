@@ -30,7 +30,6 @@ exports.coupondiscount = function (cart, cb){
           // 1. 2x1 in selected items
           if(c.category==="2x1" && c.applyToItems && _.isArray(c.applyToItems)){
             var elems = _.intersection(_.pluck(cart.items, '_id'), c.applyToItems);
-
             ds = _.filter(cart.items, function(i){
               return _.contains(elems, i._id);
             });
