@@ -13,8 +13,8 @@ angular.module('kposApp')
 
     function logIn(user, password){
       var deferred = $q.defer();
-      //TODO: el endpoint deberia llamarse login
-      var r = $resource('api/users/logged');
+      //endpoint deberia llamarse login
+      var r = $resource('api/login');
       r.save({userName: user, password: password}, function(data){
         if(data && data.result){
 

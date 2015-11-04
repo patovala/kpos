@@ -18,7 +18,7 @@ describe('Service: authenticationService', function () {
   });
 
   it('#logIn evaluates if the credentials are correct', function() {
-    $httpBackend.expectPOST('api/users/logged', {userName:'cris', password:'guncay'}).respond({result: {nombre: ''}});
+    $httpBackend.expectPOST('api/login', {userName:'cris', password:'guncay'}).respond({result: {nombre: ''}});
     authenticationService.logIn('cris','guncay').then(function (data){
       expect(data).toEqual(true);
     });
@@ -27,7 +27,7 @@ describe('Service: authenticationService', function () {
   });
 
   it('#logIn evaluates if the credentials are incorrect', function() {
-    $httpBackend.expectPOST('api/users/logged', {userName:'cris', password:'guncay'}).respond({result: undefined});
+    $httpBackend.expectPOST('api/login', {userName:'cris', password:'guncay'}).respond({result: undefined});
     authenticationService.logIn('cris','guncay').then(function (data){
       expect(data).toEqual(false);
     });

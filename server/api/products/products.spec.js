@@ -67,7 +67,6 @@ describe('GET /api/products', function() {
       .expect('Content-Type', /json/)
       .end(function(err, res) {
         if (err) return done(err);
-        //TODO: esto deberia ser solo un objeto
         res.body.should.be.instanceof(Object);
         res.body._id.should.equal(1);
         done();
