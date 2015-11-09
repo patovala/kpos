@@ -15,4 +15,25 @@ angular.module('kposApp')
         controller: 'MainCtrl',
         controllerAs: 'mc'
       });
-  });
+  })
+
+  .run(['$rootScope', '$cookies','$state', 'authenticationService', function($rootScope, $cookies, $state, authenticationService){
+
+
+    $rootScope.$on('$stateChangeStart',
+      function(event, toState){
+        var access = authenticationService.checkStatus();
+        if(toState.name.indexOf('home') > -1 && access === false){
+          console.log('noooo');
+          event.preventDefault();
+          $state.go('login');
+        }else{
+          if(toState.name.indexOf('login') > -1 && access === true){
+            console.log('siiiii');
+            event.preventDefault();
+            $state.go('home');
+          }
+        }
+
+      });
+  }]);
