@@ -37,6 +37,7 @@ exports.logoutUser = function(req, res) {
 
   MongoClient.connect(url, function(err, db) {
     var users = db.collection('users');
+    console.log('sessionId', req.body.sessionId);
     if(req.body && req.body.sessionId){
       users.findOne({sessionId: req.body.sessionId}, function(err, doc){
         if (doc !== null){

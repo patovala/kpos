@@ -4,6 +4,8 @@ describe('Service: authenticationService', function () {
 
   // load the service's module
   beforeEach(module('kposApp'));
+  beforeEach(module('app/main/partials/login.html'));
+  beforeEach(module('app/main/main.html'));
 
   // instantiate service
   var authenticationService, $httpBackend;

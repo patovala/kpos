@@ -44,7 +44,6 @@ function mainController($location, CONFIG, authenticationService, $cookies, $roo
 
     function logOut(){
         authenticationService.logOut(mc.user.sessionId);
-        $location.path('/login');
     }
 
 }

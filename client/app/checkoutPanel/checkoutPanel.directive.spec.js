@@ -5,6 +5,8 @@ describe('Directive: checkoutPanel', function () {
   // load the directive's module and view
   beforeEach(module('kposApp'));
   beforeEach(module('app/checkoutPanel/checkoutPanel.html'));
+  beforeEach(module('app/main/partials/login.html'));
+  beforeEach(module('app/main/main.html'));
 
   var element, scope, cartService, ctrl, $httpBackend;
 

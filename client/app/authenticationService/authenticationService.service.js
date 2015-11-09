@@ -2,7 +2,7 @@
 
 angular.module('kposApp')
   .service('authenticationService', function ($resource, $cookies, $location, $q) {
-    var flag = false;
+    var access = false;
 
     return {
       logIn: logIn,
@@ -17,11 +17,9 @@ angular.module('kposApp')
       r.save({userName: user, password: password}, function(data){
         if(data && data.result.sessionId){
           $cookies.putObject('user', data.result);
-          flag = true;
-          deferred.resolve(flag);
+          deferred.resolve(true);
         }else{
-          flag = false;
-          deferred.resolve(flag);
+          deferred.resolve(false);
         }
       });
       return deferred.promise;
@@ -32,19 +30,21 @@ angular.module('kposApp')
       r.save({sessionId: sessionId}, function(data){
         if(data && data.flag === true){
           $cookies.remove('user');
+          $location.path('/');
         }else{
             alertify.error('Error logout session');
         }
       });
-
     }
 
     function checkStatus(){
-      if($cookies.getObject('user') === 'undefined'){
-        $location.path('/');
+      access = false;
+      if($cookies.getObject('user') === undefined){
+        access = false;
       }else{
-        $location.path('/home');
+        access = true;
       }
+      return access;
     }
 
     function getCookie(){

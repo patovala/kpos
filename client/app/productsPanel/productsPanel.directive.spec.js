@@ -13,6 +13,8 @@ describe('Directive: productsPanel', function () {
 
   beforeEach(module('app/productsPanel/productsPanel.html'));
   beforeEach(module('app/productsPanel/partials/productsList.html'));
+  beforeEach(module('app/main/partials/login.html'));
+  beforeEach(module('app/main/main.html'));
 
   var element, scope, $httpBackend, products, ctrl, cartService;
 
