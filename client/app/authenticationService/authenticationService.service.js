@@ -2,7 +2,7 @@
 
 angular.module('kposApp')
   .service('authenticationService', function ($resource, $cookies, $location, $q) {
-    var flag = false;
+    var flag = false, access = false;
 
     return {
       logIn: logIn,
@@ -17,7 +17,6 @@ angular.module('kposApp')
       var r = $resource('api/users/logged');
       r.save({userName: user, password: password}, function(data){
         if(data && data.result){
-
           //TODO: arreglar este problema de seguridad
           $cookies.putObject('user', data.result);
           flag = true;
@@ -37,12 +36,15 @@ angular.module('kposApp')
     }
 
     function checkStatus(){
-      if($cookies.getObject('user') === 'undefined'){
-        $location.path('/login');
+      access = false;
+      if($cookies.getObject('user') === undefined){
+        access = false;
       }else{
-        $location.path('/home');
+        access = true;
       }
+      return access;
     }
+
     function getCookie(){
       //TODO: necesitamos tener a la mano la información del usuario logeado
       //      algo como {user: usuario, nombre: nombre, session_id: 102912012}

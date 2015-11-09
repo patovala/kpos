@@ -4,6 +4,7 @@ describe('<Unit Test> Validation Numbers Directive', function () {
     var $compile, $scope, form;
 
     beforeEach(module('kposApp'));
+    beforeEach(module('app/main/partials/login.html'));
 
     beforeEach(inject(function (_$compile_, $rootScope) {
         $compile = _$compile_;

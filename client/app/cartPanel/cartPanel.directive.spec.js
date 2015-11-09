@@ -7,6 +7,7 @@ describe('Directive: cartPanel', function () {
   beforeEach(module('app/cartPanel/cartPanel.html'));
   beforeEach(module('components/clientmodal/clientModal.html'));
   beforeEach(module('app/cart/cart.html'));
+  beforeEach(module('app/main/partials/login.html'));
 
   var element, scope, cartService, ctrl, $httpBackend, cart, $modal;
 
