@@ -18,10 +18,9 @@ describe('GET /api/login', function() {
       // Get the documents collection
       var collection = db.collection('users');
 
-      // TODO: al hacer login se deberia actualizar en user UNICAMENTE el session_id del usuario
       users = _.map([1, 2, 3, 4, 5], function(i){
-        return {_id: i, dni: i+'123', firstname: 'nameuser'+i, lastname: 'lastnameuser'+i,
-                  email: i+'ab@ioet.com', userName: 'user' + i, password: 'pass'+i,  session_id: i * 100};
+        return {_id: i, dni: i+'123', firstName: 'nameuser'+i, lastName: 'lastnameuser'+i,
+                  email: i+'ab@ioet.com', userName: 'user' + i, password: 'pass'+i,  sessionId: i*100};
       });
       collection.insert(users, function(err, result) {
         console.log('populando DB users');
@@ -41,11 +40,6 @@ describe('GET /api/login', function() {
       });
     });
   });
-
-  // TODO: Este test deberia ser: should login when username and password are
-  // correclty provided, cambiar mensaje y cambiar endpoint a /api/users/login.
-  //
-  // El login deberia crear una session y retornar ese id de session
   it('should login when username and password are correclty provided', function(done) {
     request(app)
       .post('/api/login')
@@ -55,7 +49,35 @@ describe('GET /api/login', function() {
       .end(function(err, res) {
         if (err) return done(err);
           res.body.result.should.be.instanceof(Object);
-          res.body.result._id.should.equal(1);
+          res.body.result.userName.should.equal("user1");
+          done();
+        });
+  });
+
+  it('should logout when session_id exist', function(done) {
+    request(app)
+      .post('/api/login/logOut')
+      .send({sessionId: 200})
+      .expect(200)
+      .expect('Content-Type', /json/)
+      .end(function(err, res) {
+        if (err) return done(err);
+          res.body.flag.should.be.instanceof(Object);
+          res.body.flag.should.equal(true);
+          done();
+        });
+  });
+
+  it('should logout when session_id no exist', function(done) {
+    request(app)
+      .post('/api/login/logOut')
+      .send({sessionId: 100})
+      .expect(200)
+      .expect('Content-Type', /json/)
+      .end(function(err, res) {
+        if (err) return done(err);
+          res.body.flag.should.be.instanceof(Object);
+          res.body.flag.should.equal(false);
           done();
         });
   });
