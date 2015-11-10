@@ -3,7 +3,8 @@
 function mainController($location, CONFIG, authenticationService, $cookies, $rootScope, $scope) {
     var mc = this;
 
-    mc.user = $cookies.getObject('user') ? $cookies.getObject('user') : null;
+    //mc.user = { userName : $cookies.getObject('user') ? $cookies.get('user') : null  }
+    mc.user = $cookies.getObject('user') ? $cookies.getObject('user') : null  ;
     mc.checkout = 1;
     mc.togglePanel = togglePanel;
     mc.logo = CONFIG.logo;
@@ -12,6 +13,7 @@ function mainController($location, CONFIG, authenticationService, $cookies, $roo
 
     init();
   return mc;
+
 
     function init() {
         var $rootListeners = {
@@ -41,8 +43,7 @@ function mainController($location, CONFIG, authenticationService, $cookies, $roo
     }
 
     function logOut(){
-        authenticationService.logOut();
-        $location.path('/login');
+        authenticationService.logOut(mc.user.sessionId);
     }
 
 }

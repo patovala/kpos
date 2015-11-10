@@ -7,7 +7,8 @@
       "email" : "j@hotmail.com",
       "userName" : "juanl",
       "password" : "juanl",
-      "session_id" : "11"
+      "sessionId" : "",
+      "lastLogin": 0
    },
    {
       "_id":"2",
@@ -17,7 +18,8 @@
       "email" : "m@hotmail.com",
       "userName" : "marthap",
       "password" : "marthap",
-      "session_id" : "22"
+      "sessionId" : "",
+      "lastlogin": 0
    },
    {
       "_id":"3",
@@ -27,6 +29,7 @@
       "email" : "p@hotmail.com",
       "userName" : "pedrog",
       "password" : "pedrog",
-      "session_id" : "33"
+      "sessionId" : "",
+      "lastLogin": 0
    }
 ]

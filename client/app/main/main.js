@@ -17,19 +17,33 @@ angular.module('kposApp')
       });
   })
 
-  .run(['$rootScope', '$cookies','$state', 'authenticationService', function($rootScope, $cookies, $state, authenticationService){
+  .run(['$rootScope', '$cookies','$state', 'authenticationService','$timeout','$document', function(
+    $rootScope, $cookies, $state, authenticationService, $timeout, $document){
 
+      var timeoutSession = 10000;
+      var timeoutTotal = $timeout(function(){logoutByTimer();}, timeoutSession);
+      var bodyElement = angular.element($document);
+      bodyElement.bind('keydown keyup click mousemove DOMMouseScroll mousewheel mousedown touchstart touchmove scroll focus', function () { timeoutReset();});
+
+    function logoutByTimer(){
+      if(authenticationService.checkStatus()){
+        authenticationService.logOut(authenticationService.getCookie().sessionId);
+      }
+    }
+
+    function timeoutReset(){
+        $timeout.cancel(timeoutTotal);
+        timeoutTotal = $timeout(function(){logoutByTimer();}, timeoutSession);
+    }
 
     $rootScope.$on('$stateChangeStart',
       function(event, toState){
         var access = authenticationService.checkStatus();
         if(toState.name.indexOf('home') > -1 && access === false){
-          console.log('noooo');
           event.preventDefault();
           $state.go('login');
         }else{
           if(toState.name.indexOf('login') > -1 && access === true){
-            console.log('siiiii');
             event.preventDefault();
             $state.go('home');
           }

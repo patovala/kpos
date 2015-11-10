@@ -2,7 +2,7 @@
 
 angular.module('kposApp')
   .service('authenticationService', function ($resource, $cookies, $location, $q) {
-    var flag = false, access = false;
+    var access = false;
 
     return {
       logIn: logIn,
@@ -13,26 +13,28 @@ angular.module('kposApp')
 
     function logIn(user, password){
       var deferred = $q.defer();
-      //TODO: el endpoint deberia llamarse login
-      var r = $resource('api/users/logged');
+      var r = $resource('api/login');
       r.save({userName: user, password: password}, function(data){
-        if(data && data.result){
-          //TODO: arreglar este problema de seguridad
+        if(data && data.result.sessionId){
           $cookies.putObject('user', data.result);
-          flag = true;
-          deferred.resolve(flag);
+          deferred.resolve(true);
         }else{
-          flag = false;
-          deferred.resolve(flag);
+          deferred.resolve(false);
         }
       });
       return deferred.promise;
     }
 
-    function logOut(){
-      //TODO: al hacer logout se debe llamar al server para que haga el logout y luego
-      //de que el server responda algo se debe eliminar la cookie
-      $cookies.remove('user');
+    function logOut(sessionId){
+      var r = $resource('api/login/logOut');
+      r.save({sessionId: sessionId}, function(data){
+        if(data && data.flag === true){
+          $cookies.remove('user');
+          $location.path('/');
+        }else{
+            alertify.error('Error logout session');
+        }
+      });
     }
 
     function checkStatus(){
@@ -46,8 +48,6 @@ angular.module('kposApp')
     }
 
     function getCookie(){
-      //TODO: necesitamos tener a la mano la información del usuario logeado
-      //      algo como {user: usuario, nombre: nombre, session_id: 102912012}
       return $cookies.getObject('user');
     }
 });

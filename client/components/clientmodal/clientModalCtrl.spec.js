@@ -4,6 +4,7 @@ describe('Controller: clientModalCtrl', function () {
   beforeEach(module('kposApp'));
   beforeEach(module('components/clientmodal/clientModal.html'));
   beforeEach(module('app/main/partials/login.html'));
+  beforeEach(module('app/main/main.html'));
   // load the controller's module
   var clientModalCtrl, $httpBackend, modalInstanceMock, scope, dependencies, $resource, client;
     // Initialize the controller and a mock scope
