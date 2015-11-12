@@ -20,7 +20,7 @@ angular.module('kposApp')
   .run(['$rootScope', '$cookies','$state', 'authenticationService','$timeout','$document', function(
     $rootScope, $cookies, $state, authenticationService, $timeout, $document){
 
-      var timeoutSession = 10000;
+      var timeoutSession = 600000;
       var timeoutTotal = $timeout(function(){logoutByTimer();}, timeoutSession);
       var bodyElement = angular.element($document);
       bodyElement.bind('keydown keyup click mousemove DOMMouseScroll mousewheel mousedown touchstart touchmove scroll focus', function () { timeoutReset();});
