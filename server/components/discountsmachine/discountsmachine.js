@@ -12,8 +12,9 @@ MongoClient = require('mongodb').MongoClient;
 
 // require here other discounts
 // var GenericDiscount = require('genericDiscount');
-var DiscountChain = function(cblogic) {
+var DiscountChain = function(cblogic, rslogic) {
     this.discount_logic = cblogic;
+    this.resolve_logic = rslogic;
     this.next = null;
 };
 
@@ -36,7 +37,26 @@ DiscountChain.prototype = {
     // set the stack that comes next in the chain
     setNextDiscount: function(stack) {
         this.next = stack;
+    },
+    resolve: function(cart, cb){
+        var that = this;
+        if(this.resolve_logic){
+          this.resolve_logic(cart, function(cart){
+            if(that.next){
+              that.next.resolve(cart, cb);
+            }else{
+              cb(cart);
+            }
+          });
+        }else{
+          if(that.next){
+            that.next.resolve(cart, cb);
+          }else{
+            cb(cart);
+          }
+        }
     }
+
 };
 
 /*
@@ -75,29 +95,85 @@ function collectgeneric(cart, cb){
 /*
  * Internet Service Discount
  * */
-function internetdiscount(cart, cb){
+function internetDiscount(cart, cb){
 
   if (cart.pendingDiscounts && _.contains(cart.pendingDiscounts, 'internetservice')){
 
     MongoClient.connect(url, {}, function(err, db) {
       // first check if there is a discount for internet service in the collection
       var discounts = db.collection('discounts'),
-      ds = [];
+        ds = [];
 
       discounts.findOne({_id: 'internetservice'}, function(err, discount){
 
-      //find the items with category equal to the one in the discount
-      if(discount && _.some(cart.items, {category: discount.applyToItemCategory})){
-        // add the discount to the discount chain
-        ds.push(discount.discount);
-      }
-      db.close();
-      cb(ds);
+        //find the items with category equal to the one in the discount
+        if(discount && _.some(cart.items, {category: discount.applyToItemCategory})){
+          // add the discount to the discount chain
+          ds.push(discount.discount);
+        }
+        db.close();
+        cb(ds);
+      });
     });
-  });
 
   }else{
     cb([]);
+  }
+}
+
+/*
+ * Internet Service Discount Resolver
+ *
+ * */
+function internetDiscountResolver(cart, cb){
+
+  if (cart.pendingDiscounts && _.contains(cart.pendingDiscounts, 'internetservice')){
+
+    MongoClient.connect(url, {}, function(err, db) {
+      var discounts = db.collection('discounts'), ds = [];
+
+      discounts.findOne({_id: 'internetservice'}, function(err, discount){
+
+        //find the items with category equal to the one in the discount
+        if(discount){
+          var ds =  _.filter(cart.items, {category: discount.applyToItemCategory});
+          //TODO PV work in progress, calcula el total de consumo aqui
+          var total = _.reduce(ds, function(total, i){
+            return total + i.price * i.quantity;
+          }, 0);
+
+          // give 15min for $1 spent with a max of 1 hour
+          var x = total * 15, // <-- change here for other unit values
+              ticket_amount = 0;
+
+          if(Math.floor(x / 60)){
+            ticket_amount = 60;
+          }else if(Math.floor(x / 30)){
+            ticket_amount = 30;
+          }else{
+            ticket_amount = 15;
+          }
+
+          var tickets = db.collection('internettickets');
+          tickets.findOne({ticket_amount: ticket_amount, used: false}, function(err, ticket){
+            cart.ticket = ticket.serial;
+
+            // remove the pendingDiscounts
+            cart.pendingDiscounts = _.pull(cart.pendingDiscounts, 'internetservice');
+            db.close();
+            cb(cart);
+          })
+
+
+        } else {
+          cb(cart);
+        }
+      });
+    });
+
+
+  } else {
+    cb(cart);
   }
 }
 
@@ -111,7 +187,7 @@ var DiscountsMachine = function () {
   //add the link for the chain internet discount
 
   var genericDiscount = new DiscountChain(collectgeneric),
-      internetDiscount = new DiscountChain(internetdiscount),
+      internetDiscount = new DiscountChain(internetDiscount, internetDiscountResolver),
       twoforoneDiscount = new DiscountChain(twoforone),
       discountsClientsDiscount = new DiscountChain(discountsClients);
   //byclientDiscount = new ByClientDiscount()
@@ -128,6 +204,10 @@ var DiscountsMachine = function () {
 DiscountsMachine.prototype.getDiscounts = function(cart, cb) {
   var discounts = [];
   this.discountsStack.calculate(cart, discounts, cb);
+};
+
+DiscountsMachine.prototype.resolveDiscounts = function(cart, cb) {
+  this.discountsStack.resolve(cart, cb);
 };
 
 module.exports.DiscountsMachine = DiscountsMachine;

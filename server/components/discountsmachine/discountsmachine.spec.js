@@ -9,11 +9,19 @@ describe('<Unit test> DiscountsMachine chain of responsabilities', function() {
 
   // Configure mongo access
   var MongoClient,
-      url = config.mongo.uri;
+      url = config.mongo.uri,
+      internetDiscount = {"_id":"internetservice",
+          "name":"internetservice",
+          "applyToItemCategory":"coffee",
+          "discount":
+            {"name":"Internet Service",
+              "type":"notvalue",
+              "comment":"this object has to be resolved in the checkout phase"},
+          };
 
   MongoClient = require('mongodb').MongoClient;
 
-  function addToCollection(data, done){
+  function addToDiscounts(data, done){
       MongoClient.connect(url, {}, function(err, db) {
         var collection = db.collection('discounts');
 
@@ -35,17 +43,20 @@ describe('<Unit test> DiscountsMachine chain of responsabilities', function() {
       });
   }
 
+  function addToTickets(data, done){
+      MongoClient.connect(url, {}, function(err, db) {
+        var collection = db.collection('internettickets');
+
+        collection.insert(data, function(err, result) {
+          db.close();
+          done();
+        });
+      });
+  }
+
   describe('#discounts', function() {
 
     var genericDiscount = {_id: 'BYO', category: 'generic', type:'value', name: 'BYO', value: 0.10, applyToCategory:'coffee'},
-        internetDiscount = {"_id":"internetservice",
-                            "name":"internetservice",
-                            "applyToItemCategory":"coffee",
-                            "discount":
-                              {"name":"Internet Service",
-                                "type":"notvalue",
-                                "comment":"this object has to be resolved in the checkout phase"},
-                              },
         discountsClientsDiscount = {_id: 'DiscountClients', category: 'client', type:'percent', name: 'DiscountsClients', value: 15, applyToCategory:'coffee'};
 
 
@@ -54,7 +65,7 @@ describe('<Unit test> DiscountsMachine chain of responsabilities', function() {
       discounts.push(genericDiscount);
       discounts.push(internetDiscount);
       discounts.push(discountsClientsDiscount);
-      addToCollection(discounts, done);
+      addToDiscounts(discounts, done);
     });
 
     afterEach(function(done){
@@ -160,8 +171,6 @@ describe('<Unit test> DiscountsMachine chain of responsabilities', function() {
 
   });
 
-
-
   describe('#coupons', function() {
     var coupon = {
       '_id': '2x1-1234',
@@ -204,5 +213,69 @@ describe('<Unit test> DiscountsMachine chain of responsabilities', function() {
         done();
       });
     });
+  });
+
+  describe.only('#resolver', function() {
+
+    beforeEach(function(done) {
+      var discounts =[];
+      discounts.push(internetDiscount);
+      addToDiscounts(discounts, done);
+
+    });
+
+
+    beforeEach(function(done) {
+      // add some tickets
+      var tickets = [
+        {_id: 1, ticket_amount: 15, serial: "15minSerialNo", used: false},
+        {_id: 2, ticket_amount: 30, serial: "30minSerialNo", used: false},
+        {_id: 3, ticket_amount: 60, serial: "60minSerialNo", used: false}
+      ];
+
+      addToTickets(tickets, done);
+    });
+
+    afterEach(function(done){
+      MongoClient.connect(url, {}, function(err, db) {
+        var discounts = db.collection('discounts');
+
+        discounts.drop(function(){
+          db.close();
+          done();
+        });
+      });
+    });
+
+    afterEach(function(done){
+      MongoClient.connect(url, {}, function(err, db) {
+
+        var internettickets = db.collection('internettickets');
+        internettickets.drop(function(){
+          db.close();
+          done();
+        });
+
+      });
+    });
+
+    /*
+     * Resolve an internet discount
+     * */
+    it('should add the discount ticket to the cart', function(done) {
+      var D = new DiscountsMachine();
+      var cart = {items: [
+          {_id:1, name: "coffee1", category:"coffee", quantity: 1, price: 0.5},
+          {_id:2, name: "coffee2", category:"coffee", quantity: 2, price: 0.6},
+          {_id:3, name: "coffee3", category:"coffee", quantity: 3, price: 0.7}
+          ], pendingDiscounts: ['internetservice']};
+
+      D.resolveDiscounts(cart, function(cart){
+        cart.ticket.should.equal("30minSerialNo");
+        cart.pendingDiscounts.should.not.containEql("internetservice");
+        done();
+      });
+    });
+
   });
 });

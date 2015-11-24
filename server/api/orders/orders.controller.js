@@ -28,6 +28,10 @@ exports.addOrder = function(req, res) {
       MongoClient.connect(url, function (err, db) {
         var orders = db.collection('orders');
         orders.insert(order, function(err, result){
+          //TODO aqui hay que volver a verificar en la maquina de estados y resolver los
+          //pendientes <-- no es en la maquina de estados sino en algun otro resolver post venta
+          //que quite los pending del cart y que los reemplace con lo que se supone que debe
+          //reemplazar
           res.send(result);
           db.close();
         });
