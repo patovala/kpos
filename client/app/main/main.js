@@ -17,10 +17,10 @@ angular.module('kposApp')
       });
   })
 
-  .run(['$rootScope', '$cookies','$state', 'authenticationService','$timeout','$document', function(
-    $rootScope, $cookies, $state, authenticationService, $timeout, $document){
+  .run(['$rootScope', '$cookies','$state', 'authenticationService','$timeout','$document','CONFIG', function(
+    $rootScope, $cookies, $state, authenticationService, $timeout, $document, CONFIG){
 
-      var timeoutSession = 10000;
+      var timeoutSession = CONFIG.timeSession;
       var timeoutTotal = $timeout(function(){logoutByTimer();}, timeoutSession);
       var bodyElement = angular.element($document);
       bodyElement.bind('keydown keyup click mousemove DOMMouseScroll mousewheel mousedown touchstart touchmove scroll focus', function () { timeoutReset();});

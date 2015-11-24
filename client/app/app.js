@@ -17,4 +17,5 @@ angular.module('kposApp', [
 
   .constant('CONFIG', {
     logo: 'assets/images/logoIcon.png',
+    timeSession: 600000,
   });
