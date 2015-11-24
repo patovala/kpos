@@ -95,7 +95,7 @@ function collectgeneric(cart, cb){
 /*
  * Internet Service Discount
  * */
-function internetDiscount(cart, cb){
+function idiscountfunc(cart, cb){
 
   if (cart.pendingDiscounts && _.contains(cart.pendingDiscounts, 'internetservice')){
 
@@ -125,7 +125,7 @@ function internetDiscount(cart, cb){
  * Internet Service Discount Resolver
  *
  * */
-function internetDiscountResolver(cart, cb){
+function idiscountresolver(cart, cb){
 
   if (cart.pendingDiscounts && _.contains(cart.pendingDiscounts, 'internetservice')){
 
@@ -187,11 +187,9 @@ var DiscountsMachine = function () {
   //add the link for the chain internet discount
 
   var genericDiscount = new DiscountChain(collectgeneric),
-      internetDiscount = new DiscountChain(internetDiscount, internetDiscountResolver),
+      internetDiscount = new DiscountChain(idiscountfunc, idiscountresolver),
       twoforoneDiscount = new DiscountChain(twoforone),
       discountsClientsDiscount = new DiscountChain(discountsClients);
-  //byclientDiscount = new ByClientDiscount()
-  //  internetDiscount = new InternetDiscount()
 
   genericDiscount.setNextDiscount(internetDiscount);
   internetDiscount.setNextDiscount(twoforoneDiscount);

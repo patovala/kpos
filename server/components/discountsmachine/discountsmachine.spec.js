@@ -215,7 +215,7 @@ describe('<Unit test> DiscountsMachine chain of responsabilities', function() {
     });
   });
 
-  describe.only('#resolver', function() {
+  describe('#resolver', function() {
 
     beforeEach(function(done) {
       var discounts =[];
