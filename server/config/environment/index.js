@@ -32,6 +32,9 @@ var all = {
   // List of user roles
   userRoles: ['guest', 'user', 'admin'],
 
+  // Internet Service definition: what is the minimun and or base unit
+  internetDiscountBaseUnit: 15,
+
   // MongoDB connection options
   mongo: {
     options: {

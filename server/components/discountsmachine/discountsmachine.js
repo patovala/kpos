@@ -143,7 +143,7 @@ function idiscountresolver(cart, cb){
           }, 0);
 
           // give 15min for $1 spent with a max of 1 hour
-          var x = total * 15, // <-- change here for other unit values
+          var x = total * config.internetDiscountBaseUnit,
               ticket_amount = 0;
 
           if(Math.floor(x / 60)){
