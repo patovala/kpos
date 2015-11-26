@@ -21,6 +21,11 @@ describe('Directive: checkoutPanel', function () {
     ctrl = element.controller('checkoutPanel');
   }));
 
+  afterEach(function() {
+      $httpBackend.verifyNoOutstandingExpectation();
+      $httpBackend.verifyNoOutstandingRequest();
+  });
+
   it('should get the cart when loaded ', function () {
     spyOn(cartService, 'getTotalCart');
     ctrl.getTotalCheck();
@@ -40,13 +45,17 @@ describe('Directive: checkoutPanel', function () {
       user: ctrl.cart.client.name,
       cart: ctrl.cart,
       dateCreated: Date.now(),
-      paymentMethods: [{type: 'cash', value: 10}]
+      paymentMethods: []
     };
 
-    ctrl.paymentProcess();
-
-    $httpBackend.expectPOST('api/orders/new', ctrl.order).respond({});
+    cartService.setCart(ctrl.cart);
+    $httpBackend.expectPOST('api/orders/new').respond(ctrl.order);
+    ctrl.processPayment();
     $httpBackend.flush();
+
+    //also should do it only if payment method totals are > cart total
+    expect(ctrl.order.paymentMethods).toBeTruthy();
+
 
   });
 

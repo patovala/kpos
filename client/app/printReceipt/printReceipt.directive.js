@@ -4,7 +4,7 @@ function printReceipt () {
     templateUrl: 'app/printReceipt/printReceipt.html',
     restrict: 'E',
     controllerAs: 'pr',
-  controller: printReceiptCtrl
+    controller: printReceiptCtrl
   };
 
   return directive;

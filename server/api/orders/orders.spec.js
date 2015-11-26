@@ -52,19 +52,18 @@ describe('POST /api/orders/new', function() {
    * - cliente: alguien o consumidor final
    * - cart: el cart para poder verificar descuentos y costos del lado del servidor
    * - forma de pago: la forma de pago con el total recaudado*/
-
-    it('should order store and check if it was stored', function(done) {
-      request(app)
-        .post('/api/orders/new')
-        .send(completeOrder)
-        .expect(200)
-        .expect('Content-Type', /json/)
-        .end(function(err, res) {
-          if (err) return done(err);
-              res.body.result.ok === 1;
-          done();
-        });
-      });
+  it('should store order and check if it was stored', function(done) {
+    request(app)
+      .post('/api/orders/new')
+      .send(completeOrder)
+      .expect(200)
+      .expect('Content-Type', /json/)
+      .end(function(err, res) {
+        if (err) return done(err);
+        assert(typeof(res.body.cart) === 'object');
+        done();
+    });
+  });
 
     /*
    * Luego de recibir la orden se debería procesar antes de contestar algo.
@@ -78,7 +77,9 @@ describe('POST /api/orders/new', function() {
       .expect('Content-Type', /json/)
       .end(function(err, res) {
         if (err) return done(err);
-        assert(res.body.result.ok === 1);
+        assert(typeof(res.body.cart) === 'object');
+        assert(typeof(res.body.cart.client) === 'object');
+        assert(res.body.user === 'trueuser');
         done();
       });
   });

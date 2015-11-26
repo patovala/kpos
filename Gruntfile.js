@@ -614,6 +614,13 @@ module.exports = function (grunt) {
           file : 'server/fixtures/users.json',
           jsonArray : true,
           upsert : true
+        },
+        {
+          name : 'internettickets',
+          type : 'json',
+          file : 'server/fixtures/internettickets.json',
+          jsonArray : true,
+          upsert : true
         }
       ]
     }
@@ -632,6 +639,31 @@ module.exports = function (grunt) {
       grunt.log.writeln('Done waiting!');
       done();
     }, 1500);
+  });
+
+  // A ticket creator for internet service
+  grunt.registerTask('internettickets', function(target) {
+    var _ = require('lodash');
+
+    if (target === 'dist'){
+      grunt.log.error('tickets are not available yet!');
+
+    }else{
+      //generate jsons to be uploaded
+      grunt.log.ok('generating tickets for dev environment');
+
+      var all = [];
+
+      _.forEach([15, 30, 60], function(i){
+        var ds = _.map(_.range(100), function(e){
+          var generic = {"ticket_amount":i,"serial":"1oascSAS-" + i,"used":false};
+          return generic;
+        });
+        all = all.concat(ds);
+      });
+
+      grunt.file.write('server/fixtures/internettickets.json', JSON.stringify(all));
+    }
   });
 
   grunt.registerTask('express-keepalive', 'Keep grunt running', function() {
@@ -666,6 +698,7 @@ module.exports = function (grunt) {
       'copy:styles',
       'autoprefixer',
       'express:dev',
+      'internettickets:dev',
       'mongoimport',
       'wait',
       'open',
