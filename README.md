@@ -1,3 +1,4 @@
+[![Build Status](https://travis-ci.org/patovala/kpos?branch=master)]
 # kpos
 Punto de Venta (POS) simple usando MEAN
 
