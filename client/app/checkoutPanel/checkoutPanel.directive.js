@@ -20,7 +20,7 @@ function checkoutPanel(){
 
     //cc.cart = cartService.getCart;
     cc.getTotalCheck = getTotalCheck;
-    cc.paymentProcess = paymentProcess;
+    cc.processPayment = processPayment;
     cc.getChangeCheck = getChangeCheck;
     cc.dissmissPanel = dissmissPanel;
 
@@ -31,11 +31,9 @@ function checkoutPanel(){
 
     }
 
-    function paymentProcess() {
+    function processPayment() {
 
       var cart = cartService.getCart();
-
-      console.log(cart);
 
       cc.order = {
         user: authenticationService.getCookie(),
@@ -59,6 +57,8 @@ function checkoutPanel(){
     }
 
     function getChangeCheck(){
+      //TODO: we need to fix this when we get more payment methods cause user will be allowed to
+      //      pay with different payments methods not only cash.
       var change = cc.cashPayment.amountTendered - cartService.getTotalCart();
 
       if(change > 0){

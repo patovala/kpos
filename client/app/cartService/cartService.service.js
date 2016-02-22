@@ -63,12 +63,12 @@ angular.module('kposApp')
       return cart;
     }
 
-    function setCart(cart){
-      cart = cart;
+    function setCart(_cart_){
+      cart = _cart_;
     }
 
-    function setOrder(order){
-      order = order;
+    function setOrder(_order_){
+      order = _order_;
     }
 
     function getOrder(){

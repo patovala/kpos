@@ -156,10 +156,13 @@ function idiscountresolver(cart, cb){
 
           var tickets = db.collection('internettickets');
           tickets.findOne({ticket_amount: ticket_amount, used: false}, function(err, ticket){
-            cart.ticket = ticket.serial;
-
-            // remove the pendingDiscounts
-            cart.pendingDiscounts = _.pull(cart.pendingDiscounts, 'internetservice');
+            if(!err){
+              cart.ticket = ticket.serial;
+              // remove the pendingDiscounts
+              cart.pendingDiscounts = _.pull(cart.pendingDiscounts, 'internetservice');
+            }else{
+              cart.ticket = 'OUT of Tickets';
+            }
             db.close();
             cb(cart);
           })
