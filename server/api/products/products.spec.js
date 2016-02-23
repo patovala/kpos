@@ -27,11 +27,12 @@ describe('GET /api/products', function() {
       // make one product featured
       products[0].featured = true;
 
-      collection.insert(products);
+      collection.insert(products, function(){
+        console.log('populando DB');
+        db.close();
+        done();
+      });
 
-      console.log('populando DB');
-      db.close();
-      done();
     });
   });
 

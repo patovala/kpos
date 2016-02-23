@@ -1,9 +1,10 @@
 sudo: false
 language: node_js
 node_js:
-- 0.10.32
+- 4.2.2
 before_script:
 - npm install -g bower grunt-cli
+- npm install
 - bower install
 script:
 - grunt test:client
