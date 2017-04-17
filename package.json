@@ -92,5 +92,12 @@
       "lintspaces"
     ]
   },
+  "pre-commit": {
+    "run": [
+      "test",
+      "jshint",
+      "lintspaces"
+    ]
+  },
   "private": true
 }
